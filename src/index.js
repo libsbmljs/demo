@@ -3,14 +3,8 @@ import ReactDOM from "react-dom";
 
 import style from "./style.css"
 
-const Index = () => {
-  return <div className={style.lediv}>Hello React!</div>;
-};
+import { hot } from 'react-hot-loader/root'
+const App = () => <div className={style.lediv}>Hello React!</div>
+export default hot(App)
 
-ReactDOM.render(<Index />, document.getElementById("index"));
-
-// if (module.hot) {
-//   module.hot.accept('./print.js', function() {
-//     console.log('Hotswap');
-//   })
-// }
+ReactDOM.render(<App/>, document.getElementById("index"));
