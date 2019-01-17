@@ -8,3 +8,9 @@ const Index = () => {
 };
 
 ReactDOM.render(<Index />, document.getElementById("index"));
+
+// if (module.hot) {
+//   module.hot.accept('./print.js', function() {
+//     console.log('Hotswap');
+//   })
+// }
