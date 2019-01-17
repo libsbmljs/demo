@@ -11,5 +11,9 @@
     "biology"
   ],
   "author": "J Kyle Medley",
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "webpack": "^4.28.4",
+    "webpack-cli": "^3.2.1"
+  }
 }
