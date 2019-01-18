@@ -1,8 +1,9 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin");
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const webpack = require('webpack');
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import CleanWebpackPlugin from 'clean-webpack-plugin';
+import webpack from 'webpack';
+import path from "path";
 
-const htmlPlugin = new HtmlWebPackPlugin({
+const htmlPlugin = new HtmlWebpackPlugin({
   template: "./src/index.html",
   filename: "./index.html"
 });
@@ -11,15 +12,23 @@ module.exports = {
   entry: {
      app: './src/index.js'
   },
+  output: {
+    // https://stackoverflow.com/questions/43209666/react-router-v4-cannot-get-url/43212553
+    publicPath: '/'
+  },
   devtool: 'inline-source-map',
   devServer: {
-    contentBase: './dist',
-    hot: true
+    contentBase: path.join(__dirname,'src'),
+    // contentBase: './dist',
+    hot: false
+  },
+  resolve: {
+    modules: [path.resolve(__dirname,'theme'),'node_modules']
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
           loader: "babel-loader"
@@ -37,12 +46,16 @@ module.exports = {
             }
           }
         ]
+      },
+      {
+        test: /\.(jpg|jpeg|png|gif|mp3|svg)$/,
+        loaders: ["file-loader"]
       }
     ]
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),
-    htmlPlugin,
-    new webpack.HotModuleReplacementPlugin()
+    htmlPlugin
+    // new webpack.HotModuleReplacementPlugin()
   ]
 };

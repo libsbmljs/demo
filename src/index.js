@@ -1,10 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { createHashHistory } from "history";
+import { Router, Route, Switch } from "react-router-dom";
 
-import style from "./style.css"
+import "assets/css/material-dashboard-react.css";
 
-import { hot } from 'react-hot-loader/root'
-const App = () => <div className={style.lediv}>Hello React!</div>
-export default hot(App)
+import indexRoutes from "routes/index.jsx";
 
-ReactDOM.render(<App/>, document.getElementById("index"));
+const hist = createHashHistory();
+
+ReactDOM.render(
+  <Router history={hist}>
+    <Switch>
+      {indexRoutes.map((prop, key) => {
+        return <Route path={prop.path} component={prop.component} key={key} />;
+      })}
+    </Switch>
+  </Router>,
+  document.getElementById("root")
+);
