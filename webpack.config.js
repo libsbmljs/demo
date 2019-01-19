@@ -23,7 +23,7 @@ module.exports = {
     hot: true
   },
   resolve: {
-    modules: [path.resolve(__dirname,'theme'),'node_modules']
+    modules: [path.resolve(__dirname,'theme'),path.resolve(__dirname,'src'),'node_modules']
   },
   module: {
     rules: [
