@@ -20,7 +20,7 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname,'src'),
     // contentBase: './dist',
-    hot: false
+    hot: true
   },
   resolve: {
     modules: [path.resolve(__dirname,'theme'),'node_modules']
@@ -55,7 +55,7 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),
-    htmlPlugin
-    // new webpack.HotModuleReplacementPlugin()
+    htmlPlugin,
+    new webpack.HotModuleReplacementPlugin()
   ]
 };
