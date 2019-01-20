@@ -41,7 +41,7 @@ const styles = {
 
 function SearchView(props) {
   const { classes, location } = props;
-  console.log(props);
+  const query = new URLSearchParams(location.search).get('q');
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
@@ -49,7 +49,7 @@ function SearchView(props) {
           <CardHeader color="primary">
             <h4 className={classes.cardTitleWhite}>Search Results</h4>
             <p className={classes.cardCategoryWhite}>
-              For {location.search}
+              For {query}
             </p>
           </CardHeader>
           <CardBody>

@@ -26,7 +26,8 @@ function Header({ ...props }) {
     });
     return name;
   }
-  const { classes, color } = props;
+  const { classes, color, location } = props;
+  const query = new URLSearchParams(location.search).get('q');
   const appBarClasses = classNames({
     [" " + classes[color]]: color
   });
@@ -40,7 +41,7 @@ function Header({ ...props }) {
           </Button>
         </div>
         <Hidden smDown implementation="css">
-          <HeaderLinks />
+          <HeaderLinks query={query} />
         </Hidden>
         <Hidden mdUp implementation="css">
           <IconButton

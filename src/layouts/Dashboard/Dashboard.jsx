@@ -64,14 +64,10 @@ class App extends React.Component {
     window.removeEventListener("resize", this.resizeFunction);
   }
   render() {
-    const query = new URLSearchParams(this.props.location.search);
     const { classes, ...rest } = this.props;
     return (
       <div className={classes.wrapper}>
         <div className={classes.mainPanel} ref="mainPanel">
-          <h1>
-            le query {this.props.location.search}
-          </h1>
           <Header
             routes={dashboardRoutes}
             handleDrawerToggle={this.handleDrawerToggle}

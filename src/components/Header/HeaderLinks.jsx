@@ -37,7 +37,7 @@ class HeaderLinks extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, query } = this.props;
     const { open } = this.state;
     return (
       <div>
@@ -49,7 +49,8 @@ class HeaderLinks extends React.Component {
             inputProps={{
               placeholder: "Search",
               inputProps: {
-                "aria-label": "Search"
+                "aria-label": "Search",
+                value: query
               }
             }}
           />
