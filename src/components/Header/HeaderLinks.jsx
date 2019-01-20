@@ -24,6 +24,12 @@ class HeaderLinks extends React.Component {
   state = {
     open: false
   };
+
+  handleChange = (event) => {
+    const { query, history } = this.props;
+    history.push('/search?q='+event.target.value);
+  }
+
   handleToggle = () => {
     this.setState(state => ({ open: !state.open }));
   };
@@ -50,7 +56,8 @@ class HeaderLinks extends React.Component {
               placeholder: "Search",
               inputProps: {
                 "aria-label": "Search",
-                value: query
+                value: query,
+                onChange: this.handleChange
               }
             }}
           />

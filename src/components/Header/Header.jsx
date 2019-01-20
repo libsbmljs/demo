@@ -41,7 +41,7 @@ function Header({ ...props }) {
           </Button>
         </div>
         <Hidden smDown implementation="css">
-          <HeaderLinks query={query} />
+          <HeaderLinks history={props.history} query={query} />
         </Hidden>
         <Hidden mdUp implementation="css">
           <IconButton
