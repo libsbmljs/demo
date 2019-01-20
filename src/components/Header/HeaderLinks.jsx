@@ -56,7 +56,7 @@ class HeaderLinks extends React.Component {
               placeholder: "Search",
               inputProps: {
                 "aria-label": "Search",
-                value: query,
+                value: query || '',
                 onChange: this.handleChange
               }
             }}
