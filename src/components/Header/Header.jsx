@@ -25,7 +25,7 @@ function Header({ ...props }) {
     //   return null;
     // });
     // return name;
-    return 'le Brande'
+    return 'libsbml.js demo'
   }
   const { classes, color, setEnteredQuery, dispatchQuery, query } = props;
   const appBarClasses = classNames({
