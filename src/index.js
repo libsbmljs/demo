@@ -5,9 +5,9 @@ import { Router, Route, Switch } from "react-router-dom"
 import { Provider } from 'react-redux'
 import { createStore, combineReducers } from 'redux'
 
-import "assets/css/material-dashboard-react.css";
+import "assets/css/material-dashboard-react.css"
 
-import indexRoutes from "routes/index.jsx";
+import indexRoutes from "routes/index.jsx"
 
 const hist = createHashHistory();
 

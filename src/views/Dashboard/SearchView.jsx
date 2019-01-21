@@ -9,6 +9,8 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 
+import "assets/css/material-dashboard-react.css"
+
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -36,21 +38,22 @@ const styles = {
       fontWeight: "400",
       lineHeight: "1"
     }
+  },
+  disabled: {
+    opacity: "0.5"
   }
 };
 
 function SearchView(props) {
-  const { classes, location } = props;
-  const query = new URLSearchParams(location.search).get('q');
+  const { classes, enabled } = props;
+  // const className = !enabled ? classes.disabled : ''
+  const className = ''
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
-        <Card>
+        <Card className={className}>
           <CardHeader color="primary">
             <h4 className={classes.cardTitleWhite}>Search Results</h4>
-            <p className={classes.cardCategoryWhite}>
-              For {query}
-            </p>
           </CardHeader>
           <CardBody>
             <Table
