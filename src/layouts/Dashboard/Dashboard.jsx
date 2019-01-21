@@ -29,8 +29,6 @@ const switchRoutes = (location) => (
 );
 
 const mapStateToProps = (state) => {
-  console.log('mapStateToProps query', state.entered_query)
-  console.log(state)
   return {
     query: state.query.entered_query
   }
@@ -95,7 +93,6 @@ class App extends React.Component {
   }
   render() {
     const { classes, setEnteredQuery, dispatchQuery, query, location, ...rest } = this.props;
-    console.log('app query', query)
     return (
       <div className={classes.wrapper}>
         <div className={classes.mainPanel} ref="mainPanel">
