@@ -16,6 +16,10 @@ const query = (state = {entered_query: '', returned_query: ''}, action) => {
     case 'SET_ENTERED_QUERY':
       console.log('set entered query', action.query)
       return {entered_query: action.query, returned_query: state.returned_query}
+    case 'DISPATCH_QUERY':
+      console.log('dispatch query', action.query)
+      hist.push('/search?q='+action.query)
+      return {entered_query: null, returned_query: state.returned_query}
     default:
       return state
   }

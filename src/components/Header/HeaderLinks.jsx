@@ -24,11 +24,19 @@ class HeaderLinks extends React.Component {
   state = {
     open: false
   };
+  timer = null;
 
   handleChange = (event) => {
-    const { query, setEnteredQuery, history } = this.props;
-    history.push('/search?q='+event.target.value);
-    setEnteredQuery(event.target.value);
+    const value = event.target.value
+    const { query, setEnteredQuery, dispatchQuery, history } = this.props;
+    if (this.timer) {
+      clearTimeout(this.timer)
+    }
+    this.timer = setTimeout( () => {
+      dispatchQuery(value)
+    }, 500 )
+    // history.push('/search?q='+event.target.value)
+    setEnteredQuery(value)
   }
 
   handleToggle = () => {

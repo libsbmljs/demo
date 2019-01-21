@@ -29,8 +29,10 @@ const switchRoutes = (location) => (
 );
 
 const mapStateToProps = (state) => {
+  console.log('mapStateToProps query', state.entered_query)
+  console.log(state)
   return {
-    // todos: getVisibleTodos(state.todos, state.visibilityFilter)
+    query: state.query.entered_query
   }
 }
 
@@ -39,10 +41,18 @@ export const setEnteredQuery = query => ({
   query
 })
 
+export const dispatchQuery = query => ({
+  type: 'DISPATCH_QUERY',
+  query
+})
+
 const mapDispatchToProps = dispatch => {
   return {
     setEnteredQuery: query => {
       dispatch(setEnteredQuery(query))
+    },
+    dispatchQuery: query => {
+      dispatch(dispatchQuery(query))
     }
   }
 }
@@ -84,7 +94,8 @@ class App extends React.Component {
     window.removeEventListener("resize", this.resizeFunction);
   }
   render() {
-    const { classes, setEnteredQuery, ...rest } = this.props;
+    const { classes, setEnteredQuery, dispatchQuery, query, location, ...rest } = this.props;
+    console.log('app query', query)
     return (
       <div className={classes.wrapper}>
         <div className={classes.mainPanel} ref="mainPanel">
@@ -92,6 +103,8 @@ class App extends React.Component {
             routes={dashboardRoutes}
             handleDrawerToggle={this.handleDrawerToggle}
             setEnteredQuery={setEnteredQuery}
+            dispatchQuery={dispatchQuery}
+            query={query || new URLSearchParams(location.search).get('q')}
             {...rest}
           />
           {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}

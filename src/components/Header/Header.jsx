@@ -17,17 +17,17 @@ import headerStyle from "assets/jss/material-dashboard-react/components/headerSt
 
 function Header({ ...props }) {
   function makeBrand() {
-    var name;
-    props.routes.map((prop, key) => {
-      if (prop.path === props.location.pathname) {
-        name = prop.navbarName;
-      }
-      return null;
-    });
-    return name;
+    // var name;
+    // props.routes.map((prop, key) => {
+    //   if (prop.path === props.location.pathname) {
+    //     name = prop.navbarName;
+    //   }
+    //   return null;
+    // });
+    // return name;
+    return 'le Brande'
   }
-  const { classes, color, setEnteredQuery, location } = props;
-  const query = new URLSearchParams(location.search).get('q');
+  const { classes, color, setEnteredQuery, dispatchQuery, query } = props;
   const appBarClasses = classNames({
     [" " + classes[color]]: color
   });
@@ -41,7 +41,7 @@ function Header({ ...props }) {
           </Button>
         </div>
         <Hidden smDown implementation="css">
-          <HeaderLinks history={props.history} setEnteredQuery={setEnteredQuery} query={query} />
+          <HeaderLinks history={props.history} setEnteredQuery={setEnteredQuery} dispatchQuery={dispatchQuery} query={query} />
         </Hidden>
         <Hidden mdUp implementation="css">
           <IconButton
