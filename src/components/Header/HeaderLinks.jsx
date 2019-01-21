@@ -26,8 +26,9 @@ class HeaderLinks extends React.Component {
   };
 
   handleChange = (event) => {
-    const { query, history } = this.props;
+    const { query, setEnteredQuery, history } = this.props;
     history.push('/search?q='+event.target.value);
+    setEnteredQuery(event.target.value);
   }
 
   handleToggle = () => {
