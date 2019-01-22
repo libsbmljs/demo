@@ -12,6 +12,7 @@ import indexRoutes from "routes/index.jsx"
 import { rootEpic } from 'epics.js'
 import { dispatchQuery } from 'actions.js'
 import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS } from 'constants.js'
+
 import Worker from 'database.worker.js';
 
 const worker = new Worker()
@@ -24,6 +25,7 @@ const query = (state = {entered_query: '', results: []}, action) => {
       return {entered_query: action.query, results: state.results}
     case DISPATCH_QUERY:
       hist.push('/search?q='+action.query)
+      worker.postMessage(dispatchQuery(action.query)) // TODO: put in history listener
       return {entered_query: null, results: state.results}
     case QUERY_RESULTS:
       return {entered_query: state.entered_query, results: action.results}
@@ -41,11 +43,9 @@ const store = createStore(combineReducers({
 )
 
 worker.addEventListener('message', function(e) {
-  console.log('Worker result: ', e.data)
   // the result should be an action - dispatch it
   store.dispatch(e.data)
 }, false);
-worker.postMessage(dispatchQuery('repr'))
 
 epicMiddleware.run(rootEpic)
 

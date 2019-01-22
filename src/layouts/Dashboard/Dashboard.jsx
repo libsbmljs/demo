@@ -30,7 +30,6 @@ const switchRoutes = (searchResultsEnabled, searchResults) => (
 );
 
 const mapStateToProps = (state) => {
-  console.log('searchResults', state.query.results)
   return {
     query: state.query.entered_query,
     searchResultsEnabled: !state.query.entered_query,
