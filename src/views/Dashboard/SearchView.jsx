@@ -46,8 +46,8 @@ const styles = {
 
 function SearchView(props) {
   const { classes, enabled } = props;
-  // const className = !enabled ? classes.disabled : ''
-  const className = ''
+  const className = !enabled ? classes.disabled : ''
+  // const className = ''
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>

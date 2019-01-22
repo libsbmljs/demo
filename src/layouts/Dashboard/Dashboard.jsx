@@ -13,6 +13,7 @@ import Header from "components/Header/Header.jsx"
 import Footer from "components/Footer/Footer.jsx"
 import Sidebar from "components/Sidebar/Sidebar.jsx"
 import SearchView from "views/Dashboard/SearchView.jsx"
+import {setEnteredQuery, dispatchQuery} from 'actions'
 
 import dashboardRoutes from "routes/dashboard.jsx"
 
@@ -34,16 +35,6 @@ const mapStateToProps = (state) => {
     searchResultsEnabled: !state.query.entered_query
   }
 }
-
-export const setEnteredQuery = query => ({
-  type: 'SET_ENTERED_QUERY',
-  query
-})
-
-export const dispatchQuery = query => ({
-  type: 'DISPATCH_QUERY',
-  query
-})
 
 const mapDispatchToProps = dispatch => {
   return {

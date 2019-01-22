@@ -16,17 +16,6 @@ import Button from "components/CustomButtons/Button.jsx";
 import headerStyle from "assets/jss/material-dashboard-react/components/headerStyle.jsx";
 
 function Header({ ...props }) {
-  function makeBrand() {
-    // var name;
-    // props.routes.map((prop, key) => {
-    //   if (prop.path === props.location.pathname) {
-    //     name = prop.navbarName;
-    //   }
-    //   return null;
-    // });
-    // return name;
-    return 'libsbml.js demo'
-  }
   const { classes, color, setEnteredQuery, dispatchQuery, query } = props;
   const appBarClasses = classNames({
     [" " + classes[color]]: color
@@ -35,9 +24,8 @@ function Header({ ...props }) {
     <AppBar className={classes.appBar + appBarClasses}>
       <Toolbar className={classes.container}>
         <div className={classes.flex}>
-          {/* Here we create navbar brand, based on route name */}
           <Button color="transparent" href="#" className={classes.title}>
-            {makeBrand()}
+            {'libsbml.js demo'}
           </Button>
         </div>
         <Hidden smDown implementation="css">
