@@ -22,17 +22,19 @@ import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboar
 import image from "assets/img/sidebar-2.jpg"
 import logo from "assets/img/reactlogo.png"
 
-const switchRoutes = (searchResultsEnabled) => (
+const switchRoutes = (searchResultsEnabled, searchResults) => (
   <Switch>
-    <Route path="/search" render={props => < SearchView enabled={searchResultsEnabled} />} key="/search" />
+    <Route path="/search" render={props => < SearchView enabled={searchResultsEnabled} searchResults={searchResults} />} key="/search" />
     <Redirect from="/" to="/search" key="root-redirect" />
   </Switch>
 );
 
 const mapStateToProps = (state) => {
+  console.log('searchResults', state.query.results)
   return {
     query: state.query.entered_query,
-    searchResultsEnabled: !state.query.entered_query
+    searchResultsEnabled: !state.query.entered_query,
+    searchResults: state.query.results
   }
 }
 
@@ -84,7 +86,7 @@ class App extends React.Component {
     window.removeEventListener("resize", this.resizeFunction);
   }
   render() {
-    const { classes, setEnteredQuery, dispatchQuery, query, searchResultsEnabled, location, ...rest } = this.props;
+    const { classes, setEnteredQuery, dispatchQuery, query, searchResultsEnabled, searchResults, location, ...rest } = this.props;
     return (
       <div className={classes.wrapper}>
         <div className={classes.mainPanel} ref="mainPanel">
@@ -94,15 +96,16 @@ class App extends React.Component {
             setEnteredQuery={setEnteredQuery}
             dispatchQuery={dispatchQuery}
             query={query || new URLSearchParams(location.search).get('q')}
+            searchResults={searchResults}
             {...rest}
           />
           {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
           {this.getRoute() ? (
             <div className={classes.content}>
-              <div className={classes.container}>{switchRoutes(searchResultsEnabled)}</div>
+              <div className={classes.container}>{switchRoutes(searchResultsEnabled, searchResults)}</div>
             </div>
           ) : (
-            <div className={classes.map}>{switchRoutes(searchResultsEnabled)}</div>
+            <div className={classes.map}>{switchRoutes(searchResultsEnabled, searchResults)}</div>
           )}
           {this.getRoute() ? <Footer /> : null}
         </div>

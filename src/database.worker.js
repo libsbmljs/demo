@@ -42,7 +42,8 @@ const idx = setupIndex()
 const processResults = (results) => (
   List(results).map(r => {
     const d = documents.get(r.ref)
-    return {id: d.id, title: d.title, origin: d.origin}
+    // return {id: d.id, title: d.title, origin: d.origin}
+    return [d.id, d.title, d.origin]
   }).toJS()
 )
 

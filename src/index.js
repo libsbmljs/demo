@@ -18,16 +18,15 @@ const worker = new Worker()
 
 const hist = createHashHistory();
 
-const query = (state = {entered_query: '', query_results: []}, action) => {
+const query = (state = {entered_query: '', results: []}, action) => {
   switch (action.type) {
     case SET_ENTERED_QUERY:
-      return {entered_query: action.query, query_results: state.query_results}
+      return {entered_query: action.query, results: state.results}
     case DISPATCH_QUERY:
       hist.push('/search?q='+action.query)
-      return {entered_query: null, query_results: state.query_results}
+      return {entered_query: null, results: state.results}
     case QUERY_RESULTS:
-      console.log('query results')
-      return {entered_query: state.entered_query, query_results: action.results}
+      return {entered_query: state.entered_query, results: action.results}
     default:
       return state
   }
