@@ -11,6 +11,9 @@ import "assets/css/material-dashboard-react.css"
 import indexRoutes from "routes/index.jsx"
 import { rootEpic } from 'epics.js'
 import { SET_ENTERED_QUERY, DISPATCH_QUERY } from 'constants.js'
+import { idx } from 'database.js'
+
+// console.log(idx.search("Solr"))
 
 const hist = createHashHistory();
 
