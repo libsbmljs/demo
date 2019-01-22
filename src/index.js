@@ -10,10 +10,23 @@ import "assets/css/material-dashboard-react.css"
 
 import indexRoutes from "routes/index.jsx"
 import { rootEpic } from 'epics.js'
+import { dispatchQuery } from 'actions.js'
 import { SET_ENTERED_QUERY, DISPATCH_QUERY } from 'constants.js'
-import { idx } from 'database.js'
+// import { idx } from 'database.worker.js'
+import Worker from 'database.worker.js';
 
-// console.log(idx.search("Solr"))
+console.log('construct worker')
+const worker = new Worker()
+console.log(worker)
+
+worker.onmessage = function (event) {
+  console.log('msg ffrom worker')
+}
+ worker.postMessage(dispatchQuery('aquery'))
+// worker.postMessage('yello')
+// setTimeout(
+// worker.postMessage(dispatchQuery('aquery'))
+// , 1000)
 
 const hist = createHashHistory();
 

@@ -20,13 +20,17 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname,'src'),
     // contentBase: './dist',
-    hot: true
+    hot: false
   },
   resolve: {
     modules: [path.resolve(__dirname,'theme'),path.resolve(__dirname,'src'),'node_modules']
   },
   module: {
     rules: [
+      {
+        test: /\.worker\.js$/,
+        use: { loader: 'worker-loader' }
+      },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
@@ -55,7 +59,6 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),
-    htmlPlugin,
-    new webpack.HotModuleReplacementPlugin()
+    htmlPlugin
   ]
 };
