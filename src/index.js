@@ -19,14 +19,11 @@ console.log('construct worker')
 const worker = new Worker()
 console.log(worker)
 
-worker.onmessage = function (event) {
-  console.log('msg ffrom worker')
-}
- worker.postMessage(dispatchQuery('aquery'))
-// worker.postMessage('yello')
-// setTimeout(
-// worker.postMessage(dispatchQuery('aquery'))
-// , 1000)
+worker.addEventListener('message', function(e) {
+  console.log('Worker result: ', e.data);
+}, false);
+worker.postMessage(dispatchQuery('repr'))
+
 
 const hist = createHashHistory();
 

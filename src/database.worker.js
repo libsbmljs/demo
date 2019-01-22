@@ -1,6 +1,6 @@
 import lunr from 'lunr'
 import { DISPATCH_QUERY } from 'constants.js'
-// import { dispatchQuery } from 'actions.js'
+import { queryResults } from 'actions.js'
 
 console.log('i am teh worker')
 
@@ -33,20 +33,13 @@ const setupIndex = function() {
   })
 }
 const idx = setupIndex()
-// console.log(idx.search("java*"))
-
-const onmessage = function(e) {
-  console.log('le message', e.data)
-}
 
 const handleAction = (action) => {
   if (action.type === 'DISPATCH_QUERY') {
-    return idx.search(action.query+'*')
+    self.postMessage(queryResults(idx.search(action.query+'*')))
   }
 }
 
 self.addEventListener('message', function(e) {
-  console.log('worker event listener')
-  // self.postMessage(e.data);
   handleAction(e.data)
 }, false);
