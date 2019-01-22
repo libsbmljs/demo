@@ -1,42 +1,54 @@
 import lunr from 'lunr'
 import { DISPATCH_QUERY } from 'constants.js'
 import { queryResults } from 'actions.js'
+import { List, Map } from 'immutable'
 
-console.log('i am teh worker')
+const corpus = [{
+  "id": "first",
+  "title": "Lunr",
+  "body": "Like Solr, but much smaller, and not as bright.",
+  "origin": "lunr"
+}, {
+  "id": "second",
+  "title": "React",
+  "body": "A JavaScript library for building user interfaces.",
+  "origin": "lunr"
+}, {
+  "id": "third",
+  "title": "Lodash",
+  "body": "A modern JavaScript utility library delivering modularity, performance & extras.",
+  "origin": "lunr"
+}, {
+  "id": "BIOMOD00..12",
+  "title": "Eliwotz2000 - Repressilator",
+  "body": "A genetic oscillator circuit.",
+  "origin": "BioModels"
+}]
+const documents = Map(List(corpus).map(c => [c.id, c]))
 
 const setupIndex = function() {
-  const documents = [{
-    "id": "first",
-    "title": "Lunr",
-    "body": "Like Solr, but much smaller, and not as bright."
-  }, {
-    "id": "second",
-    "title": "React",
-    "body": "A JavaScript library for building user interfaces."
-  }, {
-    "id": "third",
-    "title": "Lodash",
-    "body": "A modern JavaScript utility library delivering modularity, performance & extras."
-  }, {
-    "id": "BIOMOD00..12",
-    "title": "Eliwotz2000 - Repressilator",
-    "body": "A genetic oscillator circuit."
-  }]
   return lunr(function () {
     const i = this
     i.ref('id')
     i.field('title')
     i.field('body')
-    for (const doc of documents) {
+    for (const doc of corpus) {
       i.add(doc)
     }
   })
 }
 const idx = setupIndex()
 
+const processResults = (results) => (
+  List(results).map(r => {
+    const d = documents.get(r.ref)
+    return {id: d.id, title: d.title, origin: d.origin}
+  }).toJS()
+)
+
 const handleAction = (action) => {
   if (action.type === 'DISPATCH_QUERY') {
-    self.postMessage(queryResults(idx.search(action.query+'*')))
+    self.postMessage(queryResults(processResults(idx.search(action.query+'*'))))
   }
 }
 

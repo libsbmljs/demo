@@ -39,6 +39,7 @@
     "@types/markerclustererplus": "^2.1.33",
     "chartist": "^0.10.1",
     "classnames": "^2.2.6",
+    "immutable": "^4.0.0-rc.12",
     "lunr": "^2.3.5",
     "perfect-scrollbar": "^1.4.0",
     "react": "^16.7.0",
