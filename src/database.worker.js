@@ -4,7 +4,6 @@ import { queryResults } from 'actions.js'
 import { List, Map } from 'immutable'
 
 import corpus from '../assets/libsbmljs_demo_corpus.json'
-console.log('corpus.length',corpus.length)
 import rawidx from '../assets/libsbmljs_demo_index.json'
 const idx = lunr.Index.load(rawidx)
 const documents = Map(List(corpus).map(c => [c.id, c]))

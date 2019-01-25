@@ -8,6 +8,7 @@ import Table from "components/Table/Table.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
+import Hidden from "@material-ui/core/Hidden";
 
 import "assets/css/material-dashboard-react.css"
 
@@ -56,11 +57,19 @@ function SearchView(props) {
             <h4 className={classes.cardTitleWhite}>Search Results</h4>
           </CardHeader>
           <CardBody>
-            <Table
-              tableHeaderColor="primary"
-              tableHead={["Model", "Name", "Database", "Curated?"]}
-              tableData={searchResults || []}
-            />
+            <Hidden smDown implementation="css">
+              <Table
+                tableHeaderColor="primary"
+                tableHead={["Model", "Name", "Database", "Curated?"]}
+                tableData={searchResults || []}
+              />
+            </Hidden>
+            <Hidden mdUp implementation="css">
+              <Table
+                tableHeaderColor="primary"
+                tableData={(searchResults || []).map(x => [x[1]])}
+              />
+            </Hidden>
           </CardBody>
         </Card>
       </GridItem>

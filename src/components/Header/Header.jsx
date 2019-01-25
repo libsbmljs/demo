@@ -24,26 +24,28 @@ function Header({ ...props }) {
     <AppBar className={classes.appBar + appBarClasses}>
       <Toolbar className={classes.container}>
         <div className={classes.flex}>
-          <Button color="transparent" href="#" className={classes.title}>
-            {'libsbml.js demo'}
-          </Button>
+          <Hidden smDown implementation="css">
+            <Button color="transparent" href="#" className={classes.title}>
+              {'libsbml.js demo'}
+            </Button>
+          </Hidden>
         </div>
-        <Hidden smDown implementation="css">
-          <HeaderLinks history={props.history} setEnteredQuery={setEnteredQuery} dispatchQuery={dispatchQuery} query={query} />
-        </Hidden>
-        <Hidden mdUp implementation="css">
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={props.handleDrawerToggle}
-          >
-            <Menu />
-          </IconButton>
-        </Hidden>
+        <HeaderLinks setEnteredQuery={setEnteredQuery} dispatchQuery={dispatchQuery} query={query} />
       </Toolbar>
     </AppBar>
   );
 }
+// <Hidden smDown implementation="css">
+// </Hidden>
+// <Hidden mdUp implementation="css">
+//   <IconButton
+//     color="inherit"
+//     aria-label="open drawer"
+//     onClick={props.handleDrawerToggle}
+//   >
+//     <Menu />
+//   </IconButton>
+// </Hidden>
 
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
