@@ -3,41 +3,45 @@ import { DISPATCH_QUERY } from 'constants.js'
 import { queryResults } from 'actions.js'
 import { List, Map } from 'immutable'
 
-const corpus = [{
-  "id": "first",
-  "title": "Lunr",
-  "body": "Like Solr, but much smaller, and not as bright.",
-  "origin": "lunr"
-}, {
-  "id": "second",
-  "title": "React",
-  "body": "A JavaScript library for building user interfaces.",
-  "origin": "lunr"
-}, {
-  "id": "third",
-  "title": "Lodash",
-  "body": "A modern JavaScript utility library delivering modularity, performance & extras.",
-  "origin": "lunr"
-}, {
-  "id": "BIOMOD00..12",
-  "title": "Eliwotz2000 - Repressilator",
-  "body": "A genetic oscillator circuit.",
-  "origin": "BioModels"
-}]
+// const corpus = [{
+//   "id": "first",
+//   "title": "Lunr",
+//   "body": "Like Solr, but much smaller, and not as bright.",
+//   "origin": "lunr"
+// }, {
+//   "id": "second",
+//   "title": "React",
+//   "body": "A JavaScript library for building user interfaces.",
+//   "origin": "lunr"
+// }, {
+//   "id": "third",
+//   "title": "Lodash",
+//   "body": "A modern JavaScript utility library delivering modularity, performance & extras.",
+//   "origin": "lunr"
+// }, {
+//   "id": "BIOMOD00..12",
+//   "title": "Eliwotz2000 - Repressilator",
+//   "body": "A genetic oscillator circuit.",
+//   "origin": "BioModels"
+// }]
+import corpus from '../assets/libsbmljs_demo_corpus.json'
+console.log('corpus.length',corpus.length)
+import rawidx from '../assets/libsbmljs_demo_index.json'
+const idx = lunr.Index.load(rawidx)
 const documents = Map(List(corpus).map(c => [c.id, c]))
 
-const setupIndex = function() {
-  return lunr(function () {
-    const i = this
-    i.ref('id')
-    i.field('title')
-    i.field('body')
-    for (const doc of corpus) {
-      i.add(doc)
-    }
-  })
-}
-const idx = setupIndex()
+// const setupIndex = function() {
+//   return lunr(function () {
+//     const i = this
+//     i.ref('id')
+//     i.field('title')
+//     i.field('body')
+//     for (const doc of corpus) {
+//       i.add(doc)
+//     }
+//   })
+// }
+// const idx = setupIndex()
 
 const processResults = (results) => (
   List(results).map(r => {
