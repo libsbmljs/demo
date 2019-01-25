@@ -40,7 +40,7 @@ const styles = {
     }
   },
   disabled: {
-    opacity: "0.5"
+    opacity: "0.75"
   }
 };
 
@@ -58,7 +58,7 @@ function SearchView(props) {
           <CardBody>
             <Table
               tableHeaderColor="primary"
-              tableHead={["Model", "Name", "Database"]}
+              tableHead={["Model", "Name", "Database", "Curated?"]}
               tableData={searchResults || []}
             />
           </CardBody>
