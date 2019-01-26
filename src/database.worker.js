@@ -15,7 +15,7 @@ const processResults = (results) => (
 
 const handleAction = (action) => {
   if (action.type === 'DISPATCH_QUERY') {
-    self.postMessage(queryResults(processResults(idx.search(action.query+'*'))))
+    self.postMessage(queryResults(processResults(idx.search('*'+action.query+'*'))))
   }
 }
 

@@ -16,13 +16,10 @@ import { range } from 'lodash'
 
 function CustomTable({ ...props }) {
   const { classes, tableHead, tableData, tableHeaderColor } = props;
-  // console.log('tableHead',tableHead)
-  // console.log('tableData',tableData)
-  // console.log('range(4)',range(4))
-            // className={classes.table}
-  return  <Table
-            headerHeight={10}
-            rowHeight={30}
+  return  (<Table
+            className={classes.table}
+            headerHeight={30}
+            rowHeight={40}
             rowCount={tableData.length || 0}
             rowGetter={({index}) => (tableData[index] || {})}
             height={600}
@@ -30,25 +27,33 @@ function CustomTable({ ...props }) {
           >
             <Column
               key='id'
+              label='id'
               dataKey='id'
+              headerClassName={classes[tableHeaderColor + "TableHeader"]}
               width={150}
             />
             <Column
               key='title'
+              label='title'
               dataKey='title'
+              headerClassName={classes[tableHeaderColor + "TableHeader"]}
               width={400}
             />
             <Column
               key='origin'
+              label='origin'
               dataKey='origin'
+              headerClassName={classes[tableHeaderColor + "TableHeader"]}
               width={100}
             />
             <Column
               key='curated'
+              label='curated'
               dataKey='curated'
+              headerClassName={classes[tableHeaderColor + "TableHeader"]}
               width={100}
             />
-          </Table>
+          </Table>)
 }
 // <div className={classes.tableResponsive}>
 // </div>
