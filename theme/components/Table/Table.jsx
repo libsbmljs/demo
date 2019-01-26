@@ -67,6 +67,7 @@ function CustomTable({ ...props }) {
               <Table
                  className={classes.table}
                  headerHeight={30}
+                 disableHeader={true}
                  rowHeight={40}
                  rowCount={tableData.length || 0}
                  rowGetter={({index}) => (tableData[index] || {})}
