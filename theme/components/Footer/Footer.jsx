@@ -14,10 +14,10 @@ function Footer({ ...props }) {
       <div className={classes.container}>
         <p className={classes.right}>
           <span>
-            Angular Material theme by{" "}
+            Theme by{" "}
             <a href="https://www.creative-tim.com" className={classes.a}>
               Creative Tim
-            </a>. Copyrights belong to their respective owners. Usage does not imply endorsement by Creative Tim or Angular Material.
+            </a>. See disclaimer.
           </span>
         </p>
       </div>
