@@ -40,6 +40,25 @@ module.exports = {
       },
       {
         test: /\.css$/,
+        include: [
+          path.resolve(__dirname, "node_modules/react-virtualized/styles.css")
+        ],
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: false,
+              importLoaders: 0
+            }
+          }
+        ]
+      },
+      {
+        test: /\.css$/,
+        exclude: [
+          path.resolve(__dirname, "node_modules/react-virtualized/styles.css")
+        ],
         use: [
           'style-loader',
           {

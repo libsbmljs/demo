@@ -13,6 +13,8 @@ import { rootEpic } from 'epics.js'
 import { dispatchQuery } from 'actions.js'
 import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS } from 'constants.js'
 
+import 'react-virtualized/styles.css'
+
 import Worker from 'database.worker.js';
 
 const worker = new Worker()

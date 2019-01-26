@@ -10,10 +10,7 @@ const idx = lunr.Index.load(rawidx)
 const documents = Map(List(corpus).map(c => [c.id, c]))
 
 const processResults = (results) => (
-  List(results).map(r => {
-    const d = documents.get(r.ref)
-    return [d.id, d.title, d.origin, d.curated]
-  }).toJS()
+  List(results).map(r => documents.get(r.ref)).toJS()
 )
 
 const handleAction = (action) => {
