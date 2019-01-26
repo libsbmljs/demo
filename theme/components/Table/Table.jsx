@@ -16,44 +16,49 @@ import { range } from 'lodash'
 
 function CustomTable({ ...props }) {
   const { classes, tableHead, tableData, tableHeaderColor } = props;
-  return  (<Table
-            className={classes.table}
-            headerHeight={30}
-            rowHeight={40}
-            rowCount={tableData.length || 0}
-            rowGetter={({index}) => (tableData[index] || {})}
-            height={600}
-            width={1000}
-          >
-            <Column
-              key='id'
-              label='id'
-              dataKey='id'
-              headerClassName={classes[tableHeaderColor + "TableHeader"]}
-              width={150}
-            />
-            <Column
-              key='title'
-              label='title'
-              dataKey='title'
-              headerClassName={classes[tableHeaderColor + "TableHeader"]}
-              width={400}
-            />
-            <Column
-              key='origin'
-              label='origin'
-              dataKey='origin'
-              headerClassName={classes[tableHeaderColor + "TableHeader"]}
-              width={100}
-            />
-            <Column
-              key='curated'
-              label='curated'
-              dataKey='curated'
-              headerClassName={classes[tableHeaderColor + "TableHeader"]}
-              width={100}
-            />
-          </Table>)
+  return (
+       <AutoSizer>
+         {({ height, width }) => (
+           <Table
+              className={classes.table}
+              headerHeight={30}
+              rowHeight={40}
+              rowCount={tableData.length || 0}
+              rowGetter={({index}) => (tableData[index] || {})}
+              height={height}
+              width={width}
+            >
+              <Column
+                key='id'
+                label='id'
+                dataKey='id'
+                headerClassName={classes[tableHeaderColor + "TableHeader"]}
+                width={150}
+              />
+              <Column
+                key='title'
+                label='title'
+                dataKey='title'
+                headerClassName={classes[tableHeaderColor + "TableHeader"]}
+                width={400}
+              />
+              <Column
+                key='origin'
+                label='origin'
+                dataKey='origin'
+                headerClassName={classes[tableHeaderColor + "TableHeader"]}
+                width={100}
+              />
+              <Column
+                key='curated'
+                label='curated'
+                dataKey='curated'
+                headerClassName={classes[tableHeaderColor + "TableHeader"]}
+                width={100}
+              />
+            </Table>
+          )}
+        </AutoSizer>)
 }
 // <div className={classes.tableResponsive}>
 // </div>
@@ -62,9 +67,8 @@ function CustomTable({ ...props }) {
 //     {cellData ? cellData[dataKey] : ''}
 //   </TableCell>)
 // }
-  // <AutoSizer>
-  //   {({ height, width }) => (
-  // </AutoSizer>
+
+
 
 // <Table className={classes.table}>
 //   {tableHead !== undefined ? (

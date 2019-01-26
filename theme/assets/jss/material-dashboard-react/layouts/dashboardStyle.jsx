@@ -1,7 +1,8 @@
 import {
   drawerWidth,
   transition,
-  container
+  container,
+  mainContainer
 } from "assets/jss/material-dashboard-react.jsx";
 
 const appStyle = theme => ({
@@ -12,7 +13,7 @@ const appStyle = theme => ({
   },
   mainPanel: {
     [theme.breakpoints.up("md")]: {
-      width: `calc(100% - ${drawerWidth}px)`
+      width: "100%"
     },
     overflow: "auto",
     position: "relative",
@@ -28,6 +29,7 @@ const appStyle = theme => ({
     minHeight: "calc(100vh - 123px)"
   },
   container,
+  mainContainer,
   map: {
     marginTop: "70px"
   }
