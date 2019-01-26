@@ -19,7 +19,7 @@ import Worker from 'database.worker.js';
 
 const worker = new Worker()
 
-const hist = createHashHistory();
+const hist = createHashHistory()
 
 const query = (state = {entered_query: '', results: []}, action) => {
   switch (action.type) {
@@ -29,7 +29,6 @@ const query = (state = {entered_query: '', results: []}, action) => {
       hist.push('/search?q='+action.query)
       worker.postMessage(dispatchQuery(action.query)) // TODO: put in history listener
       return {entered_query: action.query, results: state.results}
-      return state
     case QUERY_RESULTS:
       return {entered_query: state.entered_query, results: action.results}
     default:
@@ -44,6 +43,13 @@ const store = createStore(combineReducers({
   }),
   applyMiddleware(epicMiddleware)
 )
+
+window.onload = () => {
+  const query = new URLSearchParams(hist.location.search).get('q')
+  if (query) {
+    store.dispatch(dispatchQuery(query))
+  }
+}
 
 worker.addEventListener('message', function(e) {
   // the result should be an action - dispatch it
