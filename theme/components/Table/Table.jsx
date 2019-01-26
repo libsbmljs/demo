@@ -12,6 +12,7 @@ import TableCell from "@material-ui/core/TableCell"
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx"
 // virtualized
 import { AutoSizer, Column, SortDirection, Table } from 'react-virtualized'
+import Hidden from "@material-ui/core/Hidden"
 import { range } from 'lodash'
 
 function CustomTable({ ...props }) {
@@ -19,44 +20,71 @@ function CustomTable({ ...props }) {
   return (
        <AutoSizer>
          {({ height, width }) => (
-           <Table
-              className={classes.table}
-              headerHeight={30}
-              rowHeight={40}
-              rowCount={tableData.length || 0}
-              rowGetter={({index}) => (tableData[index] || {})}
-              height={height}
-              width={width}
-            >
-              <Column
-                key='id'
-                label='id'
-                dataKey='id'
-                headerClassName={classes[tableHeaderColor + "TableHeader"]}
-                width={150}
-              />
-              <Column
-                key='title'
-                label='title'
-                dataKey='title'
-                headerClassName={classes[tableHeaderColor + "TableHeader"]}
-                width={400}
-              />
-              <Column
-                key='origin'
-                label='origin'
-                dataKey='origin'
-                headerClassName={classes[tableHeaderColor + "TableHeader"]}
-                width={100}
-              />
-              <Column
-                key='curated'
-                label='curated'
-                dataKey='curated'
-                headerClassName={classes[tableHeaderColor + "TableHeader"]}
-                width={100}
-              />
-            </Table>
+           <React.Fragment>
+           <Hidden smDown implementation="css">
+             <Table
+                className={classes.table}
+                headerHeight={30}
+                rowHeight={40}
+                rowCount={tableData.length || 0}
+                rowGetter={({index}) => (tableData[index] || {})}
+                height={height}
+                width={width}
+              >
+                <Column
+                  key='id'
+                  label='id'
+                  dataKey='id'
+                  headerClassName={classes[tableHeaderColor + "TableHeader"]}
+                  width={150}
+                />
+                <Column
+                  key='title'
+                  label='title'
+                  dataKey='title'
+                  headerClassName={classes[tableHeaderColor + "TableHeader"]}
+                  width={400}
+                  flexGrow={1}
+                  flexShrink={0}
+                />
+                <Column
+                  key='origin'
+                  label='origin'
+                  dataKey='origin'
+                  headerClassName={classes[tableHeaderColor + "TableHeader"]}
+                  width={100}
+                />
+                <Column
+                  key='curated'
+                  label='curated'
+                  dataKey='curated'
+                  headerClassName={classes[tableHeaderColor + "TableHeader"]}
+                  width={100}
+                />
+              </Table>
+            </Hidden>
+            <Hidden mdUp implementation="css">
+              <Table
+                 className={classes.table}
+                 headerHeight={30}
+                 rowHeight={40}
+                 rowCount={tableData.length || 0}
+                 rowGetter={({index}) => (tableData[index] || {})}
+                 height={height}
+                 width={width}
+               >
+                 <Column
+                   key='title'
+                   label='title'
+                   dataKey='title'
+                   headerClassName={classes[tableHeaderColor + "TableHeader"]}
+                   width={400}
+                   flexGrow={1}
+                   flexShrink={0}
+                 />
+              </Table>
+            </Hidden>
+            </React.Fragment>
           )}
         </AutoSizer>)
 }
