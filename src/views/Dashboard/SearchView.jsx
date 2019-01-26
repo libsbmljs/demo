@@ -50,9 +50,9 @@ function SearchView(props) {
   const className = !enabled ? classes.disabled : ''
   // const className = ''
   return (
-    <GridContainer>
+    <GridContainer style={{minHeight:'calc(100vh - 240px)'}}>
       <GridItem xs={12} sm={12} md={12}>
-        <Card className={className}>
+        <Card className={className} style={{minHeight:'calc(100vh - 240px)'}}>
           <CardHeader color="primary">
             <h4 className={classes.cardTitleWhite}>Search Results</h4>
           </CardHeader>

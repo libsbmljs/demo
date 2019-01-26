@@ -36,7 +36,7 @@ const mainContainer = {
   paddingLeft: "15px",
   marginRight: "auto",
   marginLeft: "auto",
-  minHeight: "100vh"
+  minHeight: "calc(100vh - 240px)"
 };
 
 const boxShadow = {
