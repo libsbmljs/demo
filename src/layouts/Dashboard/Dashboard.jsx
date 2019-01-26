@@ -94,7 +94,7 @@ class App extends React.Component {
             handleDrawerToggle={this.handleDrawerToggle}
             setEnteredQuery={setEnteredQuery}
             dispatchQuery={dispatchQuery}
-            query={query || new URLSearchParams(location.search).get('q')}
+            query={query}
             searchResults={searchResults}
             {...rest}
           />

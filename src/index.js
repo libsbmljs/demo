@@ -28,7 +28,8 @@ const query = (state = {entered_query: '', results: []}, action) => {
     case DISPATCH_QUERY:
       hist.push('/search?q='+action.query)
       worker.postMessage(dispatchQuery(action.query)) // TODO: put in history listener
-      return {entered_query: null, results: state.results}
+      return {entered_query: action.query, results: state.results}
+      return state
     case QUERY_RESULTS:
       return {entered_query: state.entered_query, results: action.results}
     default:

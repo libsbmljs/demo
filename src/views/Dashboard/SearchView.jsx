@@ -47,8 +47,8 @@ const styles = {
 
 function SearchView(props) {
   const { classes, enabled, searchResults } = props;
-  const className = !enabled ? classes.disabled : ''
-  // const className = ''
+  // const className = !enabled ? classes.disabled : ''
+  const className = ''
   return (
     <GridContainer style={{minHeight:'calc(100vh - 240px)'}}>
       <GridItem xs={12} sm={12} md={12}>
