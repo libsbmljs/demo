@@ -16,7 +16,7 @@ import Button from "components/CustomButtons/Button.jsx";
 import headerStyle from "assets/jss/material-dashboard-react/components/headerStyle.jsx";
 
 function Header({ ...props }) {
-  const { classes, color, setEnteredQuery, dispatchQuery, query } = props;
+  const { classes, color, setEnteredQuery, query } = props;
   const appBarClasses = classNames({
     [" " + classes[color]]: color
   });
@@ -30,7 +30,7 @@ function Header({ ...props }) {
             </Button>
           </Hidden>
         </div>
-        <HeaderLinks setEnteredQuery={setEnteredQuery} dispatchQuery={dispatchQuery} query={query} />
+        <HeaderLinks setEnteredQuery={setEnteredQuery} query={query} />
       </Toolbar>
     </AppBar>
   );

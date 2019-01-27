@@ -3,7 +3,9 @@ import ReactDOM from "react-dom"
 import { createHashHistory } from "history"
 import { Router, Route, Switch } from "react-router-dom"
 import { Provider } from 'react-redux'
-import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
+import { connectRouter, routerMiddleware, ConnectedRouter, push } from 'connected-react-router'
+import thunk from 'redux-thunk'
 import { createEpicMiddleware } from 'redux-observable'
 
 import "assets/css/material-dashboard-react.css"
@@ -26,7 +28,7 @@ const query = (state = {entered_query: '', results: []}, action) => {
     case SET_ENTERED_QUERY:
       return {entered_query: action.query, results: state.results}
     case DISPATCH_QUERY:
-      hist.push('/search?q='+action.query)
+      // hist.push('/search?q='+action.query)
       worker.postMessage(dispatchQuery(action.query)) // TODO: put in history listener
       return {entered_query: action.query, results: state.results}
     case QUERY_RESULTS:
@@ -39,9 +41,10 @@ const query = (state = {entered_query: '', results: []}, action) => {
 const epicMiddleware = createEpicMiddleware()
 
 const store = createStore(combineReducers({
+    router: connectRouter(history),
     query
   }),
-  applyMiddleware(epicMiddleware)
+  compose(applyMiddleware(routerMiddleware(hist), thunk, epicMiddleware))
 )
 
 window.onload = () => {
@@ -60,13 +63,13 @@ epicMiddleware.run(rootEpic)
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={hist}>
+    <ConnectedRouter history={hist}>
       <Switch>
         {indexRoutes.map((prop, key) => {
           return <Route path={prop.path} component={prop.component} key={key} />;
         })}
       </Switch>
-    </Router>
+    </ConnectedRouter>
   </Provider>,
   document.getElementById("root")
 );

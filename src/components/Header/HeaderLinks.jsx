@@ -28,7 +28,7 @@ class HeaderLinks extends React.Component {
 
   handleChange = (event) => {
     const value = event.target.value
-    const { query, setEnteredQuery, dispatchQuery } = this.props;
+    const { query, setEnteredQuery } = this.props;
     setEnteredQuery(value)
   }
 
