@@ -48,11 +48,9 @@ const store = createStore(combineReducers({
 )
 
 hist.listen((location, action) => {
-  console.log('hist',action)
   if (action === 'POP') {
     const query = new URLSearchParams(hist.location.search).get('q')
     if (query) {
-      console.log('new query',query,action)
       store.dispatch(dispatchQuery(query))
     }
   }
