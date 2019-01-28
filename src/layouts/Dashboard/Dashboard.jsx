@@ -3,6 +3,7 @@ import React from "react"
 import { connect } from 'react-redux'
 import PropTypes from "prop-types"
 import { Switch, Route, Redirect } from "react-router-dom"
+import { push } from 'connected-react-router'
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar"
 import "perfect-scrollbar/css/perfect-scrollbar.css"
@@ -13,7 +14,7 @@ import Header from "components/Header/Header.jsx"
 import Footer from "components/Footer/Footer.jsx"
 import Sidebar from "components/Sidebar/Sidebar.jsx"
 import SearchView from "views/Dashboard/SearchView.jsx"
-import {setEnteredQuery, dispatchQuery} from 'actions'
+import { setEnteredQuery, dispatchQuery, setActiveModel } from 'actions'
 
 import dashboardRoutes from "routes/dashboard.jsx"
 
@@ -39,7 +40,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(dispatchQuery(query))
     },
     setActiveModel: model => {
-      console.log('set active model', model)
+      dispatch(push('/view?m='+model))
     }
   }
 }
@@ -101,6 +102,7 @@ class App extends React.Component {
             <div className={classes.mainContainer}>
               <Switch>
                 <Route path="/search" render={props => < SearchView enabled={searchResultsEnabled} searchResults={searchResults} setActiveModel={setActiveModel} />} key="/search" />
+                  <Route path="/view" render={props => <div>{'hi'}</div>} key="/view" />
                 <Redirect from="/" to="/search" key="root-redirect" />
               </Switch>
             </div>
