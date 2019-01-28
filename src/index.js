@@ -67,6 +67,12 @@ window.onload = () => {
   const query = new URLSearchParams(hist.location.search).get('q')
   if (query) {
     store.dispatch(dispatchQuery(query))
+    return
+  }
+  const model = new URLSearchParams(hist.location.search).get('m')
+  if (model) {
+    store.dispatch(setActiveModel(model))
+    return
   }
 }
 
