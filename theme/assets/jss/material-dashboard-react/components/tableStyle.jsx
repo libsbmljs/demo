@@ -45,10 +45,18 @@ const tableStyle = theme => ({
     fontSize: "1em"
   },
   tableCell: {
-    ...defaultFont,
-    lineHeight: "1.42857143",
-    padding: "12px 8px",
-    verticalAlign: "middle"
+    borderSpacing: "0",
+    borderCollapse: "collapse"
+  },
+  tableRow: {
+    borderStyle: "none none solid none",
+    borderWidth: "1px",
+    borderSpacing: "0",
+    borderCollapse: "collapse",
+    borderColor: "#eeeeee",
+    '&:hover': {
+      backgroundColor: "#eeeeee"
+    }
   },
   tableResponsive: {
     width: "100%",

@@ -25,7 +25,8 @@ function CustomTable({ ...props }) {
              <Table
                 className={classes.table}
                 headerHeight={30}
-                rowHeight={40}
+                rowHeight={45}
+                rowClassName={({index}) => (index !== -1 ? classes.tableRow : '')}
                 rowCount={tableData.length || 0}
                 rowGetter={({index}) => (tableData[index] || {})}
                 height={height}
@@ -68,7 +69,8 @@ function CustomTable({ ...props }) {
                  className={classes.table}
                  headerHeight={30}
                  disableHeader={true}
-                 rowHeight={40}
+                 rowHeight={45}
+                 rowClassName={({index}) => (index !== -1 ? classes.tableRow : '')}
                  rowCount={tableData.length || 0}
                  rowGetter={({index}) => (tableData[index] || {})}
                  height={height}
