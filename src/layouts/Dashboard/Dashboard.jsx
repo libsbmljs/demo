@@ -14,6 +14,7 @@ import Header from "components/Header/Header.jsx"
 import Footer from "components/Footer/Footer.jsx"
 import Sidebar from "components/Sidebar/Sidebar.jsx"
 import SearchView from "views/Dashboard/SearchView.jsx"
+import ModelView from "views/Dashboard/ModelView.jsx"
 import { setEnteredQuery, dispatchQuery, setActiveModel } from 'actions'
 
 import dashboardRoutes from "routes/dashboard.jsx"
@@ -102,7 +103,7 @@ class App extends React.Component {
             <div className={classes.mainContainer}>
               <Switch>
                 <Route path="/search" render={props => < SearchView enabled={searchResultsEnabled} searchResults={searchResults} setActiveModel={setActiveModel} />} key="/search" />
-                  <Route path="/view" render={props => <div>{'hi'}</div>} key="/view" />
+                <Route path="/view" render={props => <ModelView model={new URLSearchParams(location.search).get('m')}/>} key="/view" />
                 <Redirect from="/" to="/search" key="root-redirect" />
               </Switch>
             </div>

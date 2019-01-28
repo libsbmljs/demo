@@ -13,7 +13,7 @@ import "assets/css/material-dashboard-react.css"
 import indexRoutes from "routes/index.jsx"
 import { rootEpic } from 'epics.js'
 import { dispatchQuery } from 'actions.js'
-import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS } from 'constants.js'
+import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, SET_ACTIVE_MODEL } from 'constants.js'
 
 import 'react-virtualized/styles.css'
 
@@ -33,6 +33,8 @@ const query = (state = {entered_query: '', results: []}, action) => {
       return {entered_query: action.query, results: state.results}
     case QUERY_RESULTS:
       return {entered_query: state.entered_query, results: action.results}
+    case SET_ACTIVE_MODEL:
+      return state
     default:
       return state
   }
@@ -48,11 +50,16 @@ const store = createStore(combineReducers({
 )
 
 hist.listen((location, action) => {
-  console.log('history',action,location)
   if (action === 'POP') {
     const query = new URLSearchParams(hist.location.search).get('q')
     if (query) {
       store.dispatch(dispatchQuery(query))
+      return
+    }
+    const model = new URLSearchParams(hist.location.search).get('m')
+    if (model) {
+      store.dispatch(setActiveModel(model))
+      return
     }
   }
 })
