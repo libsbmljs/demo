@@ -46,7 +46,7 @@ const styles = {
 };
 
 function SearchView(props) {
-  const { classes, enabled, searchResults } = props;
+  const { classes, enabled, searchResults, setActiveModel } = props;
   // const className = !enabled ? classes.disabled : ''
   const className = ''
   return (
@@ -61,6 +61,7 @@ function SearchView(props) {
                 tableHeaderColor="primary"
                 tableHead={["Model", "Name", "Database", "Curated?"]}
                 tableData={searchResults || []}
+                setActiveModel={setActiveModel}
               />
           </CardBody>
         </Card>

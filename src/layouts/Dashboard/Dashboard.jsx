@@ -22,13 +22,6 @@ import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboar
 import image from "assets/img/sidebar-2.jpg"
 import logo from "assets/img/reactlogo.png"
 
-const switchRoutes = (searchResultsEnabled, searchResults) => (
-  <Switch>
-    <Route path="/search" render={props => < SearchView enabled={searchResultsEnabled} searchResults={searchResults} />} key="/search" />
-    <Redirect from="/" to="/search" key="root-redirect" />
-  </Switch>
-);
-
 const mapStateToProps = (state) => {
   return {
     query: state.query.entered_query,
@@ -44,6 +37,9 @@ const mapDispatchToProps = dispatch => {
     },
     dispatchQuery: query => {
       dispatch(dispatchQuery(query))
+    },
+    setActiveModel: model => {
+      console.log('set active model', model)
     }
   }
 }
@@ -85,7 +81,10 @@ class App extends React.Component {
     window.removeEventListener("resize", this.resizeFunction);
   }
   render() {
-    const { classes, setEnteredQuery, dispatchQuery, query, searchResultsEnabled, searchResults, location, ...rest } = this.props;
+    // properties
+    const { classes, query, searchResultsEnabled, searchResults, location, ...rest } = this.props
+    // action dispatchers
+    const { setEnteredQuery, dispatchQuery, setActiveModel } = this.props
     return (
       <div className={classes.wrapper}>
         <div className={classes.mainPanel} ref="mainPanel">
@@ -99,7 +98,12 @@ class App extends React.Component {
             {...rest}
           />
           <div className={classes.content}>
-            <div className={classes.mainContainer}>{switchRoutes(searchResultsEnabled, searchResults)}</div>
+            <div className={classes.mainContainer}>
+              <Switch>
+                <Route path="/search" render={props => < SearchView enabled={searchResultsEnabled} searchResults={searchResults} setActiveModel={setActiveModel} />} key="/search" />
+                <Redirect from="/" to="/search" key="root-redirect" />
+              </Switch>
+            </div>
           </div>
           {this.getRoute() ? <Footer /> : null}
         </div>
