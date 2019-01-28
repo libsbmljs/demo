@@ -11,15 +11,11 @@ import { createEpicMiddleware } from 'redux-observable'
 import "assets/css/material-dashboard-react.css"
 
 import indexRoutes from "routes/index.jsx"
-import { rootEpic } from 'epics.js'
+import { rootEpic, database_worker } from 'epics.js'
 import { dispatchQuery } from 'actions.js'
-import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, SET_ACTIVE_MODEL } from 'constants.js'
+import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS } from 'constants.js'
 
 import 'react-virtualized/styles.css'
-
-import Worker from 'database.worker.js';
-
-const worker = new Worker()
 
 const hist = createHashHistory()
 
@@ -28,13 +24,10 @@ const query = (state = {entered_query: '', results: []}, action) => {
     case SET_ENTERED_QUERY:
       return {entered_query: action.query, results: state.results}
     case DISPATCH_QUERY:
-      // hist.push('/search?q='+action.query)
-      worker.postMessage(dispatchQuery(action.query)) // TODO: put in history listener
+      database_worker.postMessage(dispatchQuery(action.query))
       return {entered_query: action.query, results: state.results}
     case QUERY_RESULTS:
       return {entered_query: state.entered_query, results: action.results}
-    case SET_ACTIVE_MODEL:
-      return state
     default:
       return state
   }
@@ -76,7 +69,7 @@ window.onload = () => {
   }
 }
 
-worker.addEventListener('message', function(e) {
+database_worker.addEventListener('message', function(e) {
   // the result should be an action - dispatch it
   store.dispatch(e.data)
 }, false);

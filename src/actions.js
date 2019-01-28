@@ -1,4 +1,4 @@
-import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, SET_ACTIVE_MODEL } from 'constants.js'
+import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO } from 'constants.js'
 
 export const setEnteredQuery = query => ({
   type: SET_ENTERED_QUERY,
@@ -15,7 +15,7 @@ export const queryResults = results => ({
   results
 })
 
-export const setActiveModel = model => ({
-  type: SET_ACTIVE_MODEL,
+export const getModelInfo = model => ({
+  type: GET_MODEL_INFO,
   model
 })
