@@ -1,6 +1,7 @@
 import React from "react"
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles"
+// import typographyStyle from "assets/jss/material-dashboard-react/components/typographyStyle.jsx";
 // core components
 import GridItem from "components/Grid/GridItem.jsx"
 import GridContainer from "components/Grid/GridContainer.jsx"
@@ -10,6 +11,15 @@ import CardBody from "components/Card/CardBody.jsx"
 import Hidden from "@material-ui/core/Hidden"
 
 import "assets/css/material-dashboard-react.css"
+
+import {
+  defaultFont,
+  primaryColor,
+  infoColor,
+  successColor,
+  warningColor,
+  dangerColor
+} from "assets/jss/material-dashboard-react.jsx";
 
 const styles = {
   cardCategoryWhite: {
@@ -39,13 +49,19 @@ const styles = {
       lineHeight: "1"
     }
   },
+  primaryText: {
+    color: primaryColor
+  },
   disabled: {
     opacity: "0.75"
   }
 };
 
-function SearchView(props) {
+function ModelView(props) {
   const { classes, model, displayedModel, displayedModelOrigin, displayedModelOriginStr } = props;
+  const identifiers_org_uri = displayedModel === model ?
+    (displayedModelOrigin === 'BioModels' ? 'http://identifiers.org/biomodels.db/' : 'http://identifiers.org/bigg.model/')+displayedModel
+     : ''
   return (
     <GridContainer style={{minHeight:'calc(100vh - 240px)'}}>
       <GridItem xs={12} sm={12} md={12}>
@@ -57,9 +73,10 @@ function SearchView(props) {
             </p>
           </CardHeader>
           <CardBody>
-          {displayedModel === model ?
-            (displayedModelOrigin === 'BioModels' ? 'http://identifiers.org/biomodels.db/' : 'http://identifiers.org/bigg.model/')+displayedModel
-             : ''}
+          <h4 className={classes.primaryText}>The identifiers.org URI for this model</h4>
+          <a href={identifiers_org_uri}>
+          {identifiers_org_uri}
+           </a>
           </CardBody>
         </Card>
       </GridItem>
@@ -67,4 +84,4 @@ function SearchView(props) {
   );
 }
 
-export default withStyles(styles)(SearchView);
+export default withStyles(styles)(ModelView);
