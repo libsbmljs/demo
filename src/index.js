@@ -33,13 +33,16 @@ const query = (state = {entered_query: '', results: []}, action) => {
   }
 }
 
-const model = (state = {model: '', origin_str: ''}, action) => {
+const model = (state = {model: '', origin: '', origin_str: ''}, action) => {
   switch (action.type) {
     case GET_MODEL_INFO:
       database_worker.postMessage(getModelInfo(action.model))
       return state
     case SET_MODEL_INFO:
-      return {model: action.model, origin_str: action.origin +
+      return {
+        model: action.model,
+        origin: action.origin,
+        origin_str: action.origin +
         (action.origin === 'BioModels' ?
           (action.curated === 'Yes' ? ' (curated)' : ' (non-curated)')
          : '')

@@ -30,7 +30,8 @@ const mapStateToProps = (state) => {
     searchResultsEnabled: !state.query.entered_query,
     searchResults: state.query.results,
     displayedModel: state.model.model,
-    displayedModelOrigin: state.model.origin_str,
+    displayedModelOrigin: state.model.origin,
+    displayedModelOriginStr: state.model.origin_str,
   }
 }
 

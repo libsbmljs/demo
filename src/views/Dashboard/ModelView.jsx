@@ -45,7 +45,7 @@ const styles = {
 };
 
 function SearchView(props) {
-  const { classes, model, displayedModel, displayedModelOrigin } = props;
+  const { classes, model, displayedModel, displayedModelOrigin, displayedModelOriginStr } = props;
   return (
     <GridContainer style={{minHeight:'calc(100vh - 240px)'}}>
       <GridItem xs={12} sm={12} md={12}>
@@ -57,6 +57,9 @@ function SearchView(props) {
             </p>
           </CardHeader>
           <CardBody>
+          {displayedModel === model ?
+            (displayedModelOrigin === 'BioModels' ? 'http://identifiers.org/biomodels.db/' : 'http://identifiers.org/bigg.model/')+displayedModel
+             : ''}
           </CardBody>
         </Card>
       </GridItem>
