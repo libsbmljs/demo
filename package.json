@@ -4,7 +4,7 @@
   "description": "Live demo of libsbml.js",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node ./node_modules/webpack-dev-server/bin/webpack-dev-server --mode development --env.DATABASE_PREFIX=$DATABASE_PREFIX",
+    "start": "babel-node ./node_modules/webpack-dev-server/bin/webpack-dev-server --mode development --env.DATABASE_PREFIX=$DATABASE_PREFIX --env.LIBSBMLJS_PREFIX=$LIBSBMLJS_PREFIX",
     "build": "babel-node ./node_modules/webpack-dev-server/bin/webpack --mode production"
   },
   "keywords": [

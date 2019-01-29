@@ -15,6 +15,11 @@ import { rootEpic, database_worker } from 'epics.js'
 import { dispatchQuery, getModelInfo } from 'actions.js'
 import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO, SET_MODEL_SRC } from 'constants.js'
 
+import libsbml from 'libsbml.js'
+libsbml().then(() => {
+  console.log('libsml.js loaded')
+})
+
 import 'react-virtualized/styles.css'
 
 const hist = createHashHistory()

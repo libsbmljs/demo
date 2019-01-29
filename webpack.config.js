@@ -18,12 +18,11 @@ module.exports = env => ({
   },
   devtool: 'inline-source-map',
   devServer: {
-    contentBase: [path.join(__dirname,'src'), env.DATABASE_PREFIX],
-    // contentBase: './dist',
+    contentBase: [path.join(__dirname,'src'), env.LIBSBMLJS_PREFIX, env.DATABASE_PREFIX],
     hot: false
   },
   resolve: {
-    modules: [path.resolve(__dirname,'theme'),path.resolve(__dirname,'src'),'node_modules']
+    modules: [path.resolve(__dirname,'src'),path.resolve(__dirname,'theme'),env.LIBSBMLJS_PREFIX,'node_modules']
   },
   module: {
     rules: [
@@ -73,11 +72,22 @@ module.exports = env => ({
       {
         test: /\.(jpg|jpeg|png|gif|mp3|svg)$/,
         loaders: ["file-loader"]
+      },
+      {
+        test: /\.wasm$/,
+        use : {
+          loader: 'file-loader',
+          options: {
+            type: 'application/wasm',
+            publicPath: '/'
+          }
+        },
       }
     ]
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),
-    htmlPlugin
+    new webpack.IgnorePlugin(/^fs$/),
+    htmlPlugin,
   ]
 })
