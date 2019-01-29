@@ -1,4 +1,4 @@
-import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO, SET_MODEL_SRC } from 'constants.js'
+import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO, SET_MODEL_SRC, SET_MODEL_PROPERTIES } from 'constants.js'
 
 export const setEnteredQuery = query => ({
   type: SET_ENTERED_QUERY,
@@ -31,4 +31,11 @@ export const setModelSource = (model, source) => ({
   type: SET_MODEL_SRC,
   model,
   source,
+})
+
+export const setModelProperties = (model, n_reactions, n_species) => ({
+  type: SET_MODEL_PROPERTIES,
+  model,
+  n_reactions,
+  n_species,
 })

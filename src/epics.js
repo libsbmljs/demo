@@ -11,7 +11,7 @@ import DatabaseWorker from 'database.worker.js'
 export const database_worker = new DatabaseWorker()
 
 import LibsbmljsWorker from 'libsbmljs.worker.js'
-const libsbmljs_worker = new LibsbmljsWorker()
+export const libsbmljs_worker = new LibsbmljsWorker()
 
 const enteredQueryEpic = action$ =>
   action$.pipe(
