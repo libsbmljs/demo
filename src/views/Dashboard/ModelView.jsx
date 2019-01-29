@@ -4,7 +4,6 @@ import withStyles from "@material-ui/core/styles/withStyles"
 // core components
 import GridItem from "components/Grid/GridItem.jsx"
 import GridContainer from "components/Grid/GridContainer.jsx"
-import Table from "components/Table/Table.jsx"
 import Card from "components/Card/Card.jsx"
 import CardHeader from "components/Card/CardHeader.jsx"
 import CardBody from "components/Card/CardBody.jsx"
@@ -46,13 +45,16 @@ const styles = {
 };
 
 function SearchView(props) {
-  const { classes, model } = props;
+  const { classes, model, displayedModel, displayedModelOrigin } = props;
   return (
     <GridContainer style={{minHeight:'calc(100vh - 240px)'}}>
       <GridItem xs={12} sm={12} md={12}>
         <Card style={{minHeight:'calc(100vh - 240px)'}}>
           <CardHeader color="primary">
             <h4 className={classes.cardTitleWhite}>{model}</h4>
+            <p className={classes.cardCategoryWhite}>
+              {displayedModel === model ? displayedModelOrigin : ''}
+            </p>
           </CardHeader>
           <CardBody>
           </CardBody>
@@ -61,13 +63,5 @@ function SearchView(props) {
     </GridContainer>
   );
 }
-//   <Hidden smDown implementation="css">
-// </Hidden>
-// <Hidden mdUp implementation="css">
-//   <Table
-//     tableHeaderColor="primary"
-//     tableData={(searchResults || []).map(x => [x[1]])}
-//   />
-// </Hidden>
 
 export default withStyles(styles)(SearchView);

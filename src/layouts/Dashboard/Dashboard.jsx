@@ -15,7 +15,7 @@ import Footer from "components/Footer/Footer.jsx"
 import Sidebar from "components/Sidebar/Sidebar.jsx"
 import SearchView from "views/Dashboard/SearchView.jsx"
 import ModelView from "views/Dashboard/ModelView.jsx"
-import { setEnteredQuery, dispatchQuery, setActiveModel } from 'actions'
+import { setEnteredQuery, dispatchQuery, setActiveModel, getModelInfo } from 'actions'
 
 import dashboardRoutes from "routes/dashboard.jsx"
 
@@ -28,7 +28,9 @@ const mapStateToProps = (state) => {
   return {
     query: state.query.entered_query,
     searchResultsEnabled: !state.query.entered_query,
-    searchResults: state.query.results
+    searchResults: state.query.results,
+    displayedModel: state.model.model,
+    displayedModelOrigin: state.model.origin_str,
   }
 }
 
@@ -42,6 +44,7 @@ const mapDispatchToProps = dispatch => {
     },
     setActiveModel: model => {
       dispatch(push('/view?m='+model))
+      dispatch(getModelInfo(model))
     }
   }
 }
@@ -84,7 +87,7 @@ class App extends React.Component {
   }
   render() {
     // properties
-    const { classes, query, searchResultsEnabled, searchResults, location, ...rest } = this.props
+    const { classes, query, searchResultsEnabled, searchResults, location, displayedModel, displayedModelOrigin, ...rest } = this.props
     // action dispatchers
     const { setEnteredQuery, dispatchQuery, setActiveModel } = this.props
     return (
@@ -102,8 +105,17 @@ class App extends React.Component {
           <div className={classes.content}>
             <div className={classes.mainContainer}>
               <Switch>
-                <Route path="/search" render={props => < SearchView enabled={searchResultsEnabled} searchResults={searchResults} setActiveModel={setActiveModel} />} key="/search" />
-                <Route path="/view" render={props => <ModelView model={new URLSearchParams(location.search).get('m')}/>} key="/view" />
+                <Route path="/search" render={props =>
+                  <SearchView
+                    enabled={searchResultsEnabled}
+                    searchResults={searchResults}
+                    setActiveModel={setActiveModel}/>} key="/search" />
+
+                <Route path="/view" render={props =>
+                  <ModelView
+                  model={new URLSearchParams(location.search).get('m')}
+                  displayedModel={displayedModel}
+                  displayedModelOrigin={displayedModelOrigin}/>} key="/view" />
                 <Redirect from="/" to="/search" key="root-redirect" />
               </Switch>
             </div>

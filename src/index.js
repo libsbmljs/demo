@@ -12,8 +12,8 @@ import "assets/css/material-dashboard-react.css"
 
 import indexRoutes from "routes/index.jsx"
 import { rootEpic, database_worker } from 'epics.js'
-import { dispatchQuery } from 'actions.js'
-import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS } from 'constants.js'
+import { dispatchQuery, getModelInfo } from 'actions.js'
+import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO } from 'constants.js'
 
 import 'react-virtualized/styles.css'
 
@@ -33,11 +33,28 @@ const query = (state = {entered_query: '', results: []}, action) => {
   }
 }
 
+const model = (state = {model: '', origin_str: ''}, action) => {
+  switch (action.type) {
+    case GET_MODEL_INFO:
+      database_worker.postMessage(getModelInfo(action.model))
+      return state
+    case SET_MODEL_INFO:
+      return {model: action.model, origin_str: action.origin +
+        (action.origin === 'BioModels' ?
+          (action.curated === 'Yes' ? ' (curated)' : ' (non-curated)')
+         : '')
+      }
+    default:
+      return state
+  }
+}
+
 const epicMiddleware = createEpicMiddleware()
 
 const store = createStore(combineReducers({
     router: connectRouter(history),
-    query
+    query,
+    model,
   }),
   compose(applyMiddleware(routerMiddleware(hist), thunk, epicMiddleware))
 )
@@ -51,7 +68,7 @@ hist.listen((location, action) => {
     }
     const model = new URLSearchParams(hist.location.search).get('m')
     if (model) {
-      store.dispatch(setActiveModel(model))
+      store.dispatch(getModelInfo(model))
       return
     }
   }
@@ -64,7 +81,7 @@ window.onload = () => {
   }
   const model = new URLSearchParams(hist.location.search).get('m')
   if (model) {
-    store.dispatch(setActiveModel(model))
+    store.dispatch(getModelInfo(model))
     return
   }
 }

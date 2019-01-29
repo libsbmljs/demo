@@ -1,6 +1,6 @@
 import lunr from 'lunr'
-import { DISPATCH_QUERY } from 'constants.js'
-import { queryResults } from 'actions.js'
+import { DISPATCH_QUERY, GET_MODEL_INFO } from 'constants.js'
+import { queryResults, setModelInfo } from 'actions.js'
 import { List, Map } from 'immutable'
 
 // import corpus from '../assets/libsbmljs_demo_corpus.json'
@@ -14,8 +14,17 @@ const processResults = (results) => (
 )
 
 const handleAction = (action) => {
-  if (action.type === 'DISPATCH_QUERY') {
-    self.postMessage(queryResults(processResults(idx.search('*'+action.query+'*'))))
+  switch (action.type) {
+    case DISPATCH_QUERY:
+      self.postMessage(queryResults(processResults(idx.search('*'+action.query+'*'))))
+      return
+    case GET_MODEL_INFO:
+      self.postMessage(
+        setModelInfo(
+          action.model,
+          documents.get(action.model).origin,
+          documents.get(action.model).curated))
+      return
   }
 }
 

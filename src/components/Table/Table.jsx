@@ -16,7 +16,7 @@ import Hidden from "@material-ui/core/Hidden"
 import { range } from 'lodash'
 
 function CustomTable({ ...props }) {
-  const { classes, tableHead, tableData, tableHeaderColor, setActiveModel } = props;
+  const { classes, tableHead, tableData, tableHeaderColor, setActiveModel } = props
   return (
        <AutoSizer>
          {({ height, width }) => (
