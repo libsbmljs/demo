@@ -32,6 +32,8 @@ const mapStateToProps = (state) => {
     displayedModel: state.model.model,
     displayedModelOrigin: state.model.origin,
     displayedModelOriginStr: state.model.origin_str,
+    displayedModeNumReactions: state.model.n_reactions,
+    displayedModeNumSpecies: state.model.n_species,
   }
 }
 
@@ -43,7 +45,7 @@ const mapDispatchToProps = dispatch => {
     dispatchQuery: query => {
       dispatch(dispatchQuery(query))
     },
-    setActiveModel: model => {
+    setActiveModel: (model) => {
       dispatch(push('/view?m='+model))
       dispatch(getModelInfo(model))
     }
@@ -88,7 +90,9 @@ class App extends React.Component {
   }
   render() {
     // properties
-    const { classes, query, searchResultsEnabled, searchResults, location, displayedModel, displayedModelOrigin, ...rest } = this.props
+    const { classes, query, searchResultsEnabled, searchResults, location,
+      displayedModel, displayedModelOrigin, displayedModeNumReactions, displayedModeNumSpecies,
+       ...rest } = this.props
     // action dispatchers
     const { setEnteredQuery, dispatchQuery, setActiveModel } = this.props
     return (
@@ -116,7 +120,11 @@ class App extends React.Component {
                   <ModelView
                   model={new URLSearchParams(location.search).get('m')}
                   displayedModel={displayedModel}
-                  displayedModelOrigin={displayedModelOrigin}/>} key="/view" />
+                  displayedModelOrigin={displayedModelOrigin}
+                  displayedModeNumReactions={displayedModeNumReactions}
+                  displayedModeNumSpecies={displayedModeNumSpecies}
+                  />}
+                  key="/view"/>
                 <Redirect from="/" to="/search" key="root-redirect" />
               </Switch>
             </div>

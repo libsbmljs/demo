@@ -33,27 +33,32 @@ const query = (state = {entered_query: '', results: []}, action) => {
   }
 }
 
-const model = (state = {model: '', origin: '', origin_str: ''}, action) => {
+const model = (state = {model: '', origin: '', origin_str: '', n_reactions: -1, n_species: -1}, action) => {
   switch (action.type) {
     case GET_MODEL_INFO:
       database_worker.postMessage(getModelInfo(action.model))
       return state
     case SET_MODEL_INFO:
-      return {
+      return Object.assign({}, state, {
         model: action.model,
         origin: action.origin,
         origin_str: action.origin +
         (action.origin === 'BioModels' ?
           (action.curated === 'Yes' ? ' (curated)' : ' (non-curated)')
          : '')
-      }
+      })
     case SET_MODEL_SRC:
       // console.log('set model source', action.model, action.source)
       libsbmljs_worker.postMessage(action)
       return state
     case SET_MODEL_PROPERTIES:
       console.log('SET_MODEL_PROPERTIES', action.n_reactions, action.n_species)
-      return state
+      const result = Object.assign({}, state, {
+        n_reactions: action.n_reactions,
+        n_species: action.n_species,
+      })
+      console.log('result',result)
+      return result
     default:
       return state
   }

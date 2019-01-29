@@ -15,7 +15,7 @@ export const queryResults = results => ({
   results
 })
 
-export const getModelInfo = model => ({
+export const getModelInfo = (model) => ({
   type: GET_MODEL_INFO,
   model
 })
