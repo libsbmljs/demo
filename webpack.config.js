@@ -73,16 +73,6 @@ module.exports = env => ({
         test: /\.(jpg|jpeg|png|gif|mp3|svg)$/,
         loaders: ["file-loader"]
       },
-      {
-        test: /\.wasm$/,
-        use : {
-          loader: 'file-loader',
-          options: {
-            type: 'application/wasm',
-            publicPath: '/'
-          }
-        },
-      }
     ]
   },
   plugins: [
