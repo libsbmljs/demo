@@ -1,9 +1,10 @@
 import { combineEpics, ofType } from 'redux-observable'
-import { map, debounceTime, merge, tap } from 'rxjs/operators'
+import { map, debounceTime, merge, tap, mergeMap } from 'rxjs/operators'
 import { of } from 'rxjs'
+import { ajax } from 'rxjs/ajax'
 import { push } from 'connected-react-router'
 
-import { dispatchQuery, getModelInfo } from 'actions.js'
+import { dispatchQuery, getModelInfo, setModelSource } from 'actions.js'
 import { SET_ENTERED_QUERY, DISPATCH_QUERY, GET_MODEL_INFO } from 'constants.js'
 
 import Worker from 'database.worker.js';
@@ -19,13 +20,15 @@ const enteredQueryEpic = action$ =>
     }))
   )
 
-// const getModelInfoEpic = action$ =>
-//   action$.pipe(
-//     ofType(GET_MODEL_INFO),
-//     map(({model}) => getModelInfo(model))
-//   )
+const getModelInfoEpic = action$ =>
+  action$.pipe(
+    ofType(GET_MODEL_INFO),
+    mergeMap(({model}) => ajax({url: 'components/Table/Table.jsx', responseType: 'text'}).pipe(
+      map(({response}) => setModelSource(model, response))
+    ))
+  )
 
 export const rootEpic = combineEpics(
   enteredQueryEpic,
-  // getModelInfoEpic,
+  getModelInfoEpic,
 )

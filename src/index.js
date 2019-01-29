@@ -13,7 +13,7 @@ import "assets/css/material-dashboard-react.css"
 import indexRoutes from "routes/index.jsx"
 import { rootEpic, database_worker } from 'epics.js'
 import { dispatchQuery, getModelInfo } from 'actions.js'
-import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO } from 'constants.js'
+import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO, SET_MODEL_SRC } from 'constants.js'
 
 import 'react-virtualized/styles.css'
 
@@ -47,6 +47,9 @@ const model = (state = {model: '', origin: '', origin_str: ''}, action) => {
           (action.curated === 'Yes' ? ' (curated)' : ' (non-curated)')
          : '')
       }
+    case SET_MODEL_SRC:
+      console.log('set model source', action.model, action.source)
+      return state
     default:
       return state
   }
