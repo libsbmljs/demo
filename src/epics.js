@@ -7,8 +7,11 @@ import { push } from 'connected-react-router'
 import { dispatchQuery, getModelInfo, setModelSource } from 'actions.js'
 import { SET_ENTERED_QUERY, DISPATCH_QUERY, GET_MODEL_INFO } from 'constants.js'
 
-import Worker from 'database.worker.js';
-export const database_worker = new Worker()
+import DatabaseWorker from 'database.worker.js'
+export const database_worker = new DatabaseWorker()
+
+import LibsbmljsWorker from 'libsbmljs.worker.js'
+const libsbmljs_worker = new LibsbmljsWorker()
 
 const enteredQueryEpic = action$ =>
   action$.pipe(
