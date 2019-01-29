@@ -8,7 +8,7 @@ const htmlPlugin = new HtmlWebpackPlugin({
   filename: "./index.html"
 });
 
-module.exports = {
+module.exports = env => ({
   entry: {
      app: './src/index.js'
   },
@@ -18,7 +18,7 @@ module.exports = {
   },
   devtool: 'inline-source-map',
   devServer: {
-    contentBase: path.join(__dirname,'src'),
+    contentBase: [path.join(__dirname,'src'), env.DATABASE_PREFIX],
     // contentBase: './dist',
     hot: false
   },
@@ -80,4 +80,4 @@ module.exports = {
     new CleanWebpackPlugin(['dist']),
     htmlPlugin
   ]
-};
+})

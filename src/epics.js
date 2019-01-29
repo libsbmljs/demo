@@ -23,7 +23,7 @@ const enteredQueryEpic = action$ =>
 const getModelInfoEpic = action$ =>
   action$.pipe(
     ofType(GET_MODEL_INFO),
-    mergeMap(({model}) => ajax({url: 'components/Table/Table.jsx', responseType: 'text'}).pipe(
+    mergeMap(({model}) => ajax({url: 'biomodels/curated/BIOMD0000000070/BIOMD0000000070_url.xml', responseType: 'text'}).pipe(
       map(({response}) => setModelSource(model, response))
     ))
   )
