@@ -92,49 +92,6 @@ function CustomTable({ ...props }) {
           )}
         </AutoSizer>)
 }
-// <div className={classes.tableResponsive}>
-// </div>
-// cellRenderer={({cellData,dataKey}) =>
-//   (<TableCell className={classes.tableCell}>
-//     {cellData ? cellData[dataKey] : ''}
-//   </TableCell>)
-// }
-
-
-
-// <Table className={classes.table}>
-//   {tableHead !== undefined ? (
-//     <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
-//       <TableRow>
-//         {tableHead.map((prop, key) => {
-//           return (
-//             <TableCell
-//               className={classes.tableCell + " " + classes.tableHeadCell}
-//               key={key}
-//             >
-//               {prop}
-//             </TableCell>
-//           );
-//         })}
-//       </TableRow>
-//     </TableHead>
-//   ) : null}
-//   <TableBody>
-//     {tableData.map((prop, key) => {
-//       return (
-//         <TableRow key={key}>
-//           {prop.map((prop, key) => {
-//             return (
-//               <TableCell className={classes.tableCell} key={key}>
-//                 {prop}
-//               </TableCell>
-//             );
-//           })}
-//         </TableRow>
-//       );
-//     })}
-//   </TableBody>
-// </Table>
 
 CustomTable.defaultProps = {
   tableHeaderColor: "gray"

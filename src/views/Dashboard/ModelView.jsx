@@ -73,7 +73,7 @@ function ModelView(props) {
             </p>
           </CardHeader>
           <CardBody>
-          <h4 className={classes.primaryText}>The identifiers.org URI for this model</h4>
+          <h4>The identifiers.org URI for this model</h4>
           <a href={identifiers_org_uri}>
           {identifiers_org_uri}
            </a>
