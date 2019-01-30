@@ -13,6 +13,12 @@ export const database_worker = new DatabaseWorker()
 import LibsbmljsWorker from 'libsbmljs.worker.js'
 export const libsbmljs_worker = new LibsbmljsWorker()
 
+const remapBiggModel = (id) => {
+  if (id === 'e_coli_core')
+    return 'ecoli_core_model'
+  return id
+}
+
 const buildModelUrl = (model, origin, curated) => {
   if (origin === 'BioModels') {
     if (curated === 'Yes') {
@@ -21,7 +27,8 @@ const buildModelUrl = (model, origin, curated) => {
       return `biomodels/non_curated/${model}/${model}_url.xml`
     }
   } else {
-    return `bigg_models/${model}.xml`
+    console.log('load bigg model',`bigg_models/${remapBiggModel(model)}.xml`)
+    return `bigg_models/${remapBiggModel(model)}.xml`
   }
 }
 

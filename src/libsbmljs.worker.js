@@ -19,7 +19,16 @@ const handleAction = (action) => {
           console.log('Errors when reading SBML document')
         }
         const model = doc.getModel()
-        self.postMessage(setModelProperties(action.model, model.getNumReactions(), model.getNumSpecies()))
+        self.postMessage(setModelProperties(
+          action.model,
+          model.getNumReactions(),
+          model.getNumSpecies(),
+          model.getNumCompartments(),
+          model.getNumParameters(),
+          model.getNumEvents(),
+          model.getNumFunctionDefinitions(),
+          model.getNumRules(),
+        ))
         }, 1000
       )
       return

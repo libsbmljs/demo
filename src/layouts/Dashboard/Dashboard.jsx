@@ -34,6 +34,10 @@ const mapStateToProps = (state) => {
     displayedModelOriginStr: state.model.origin_str,
     displayedModeNumReactions: state.model.n_reactions,
     displayedModeNumSpecies: state.model.n_species,
+    displayedModeNumCompartments: state.model.n_compartments,
+    displayedModeNumEvents: state.model.n_events,
+    displayedModeNumFunctions: state.model.n_functions,
+    displayedModeNumRules: state.model.n_rules,
   }
 }
 
@@ -92,6 +96,7 @@ class App extends React.Component {
     // properties
     const { classes, query, searchResultsEnabled, searchResults, location,
       displayedModel, displayedModelOrigin, displayedModeNumReactions, displayedModeNumSpecies,
+      displayedModeNumCompartments, displayedModeNumEvents, displayedModeNumFunctions, displayedModeNumRules,
        ...rest } = this.props
     // action dispatchers
     const { setEnteredQuery, dispatchQuery, setActiveModel } = this.props
@@ -123,6 +128,10 @@ class App extends React.Component {
                   displayedModelOrigin={displayedModelOrigin}
                   displayedModeNumReactions={displayedModeNumReactions}
                   displayedModeNumSpecies={displayedModeNumSpecies}
+                  displayedModeNumCompartments={displayedModeNumCompartments}
+                  displayedModeNumEvents={displayedModeNumEvents}
+                  displayedModeNumFunctions={displayedModeNumFunctions}
+                  displayedModeNumRules={displayedModeNumRules}
                   />}
                   key="/view"/>
                 <Redirect from="/" to="/search" key="root-redirect" />

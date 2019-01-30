@@ -58,7 +58,7 @@ const styles = {
 };
 
 function ModelView(props) {
-  const { classes, model, displayedModel, displayedModelOrigin, displayedModelOriginStr, displayedModeNumReactions, displayedModeNumSpecies } = props
+  const { classes, model, displayedModel, displayedModelOrigin, displayedModelOriginStr, displayedModeNumReactions, displayedModeNumSpecies, displayedModeNumCompartments, displayedModeNumEvents, displayedModeNumFunctions, displayedModeNumRules } = props
   const identifiers_org_uri = displayedModel === model ?
     (displayedModelOrigin === 'BioModels' ? 'http://identifiers.org/biomodels.db/' : 'http://identifiers.org/bigg.model/')+displayedModel
      : ''
@@ -78,7 +78,7 @@ function ModelView(props) {
           {identifiers_org_uri}
            </a>
            <p>
-           {displayedModeNumReactions>0 ? `${displayedModeNumReactions} reactions / ${displayedModeNumSpecies} species` : ''}
+           {displayedModeNumReactions>0 ? `${displayedModeNumReactions} reactions, ${displayedModeNumSpecies} species, ${displayedModeNumCompartments} compartments, ${displayedModeNumEvents} events, ${displayedModeNumFunctions} functions, ${displayedModeNumRules} rules` : ''}
            </p>
           </CardBody>
         </Card>

@@ -33,7 +33,10 @@ const query = (state = {entered_query: '', results: []}, action) => {
   }
 }
 
-const model = (state = {model: '', origin: '', origin_str: '', n_reactions: -1, n_species: -1}, action) => {
+const model = (state = {
+      model: '', origin: '', origin_str: '',
+      n_reactions: -1, n_species: -1, n_compartments: -1, n_events: -1, n_functions: -1, n_rules: -1
+    }, action) => {
   switch (action.type) {
     case GET_MODEL_INFO:
       database_worker.postMessage(getModelInfo(action.model))
@@ -56,6 +59,10 @@ const model = (state = {model: '', origin: '', origin_str: '', n_reactions: -1, 
       const result = Object.assign({}, state, {
         n_reactions: action.n_reactions,
         n_species: action.n_species,
+        n_compartments: action.n_compartments,
+        n_events: action.n_events,
+        n_functions: action.n_functions,
+        n_rules: action.n_rules,
       })
       console.log('result',result)
       return result
