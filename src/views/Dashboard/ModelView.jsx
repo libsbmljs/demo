@@ -58,7 +58,11 @@ const styles = {
 };
 
 function ModelView(props) {
-  const { classes, model, displayedModel, displayedModelOrigin, displayedModelOriginStr, displayedModeNumReactions, displayedModeNumSpecies, displayedModeNumCompartments, displayedModeNumEvents, displayedModeNumFunctions, displayedModeNumRules } = props
+  const { classes, model, displayedModel, displayedModelOrigin, displayedModelOriginStr,
+    sbmlModelToken, sbmlModelNumReactions, sbmlModelNumSpecies, sbmlModelNumCompartments,
+    sbmlModelNumEvents, sbmlModelNumFunctions, sbmlModelNumRules
+   } = props
+  console.log('model',model,'vs displayedModel',displayedModel)
   const identifiers_org_uri = displayedModel === model ?
     (displayedModelOrigin === 'BioModels' ? 'http://identifiers.org/biomodels.db/' : 'http://identifiers.org/bigg.model/')+displayedModel
      : ''
@@ -72,15 +76,19 @@ function ModelView(props) {
               {displayedModel === model ? displayedModelOrigin : ''}
             </p>
           </CardHeader>
-          <CardBody>
-          <h4>The identifiers.org URI for this model</h4>
-          <a href={identifiers_org_uri}>
-          {identifiers_org_uri}
-           </a>
-           <p>
-           {displayedModeNumReactions>0 ? `${displayedModeNumReactions} reactions, ${displayedModeNumSpecies} species, ${displayedModeNumCompartments} compartments, ${displayedModeNumEvents} events, ${displayedModeNumFunctions} functions, ${displayedModeNumRules} rules` : ''}
-           </p>
-          </CardBody>
+            <CardBody>
+              <h4>The identifiers.org URI for this model</h4>
+              <a href={identifiers_org_uri}>
+              {identifiers_org_uri}
+               </a>
+               {sbmlModelToken === model ?
+               <p>
+               {sbmlModelNumReactions>0 ? `${sbmlModelNumReactions} reactions, ${sbmlModelNumSpecies} species, ${sbmlModelNumCompartments} compartments, ${sbmlModelNumEvents} events, ${sbmlModelNumFunctions} functions, ${sbmlModelNumRules} rules` : ''}
+               </p> :
+               <p>
+               Loading model...
+               </p>}
+            </CardBody>
         </Card>
       </GridItem>
     </GridContainer>

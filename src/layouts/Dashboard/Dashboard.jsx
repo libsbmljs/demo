@@ -32,12 +32,13 @@ const mapStateToProps = (state) => {
     displayedModel: state.model.model,
     displayedModelOrigin: state.model.origin,
     displayedModelOriginStr: state.model.origin_str,
-    displayedModeNumReactions: state.model.n_reactions,
-    displayedModeNumSpecies: state.model.n_species,
-    displayedModeNumCompartments: state.model.n_compartments,
-    displayedModeNumEvents: state.model.n_events,
-    displayedModeNumFunctions: state.model.n_functions,
-    displayedModeNumRules: state.model.n_rules,
+    sbmlModelToken: state.model.sbml_model_token,
+    sbmlModelNumReactions: state.model.n_reactions,
+    sbmlModelNumSpecies: state.model.n_species,
+    sbmlModelNumCompartments: state.model.n_compartments,
+    sbmlModelNumEvents: state.model.n_events,
+    sbmlModelNumFunctions: state.model.n_functions,
+    sbmlModelNumRules: state.model.n_rules,
   }
 }
 
@@ -95,8 +96,9 @@ class App extends React.Component {
   render() {
     // properties
     const { classes, query, searchResultsEnabled, searchResults, location,
-      displayedModel, displayedModelOrigin, displayedModeNumReactions, displayedModeNumSpecies,
-      displayedModeNumCompartments, displayedModeNumEvents, displayedModeNumFunctions, displayedModeNumRules,
+      displayedModel, displayedModelOrigin,
+      sbmlModelToken, sbmlModelNumReactions, sbmlModelNumSpecies,sbmlModelNumCompartments,
+      sbmlModelNumEvents, sbmlModelNumFunctions, sbmlModelNumRules,
        ...rest } = this.props
     // action dispatchers
     const { setEnteredQuery, dispatchQuery, setActiveModel } = this.props
@@ -126,12 +128,13 @@ class App extends React.Component {
                   model={new URLSearchParams(location.search).get('m')}
                   displayedModel={displayedModel}
                   displayedModelOrigin={displayedModelOrigin}
-                  displayedModeNumReactions={displayedModeNumReactions}
-                  displayedModeNumSpecies={displayedModeNumSpecies}
-                  displayedModeNumCompartments={displayedModeNumCompartments}
-                  displayedModeNumEvents={displayedModeNumEvents}
-                  displayedModeNumFunctions={displayedModeNumFunctions}
-                  displayedModeNumRules={displayedModeNumRules}
+                  sbmlModelToken={sbmlModelToken}
+                  sbmlModelNumReactions={sbmlModelNumReactions}
+                  sbmlModelNumSpecies={sbmlModelNumSpecies}
+                  sbmlModelNumCompartments={sbmlModelNumCompartments}
+                  sbmlModelNumEvents={sbmlModelNumEvents}
+                  sbmlModelNumFunctions={sbmlModelNumFunctions}
+                  sbmlModelNumRules={sbmlModelNumRules}
                   />}
                   key="/view"/>
                 <Redirect from="/" to="/search" key="root-redirect" />

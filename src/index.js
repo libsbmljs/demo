@@ -35,7 +35,7 @@ const query = (state = {entered_query: '', results: []}, action) => {
 
 const model = (state = {
       model: '', origin: '', origin_str: '',
-      n_reactions: -1, n_species: -1, n_compartments: -1, n_events: -1, n_functions: -1, n_rules: -1
+      sbml_model_token: '', n_reactions: -1, n_species: -1, n_compartments: -1, n_events: -1, n_functions: -1, n_rules: -1
     }, action) => {
   switch (action.type) {
     case GET_MODEL_INFO:
@@ -57,6 +57,7 @@ const model = (state = {
     case SET_MODEL_PROPERTIES:
       console.log('SET_MODEL_PROPERTIES', action.n_reactions, action.n_species)
       const result = Object.assign({}, state, {
+        sbml_model_token: action.sbml_model_token,
         n_reactions: action.n_reactions,
         n_species: action.n_species,
         n_compartments: action.n_compartments,
