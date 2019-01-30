@@ -68,9 +68,6 @@ class App extends React.Component {
   }
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
-  };
-  getRoute() {
-    return this.props.location.pathname !== "/maps";
   }
   resizeFunction() {
     if (window.innerWidth >= 960) {
@@ -82,14 +79,6 @@ class App extends React.Component {
       // const ps = new PerfectScrollbar(this.refs.mainPanel);
     }
     window.addEventListener("resize", this.resizeFunction);
-  }
-  componentDidUpdate(e) {
-    if (e.history.location.pathname !== e.location.pathname) {
-      this.refs.mainPanel.scrollTop = 0;
-      if (this.state.mobileOpen) {
-        this.setState({ mobileOpen: false });
-      }
-    }
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.resizeFunction);
@@ -123,7 +112,6 @@ class App extends React.Component {
                     enabled={searchResultsEnabled}
                     searchResults={searchResults}
                     setActiveModel={setActiveModel}/>} key="/search" />
-
                 <Route path="/view" render={props =>
                   <ModelView
                   model={new URLSearchParams(location.search).get('m')}
@@ -139,11 +127,10 @@ class App extends React.Component {
                   sbmlModelNumRules={sbmlModelNumRules}
                   />}
                   key="/view"/>
-                <Redirect from="/" to="/search" key="root-redirect" />
               </Switch>
             </div>
           </div>
-          {this.getRoute() ? <Footer /> : null}
+          <Footer/>
         </div>
       </div>
     );

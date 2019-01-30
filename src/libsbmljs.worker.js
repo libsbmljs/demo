@@ -30,6 +30,7 @@ const handleAction = (action) => {
           model.getNumRules(),
         ))
         }, 1000
+        // TODO: destroy document instance
       )
       return
     default:

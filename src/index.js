@@ -4,9 +4,10 @@ import { createHashHistory } from "history"
 import { Router, Route, Switch } from "react-router-dom"
 import { Provider } from 'react-redux'
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
-import { connectRouter, routerMiddleware, ConnectedRouter, push } from 'connected-react-router'
+import { connectRouter, routerMiddleware, ConnectedRouter } from 'connected-react-router'
 import thunk from 'redux-thunk'
 import { createEpicMiddleware } from 'redux-observable'
+import Dashboard from "layouts/Dashboard/Dashboard.jsx"
 
 import "assets/css/material-dashboard-react.css"
 
@@ -72,8 +73,9 @@ const model = (state = {
 
 const epicMiddleware = createEpicMiddleware()
 
-const store = createStore(combineReducers({
-    router: connectRouter(history),
+const store = createStore(
+  combineReducers({
+    router: connectRouter(hist),
     query,
     model,
   }),
@@ -123,9 +125,7 @@ ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={hist}>
       <Switch>
-        {indexRoutes.map((prop, key) => {
-          return <Route path={prop.path} component={prop.component} key={key} />;
-        })}
+        <Route path='/' component={Dashboard} key='dashboard' />
       </Switch>
     </ConnectedRouter>
   </Provider>,
