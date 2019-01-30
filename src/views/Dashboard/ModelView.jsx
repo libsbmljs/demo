@@ -62,7 +62,6 @@ function ModelView(props) {
     sbmlModelToken, sbmlModelNumReactions, sbmlModelNumSpecies, sbmlModelNumCompartments,
     sbmlModelNumEvents, sbmlModelNumFunctions, sbmlModelNumRules
    } = props
-  console.log('model',model,'vs displayedModel',displayedModel)
   const identifiers_org_uri = displayedModel === model ?
     (displayedModelOrigin === 'BioModels' ? 'http://identifiers.org/biomodels.db/' : 'http://identifiers.org/bigg.model/')+displayedModel
      : ''

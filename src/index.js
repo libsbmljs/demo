@@ -55,8 +55,7 @@ const model = (state = {
       libsbmljs_worker.postMessage(action)
       return state
     case SET_MODEL_PROPERTIES:
-      console.log('SET_MODEL_PROPERTIES', action.n_reactions, action.n_species)
-      const result = Object.assign({}, state, {
+      return Object.assign({}, state, {
         sbml_model_token: action.sbml_model_token,
         n_reactions: action.n_reactions,
         n_species: action.n_species,
@@ -65,8 +64,6 @@ const model = (state = {
         n_functions: action.n_functions,
         n_rules: action.n_rules,
       })
-      console.log('result',result)
-      return result
     default:
       return state
   }

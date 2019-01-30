@@ -27,7 +27,6 @@ const buildModelUrl = (model, origin, curated) => {
       return `biomodels/non_curated/${model}/${model}_url.xml`
     }
   } else {
-    console.log('load bigg model',`bigg_models/${remapBiggModel(model)}.xml`)
     return `bigg_models/${remapBiggModel(model)}.xml`
   }
 }
