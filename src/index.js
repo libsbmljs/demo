@@ -34,7 +34,7 @@ const query = (state = {entered_query: '', results: []}, action) => {
 }
 
 const model = (state = {
-      model: '', origin: '', origin_str: '',
+      model: '', title: '', origin: '', origin_str: '',
       sbml_model_token: '', n_reactions: -1, n_species: -1, n_compartments: -1, n_events: -1, n_functions: -1, n_rules: -1
     }, action) => {
   switch (action.type) {
@@ -44,6 +44,7 @@ const model = (state = {
     case SET_MODEL_INFO:
       return Object.assign({}, state, {
         model: action.model,
+        title: action.title,
         origin: action.origin,
         origin_str: action.origin +
         (action.origin === 'BioModels' ?

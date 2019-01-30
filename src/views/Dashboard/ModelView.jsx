@@ -58,7 +58,7 @@ const styles = {
 };
 
 function ModelView(props) {
-  const { classes, model, displayedModel, displayedModelOrigin, displayedModelOriginStr,
+  const { classes, model, displayedModel, displayedModelTitle, displayedModelOrigin, displayedModelOriginStr,
     sbmlModelToken, sbmlModelNumReactions, sbmlModelNumSpecies, sbmlModelNumCompartments,
     sbmlModelNumEvents, sbmlModelNumFunctions, sbmlModelNumRules
    } = props
@@ -68,7 +68,7 @@ function ModelView(props) {
   return (
     <GridContainer style={{minHeight:'calc(100vh - 240px)'}}>
       <GridItem xs={12} sm={12} md={12}>
-        <Card style={{minHeight:'calc(100vh - 240px)'}}>
+        <Card>
           <CardHeader color="primary">
             <h4 className={classes.cardTitleWhite}>{model}</h4>
             <p className={classes.cardCategoryWhite}>
@@ -76,7 +76,7 @@ function ModelView(props) {
             </p>
           </CardHeader>
             <CardBody>
-              <h4>The identifiers.org URI for this model</h4>
+              <h4>{displayedModel === model ? displayedModelTitle : ''}</h4>
               <a href={identifiers_org_uri}>
               {identifiers_org_uri}
                </a>

@@ -30,6 +30,7 @@ const mapStateToProps = (state) => {
     searchResultsEnabled: !state.query.entered_query,
     searchResults: state.query.results,
     displayedModel: state.model.model,
+    displayedModelTitle: state.model.title,
     displayedModelOrigin: state.model.origin,
     displayedModelOriginStr: state.model.origin_str,
     sbmlModelToken: state.model.sbml_model_token,
@@ -96,7 +97,7 @@ class App extends React.Component {
   render() {
     // properties
     const { classes, query, searchResultsEnabled, searchResults, location,
-      displayedModel, displayedModelOrigin,
+      displayedModel, displayedModelTitle, displayedModelOrigin,
       sbmlModelToken, sbmlModelNumReactions, sbmlModelNumSpecies,sbmlModelNumCompartments,
       sbmlModelNumEvents, sbmlModelNumFunctions, sbmlModelNumRules,
        ...rest } = this.props
@@ -127,6 +128,7 @@ class App extends React.Component {
                   <ModelView
                   model={new URLSearchParams(location.search).get('m')}
                   displayedModel={displayedModel}
+                  displayedModelTitle={displayedModelTitle}
                   displayedModelOrigin={displayedModelOrigin}
                   sbmlModelToken={sbmlModelToken}
                   sbmlModelNumReactions={sbmlModelNumReactions}

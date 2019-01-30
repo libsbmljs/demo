@@ -22,6 +22,7 @@ const handleAction = (action) => {
       self.postMessage(
         setModelInfo(
           action.model,
+          documents.get(action.model).title,
           documents.get(action.model).origin,
           documents.get(action.model).curated))
       return

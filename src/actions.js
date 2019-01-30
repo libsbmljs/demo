@@ -20,9 +20,10 @@ export const getModelInfo = (model) => ({
   model
 })
 
-export const setModelInfo = (model, origin, curated) => ({
+export const setModelInfo = (model, title, origin, curated) => ({
   type: SET_MODEL_INFO,
   model,
+  title,
   origin,
   curated,
 })
