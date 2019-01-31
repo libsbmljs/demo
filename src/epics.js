@@ -1,11 +1,11 @@
 import { combineEpics, ofType } from 'redux-observable'
-import { map, debounceTime, merge, tap, mergeMap } from 'rxjs/operators'
+import { map, mapTo, debounceTime, merge, tap, mergeMap, publish, skipUntil, takeUntil, last, filter, buffer } from 'rxjs/operators'
 import { of } from 'rxjs'
 import { ajax } from 'rxjs/ajax'
 import { push } from 'connected-react-router'
 
 import { dispatchQuery, getModelInfo, setModelSource } from 'actions.js'
-import { SET_ENTERED_QUERY, DISPATCH_QUERY, SET_MODEL_INFO } from 'constants.js'
+import { SET_ENTERED_QUERY, DISPATCH_QUERY, SET_MODEL_INFO, SET_MODEL_SRC, LIBSBML_LOADED } from 'constants.js'
 
 import DatabaseWorker from 'database.worker.js'
 export const database_worker = new DatabaseWorker()
@@ -49,7 +49,34 @@ const setModelInfoEpic = action$ =>
     ))
   )
 
+export const setModelSourceEpic = action$ =>
+  action$.pipe(
+    ofType(SET_MODEL_SRC),
+    skipUntil(action$.ofType(LIBSBML_LOADED)),
+    map(action => libsbmljs_worker.postMessage(action)),
+    filter(() => false),
+  )
+
+export const bufferedSetModelSourceEpic = action$ =>
+  action$.pipe(
+    ofType(SET_MODEL_SRC),
+    takeUntil(action$.pipe(
+      ofType(LIBSBML_LOADED),
+      tap(() => console.log('libsbml loaded action')),
+    )),
+    last(),
+    tap(() => console.log('buffered set src2')),
+    // buffer(action$.pipe(
+    //   ofType(LIBSBML_LOADED),
+    //   tap(() => console.log('libsbml loaded action')),
+    // )),
+    // tap(() => console.log('buffered set src')),
+    // map(actions => actions.slice(-1)[0]),
+  )
+
 export const rootEpic = combineEpics(
   enteredQueryEpic,
   setModelInfoEpic,
+  setModelSourceEpic,
+  bufferedSetModelSourceEpic,
 )

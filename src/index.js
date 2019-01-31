@@ -14,7 +14,8 @@ import "assets/css/material-dashboard-react.css"
 import indexRoutes from "routes/index.jsx"
 import { rootEpic, database_worker, libsbmljs_worker } from 'epics.js'
 import { dispatchQuery, getModelInfo } from 'actions.js'
-import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO, SET_MODEL_SRC, SET_MODEL_PROPERTIES } from 'constants.js'
+import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO, SET_MODEL_PROPERTIES, LIBSBML_LOADED, SET_MODEL_SRC } from 'constants.js'
+import { setModelSourceEpic } from 'epics.js'
 
 import 'react-virtualized/styles.css'
 
@@ -36,6 +37,7 @@ const query = (state = {entered_query: '', results: []}, action) => {
 
 const model = (state = {
       model: '', title: '', origin: '', origin_str: '',
+      // libsbml_loaded: false,
       sbml_model_token: '', n_reactions: -1, n_species: -1, n_compartments: -1, n_events: -1, n_functions: -1, n_rules: -1
     }, action) => {
   switch (action.type) {
@@ -52,10 +54,10 @@ const model = (state = {
           (action.curated === 'Yes' ? ' (curated)' : ' (non-curated)')
          : '')
       })
-    case SET_MODEL_SRC:
+    // case SET_MODEL_SRC:
       // console.log('set model source', action.model, action.source)
-      libsbmljs_worker.postMessage(action)
-      return state
+      // libsbmljs_worker.postMessage(action)
+      // return state
     case SET_MODEL_PROPERTIES:
       return Object.assign({}, state, {
         sbml_model_token: action.sbml_model_token,
@@ -66,6 +68,14 @@ const model = (state = {
         n_functions: action.n_functions,
         n_rules: action.n_rules,
       })
+    case LIBSBML_LOADED:
+      console.log('libsbml loaded reducer')
+      // setModelSourceEpic.connect()
+      // return Object.assign({}, state, {libsbml_loaded: true})
+      return state
+    // case SET_MODEL_SRC:
+      // libsbmljs_worker.postMessage(action)
+      // return state
     default:
       return state
   }
@@ -117,7 +127,8 @@ database_worker.addEventListener('message', function(e) {
 libsbmljs_worker.addEventListener('message', function(e) {
   // the result should be an action - dispatch it
   store.dispatch(e.data)
-}, false);
+});
+console.log('added libsbmljs worker listener')
 
 epicMiddleware.run(rootEpic)
 

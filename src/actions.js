@@ -1,4 +1,8 @@
-import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO, SET_MODEL_SRC, SET_MODEL_PROPERTIES } from 'constants.js'
+import { NULL_ACTION, SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO, SET_MODEL_SRC, SET_MODEL_PROPERTIE, LIBSBML_LOADED } from 'constants.js'
+
+export const nullAction = () => ({
+  type: NULL_ACTION,
+})
 
 export const setEnteredQuery = query => ({
   type: SET_ENTERED_QUERY,
@@ -44,4 +48,8 @@ export const setModelProperties = (sbml_model_token, n_reactions, n_species, n_c
   n_events,
   n_functions,
   n_rules,
+})
+
+export const libsbmlLoaded = () => ({
+  type: LIBSBML_LOADED,
 })
