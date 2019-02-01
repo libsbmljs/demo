@@ -9,6 +9,7 @@ import Card from "components/Card/Card.jsx"
 import CardHeader from "components/Card/CardHeader.jsx"
 import CardBody from "components/Card/CardBody.jsx"
 import Hidden from "@material-ui/core/Hidden"
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import "assets/css/material-dashboard-react.css"
 
@@ -54,7 +55,11 @@ const styles = {
   },
   disabled: {
     opacity: "0.75"
-  }
+  },
+  progress: {
+    color: primaryColor,
+    margin: '1 em',
+  },
 };
 
 function ModelView(props) {
@@ -83,12 +88,14 @@ function ModelView(props) {
                {sbmlModelToken === model ?
                <p>
                {sbmlModelNumReactions>0 ? `${sbmlModelNumReactions} reactions, ${sbmlModelNumSpecies} species, ${sbmlModelNumCompartments} compartments, ${sbmlModelNumEvents} events, ${sbmlModelNumFunctions} functions, ${sbmlModelNumRules} rules` : ''}
-               </p> :
-               <p>
-               Loading model...
-               </p>}
+               </p> : []}
             </CardBody>
         </Card>
+        {sbmlModelToken !== model ?
+          <div style={{textAlign:'center'}}>
+            <CircularProgress className={classes.progress} />
+          </div> : []
+        }
       </GridItem>
     </GridContainer>
   );
