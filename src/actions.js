@@ -1,4 +1,4 @@
-import { NULL_ACTION, SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO, SET_MODEL_SRC, SET_MODEL_PROPERTIES, LIBSBML_LOADED } from 'constants.js'
+import { NULL_ACTION, SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO, SET_MODEL_SRC, SET_MODEL_PROPERTIES, LIBSBML_LOADED, VALIDATE_MODEL } from 'constants.js'
 
 export const nullAction = () => ({
   type: NULL_ACTION,
@@ -52,4 +52,9 @@ export const setModelProperties = (sbml_model_token, n_reactions, n_species, n_c
 
 export const libsbmlLoaded = () => ({
   type: LIBSBML_LOADED,
+})
+
+export const validateModel = (model) => ({
+  type: VALIDATE_MODEL,
+  model
 })

@@ -14,7 +14,7 @@ import "assets/css/material-dashboard-react.css"
 import indexRoutes from "routes/index.jsx"
 import { rootEpic, database_worker, libsbmljs_worker } from 'epics.js'
 import { dispatchQuery, getModelInfo } from 'actions.js'
-import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO, SET_MODEL_PROPERTIES, LIBSBML_LOADED, SET_MODEL_SRC } from 'constants.js'
+import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO, SET_MODEL_PROPERTIES, LIBSBML_LOADED, SET_MODEL_SRC, VALIDATE_MODEL } from 'constants.js'
 import { setModelSourceEpic } from 'epics.js'
 
 import 'react-virtualized/styles.css'
@@ -38,7 +38,8 @@ const query = (state = {entered_query: '', results: []}, action) => {
 const model = (state = {
       model: '', title: '', origin: '', origin_str: '',
       // libsbml_loaded: false,
-      sbml_model_token: '', n_reactions: -1, n_species: -1, n_compartments: -1, n_events: -1, n_functions: -1, n_rules: -1
+      sbml_model_token: '', n_reactions: -1, n_species: -1, n_compartments: -1, n_events: -1, n_functions: -1, n_rules: -1,
+      validating_model: '',
     }, action) => {
   switch (action.type) {
     case GET_MODEL_INFO:
@@ -76,6 +77,8 @@ const model = (state = {
     // case SET_MODEL_SRC:
       // libsbmljs_worker.postMessage(action)
       // return state
+    case VALIDATE_MODEL:
+      return Object.assign({}, state, {validating_model: action.model})
     default:
       return state
   }

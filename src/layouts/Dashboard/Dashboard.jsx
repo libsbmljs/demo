@@ -15,7 +15,7 @@ import Footer from "components/Footer/Footer.jsx"
 import Sidebar from "components/Sidebar/Sidebar.jsx"
 import SearchView from "views/Dashboard/SearchView.jsx"
 import ModelView from "views/Dashboard/ModelView.jsx"
-import { setEnteredQuery, dispatchQuery, setActiveModel, getModelInfo } from 'actions'
+import { setEnteredQuery, dispatchQuery, setActiveModel, getModelInfo, validateModel } from 'actions'
 
 import dashboardRoutes from "routes/dashboard.jsx"
 
@@ -40,6 +40,7 @@ const mapStateToProps = (state) => {
     sbmlModelNumEvents: state.model.n_events,
     sbmlModelNumFunctions: state.model.n_functions,
     sbmlModelNumRules: state.model.n_rules,
+    validatingModel: state.model.validating_model,
   }
 }
 
@@ -54,7 +55,10 @@ const mapDispatchToProps = dispatch => {
     setActiveModel: (model) => {
       dispatch(push('/view?m='+model))
       dispatch(getModelInfo(model))
-    }
+    },
+    validateModel: (model) => {
+      dispatch(validateModel(model))
+    },
   }
 }
 
@@ -89,6 +93,7 @@ class App extends React.Component {
       displayedModel, displayedModelTitle, displayedModelOrigin,
       sbmlModelToken, sbmlModelNumReactions, sbmlModelNumSpecies,sbmlModelNumCompartments,
       sbmlModelNumEvents, sbmlModelNumFunctions, sbmlModelNumRules,
+      validateModel, validatingModel,
        ...rest } = this.props
     // action dispatchers
     const { setEnteredQuery, dispatchQuery, setActiveModel } = this.props
@@ -125,6 +130,8 @@ class App extends React.Component {
                   sbmlModelNumEvents={sbmlModelNumEvents}
                   sbmlModelNumFunctions={sbmlModelNumFunctions}
                   sbmlModelNumRules={sbmlModelNumRules}
+                  validateModel={validateModel}
+                  validatingModel={validatingModel}
                   />}
                   key="/view"/>
               </Switch>

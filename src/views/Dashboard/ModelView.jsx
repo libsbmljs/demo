@@ -10,6 +10,7 @@ import CardHeader from "components/Card/CardHeader.jsx"
 import CardBody from "components/Card/CardBody.jsx"
 import Hidden from "@material-ui/core/Hidden"
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Button from 'components/CustomButtons/Button.jsx'
 
 import "assets/css/material-dashboard-react.css"
 
@@ -60,12 +61,16 @@ const styles = {
     color: primaryColor,
     margin: '1 em',
   },
+  cardWithMargin: {
+    margin: '10 em',
+  },
 };
 
 function ModelView(props) {
   const { classes, model, displayedModel, displayedModelTitle, displayedModelOrigin, displayedModelOriginStr,
     sbmlModelToken, sbmlModelNumReactions, sbmlModelNumSpecies, sbmlModelNumCompartments,
-    sbmlModelNumEvents, sbmlModelNumFunctions, sbmlModelNumRules
+    sbmlModelNumEvents, sbmlModelNumFunctions, sbmlModelNumRules,
+    validateModel, validatingModel,
    } = props
   const identifiers_org_uri = displayedModel === model ?
     (displayedModelOrigin === 'BioModels' ? 'http://identifiers.org/biomodels.db/' : 'http://identifiers.org/bigg.model/')+displayedModel
@@ -80,21 +85,35 @@ function ModelView(props) {
               {displayedModel === model ? displayedModelOrigin : ''}
             </p>
           </CardHeader>
-            <CardBody>
-              <h4>{displayedModel === model ? displayedModelTitle : ''}</h4>
-              <a href={identifiers_org_uri}>
+          <CardBody>
+            <h4>{displayedModel === model ? displayedModelTitle : ''}</h4>
+            <a href={identifiers_org_uri}>
               {identifiers_org_uri}
-               </a>
-               {sbmlModelToken === model ?
-               <p>
-               {sbmlModelNumReactions>0 ? `${sbmlModelNumReactions} reactions, ${sbmlModelNumSpecies} species, ${sbmlModelNumCompartments} compartments, ${sbmlModelNumEvents} events, ${sbmlModelNumFunctions} functions, ${sbmlModelNumRules} rules` : ''}
-               </p> : []}
-            </CardBody>
+            </a>
+            {sbmlModelToken === model ?
+            <p>
+            {sbmlModelNumReactions>0 ? `${sbmlModelNumReactions} reactions, ${sbmlModelNumSpecies} species, ${sbmlModelNumCompartments} compartments, ${sbmlModelNumEvents} events, ${sbmlModelNumFunctions} functions, ${sbmlModelNumRules} rules` : ''}
+            </p> : []}
+          </CardBody>
         </Card>
         {sbmlModelToken !== model ?
           <div style={{textAlign:'center'}}>
             <CircularProgress className={classes.progress} />
-          </div> : []
+          </div> :
+          <div>
+          <div><br/></div>
+          <Card>
+            <CardHeader color="primary">
+              <h4 className={classes.cardTitleWhite}>Validation</h4>
+            </CardHeader>
+            <CardBody style={{textAlign:'center'}}>
+              { validatingModel !== displayedModel ?
+              <Button color="primary" onClick={() => validateModel(model)}>Validate Now</Button> :
+              <CircularProgress className={classes.progress} />
+              }
+            </CardBody>
+          </Card>
+          </div>
         }
       </GridItem>
     </GridContainer>
