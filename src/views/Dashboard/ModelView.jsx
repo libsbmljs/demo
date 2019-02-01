@@ -107,7 +107,8 @@ function ModelView(props) {
             <CardHeader color={modelIsValid ? 'success' : 'danger'}>
               <h4 className={classes.cardTitleWhite}>{modelIsValid ? 'Valid' : 'Invalid'}</h4>
             </CardHeader>
-            <CardBody style={{textAlign:'center'}}>
+            <CardBody>
+              {modelConsistencyErrors.map((e) => (<div key={e.key}>{e.message}</div>))}
             </CardBody>
           </Card> :
           <Card>
@@ -116,7 +117,9 @@ function ModelView(props) {
             </CardHeader>
             <CardBody style={{textAlign:'center'}}>
               { validatingModel !== displayedModel ?
-              <Button color="primary" onClick={() => validateModel(model)}>Validate Now</Button> :
+              <div>
+                <Button color="primary" onClick={() => validateModel(model)}>Validate Now</Button>
+              </div> :
               <CircularProgress className={classes.progress} />
               }
             </CardBody>

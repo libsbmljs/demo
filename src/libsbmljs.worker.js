@@ -33,6 +33,7 @@ const handleAction = (action) => {
       return
     }
     case VALIDATE_MODEL:{
+      console.log('worker validate model',action.model)
       const reader = new libsbml.SBMLReader()
       const doc = reader.readSBMLFromString(action.source)
       const loading_errors = doc.getNumErrors()
@@ -40,7 +41,12 @@ const handleAction = (action) => {
         console.log('Errors when reading SBML document') // TODO: post error
       }
       const n_consistency_errors = doc.checkConsistency() ? doc.getNumErrors() : 0
-      const consistency_errors = range(n_consistency_errors).map(k => doc.getError(k))
+      const consistency_errors = range(n_consistency_errors).map(k =>
+        ({
+          key: k,
+          message: doc.getError(k).getMessage(),
+        })
+      )
       self.postMessage(setModelValidationResults(
         action.model,
         n_consistency_errors === 0,

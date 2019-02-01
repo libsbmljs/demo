@@ -133,8 +133,7 @@ database_worker.addEventListener('message', function(e) {
 libsbmljs_worker.addEventListener('message', function(e) {
   // the result should be an action - dispatch it
   store.dispatch(e.data)
-});
-console.log('added libsbmljs worker listener')
+})
 
 epicMiddleware.run(rootEpic)
 
