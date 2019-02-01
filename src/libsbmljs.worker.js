@@ -3,12 +3,11 @@ import { SET_MODEL_SRC } from 'constants.js'
 
 // import libsbml from 'libsbml.js'
 import libsbml_module from 'libsbml.js'
-var libsbml = null
-libsbml_module().then(((module,self) => {
+let libsbml = null
+libsbml_module().then(((self,module) => {
   libsbml = module
-  console.log('libsbml loaded worker')
   self.postMessage(libsbmlLoaded())
-}).bind(undefined, module, self))
+}).bind(undefined, self))
 
 const handleAction = (action) => {
   switch (action.type) {
@@ -38,4 +37,8 @@ const handleAction = (action) => {
 
 self.addEventListener('message', function(e) {
   handleAction(e.data)
-}, false);
+}, false)
+
+// while(libsbml === null) {
+// }
+// self.postMessage(libsbmlLoaded())
