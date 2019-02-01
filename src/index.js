@@ -14,7 +14,7 @@ import "assets/css/material-dashboard-react.css"
 import indexRoutes from "routes/index.jsx"
 import { rootEpic, database_worker, libsbmljs_worker } from 'epics.js'
 import { dispatchQuery, getModelInfo } from 'actions.js'
-import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO, SET_MODEL_PROPERTIES, LIBSBML_LOADED, SET_MODEL_SRC, VALIDATE_MODEL } from 'constants.js'
+import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO, SET_MODEL_PROPERTIES, LIBSBML_LOADED, SET_MODEL_SRC, VALIDATE_MODEL, SET_MODEL_VALIDATION_RESULTS } from 'constants.js'
 import { setModelSourceEpic } from 'epics.js'
 
 import 'react-virtualized/styles.css'
@@ -39,7 +39,8 @@ const model = (state = {
       model: '', title: '', origin: '', origin_str: '',
       // libsbml_loaded: false,
       sbml_model_token: '', n_reactions: -1, n_species: -1, n_compartments: -1, n_events: -1, n_functions: -1, n_rules: -1,
-      validating_model: '',
+      model_source: '',
+      validating_model: '', validated_model: '', model_is_valid: false, model_consistency_errors: [],
     }, action) => {
   switch (action.type) {
     case GET_MODEL_INFO:
@@ -74,11 +75,13 @@ const model = (state = {
       // setModelSourceEpic.connect()
       // return Object.assign({}, state, {libsbml_loaded: true})
       return state
-    // case SET_MODEL_SRC:
-      // libsbmljs_worker.postMessage(action)
-      // return state
+    case SET_MODEL_SRC:
+      return Object.assign({}, state, {model_source: action.source})
     case VALIDATE_MODEL:
+      libsbmljs_worker.postMessage(Object.assign({}, action, {source: state.model_source}))
       return Object.assign({}, state, {validating_model: action.model})
+    case SET_MODEL_VALIDATION_RESULTS:
+      return Object.assign({}, state, {validated_model: action.model, model_is_valid: action.is_valid, model_consistency_errors: action.consistency_errors})
     default:
       return state
   }

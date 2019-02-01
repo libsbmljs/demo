@@ -1,5 +1,6 @@
-import { setModelProperties, libsbmlLoaded } from 'actions.js'
-import { SET_MODEL_SRC } from 'constants.js'
+import { setModelProperties, libsbmlLoaded, setModelValidationResults } from 'actions.js'
+import { SET_MODEL_SRC, VALIDATE_MODEL } from 'constants.js'
+import { range } from 'lodash'
 
 // import libsbml from 'libsbml.js'
 import libsbml_module from 'libsbml.js'
@@ -11,12 +12,12 @@ libsbml_module().then(((self,module) => {
 
 const handleAction = (action) => {
   switch (action.type) {
-    case SET_MODEL_SRC:
+    case SET_MODEL_SRC:{
       const reader = new libsbml.SBMLReader()
       const doc = reader.readSBMLFromString(action.source)
       const n_errors = doc.getNumErrors()
       if (n_errors > 0) {
-        console.log('Errors when reading SBML document')
+        console.log('Errors when reading SBML document') // TODO: post error
       }
       const model = doc.getModel()
       self.postMessage(setModelProperties(
@@ -30,6 +31,23 @@ const handleAction = (action) => {
         model.getNumRules(),
       ))
       return
+    }
+    case VALIDATE_MODEL:{
+      const reader = new libsbml.SBMLReader()
+      const doc = reader.readSBMLFromString(action.source)
+      const loading_errors = doc.getNumErrors()
+      if (loading_errors > 0) {
+        console.log('Errors when reading SBML document') // TODO: post error
+      }
+      const n_consistency_errors = doc.checkConsistency() ? doc.getNumErrors() : 0
+      const consistency_errors = range(n_consistency_errors).map(k => doc.getError(k))
+      self.postMessage(setModelValidationResults(
+        action.model,
+        n_consistency_errors === 0,
+        consistency_errors,
+      ))
+      return
+    }
     default:
       return
   }

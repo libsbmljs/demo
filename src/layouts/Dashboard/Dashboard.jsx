@@ -41,6 +41,9 @@ const mapStateToProps = (state) => {
     sbmlModelNumFunctions: state.model.n_functions,
     sbmlModelNumRules: state.model.n_rules,
     validatingModel: state.model.validating_model,
+    validatedModel: state.model.validated_model,
+    modelIsValid: state.model.model_is_valid,
+    modelConsistencyErrors: state.model.model_consistency_errors,
   }
 }
 
@@ -93,7 +96,7 @@ class App extends React.Component {
       displayedModel, displayedModelTitle, displayedModelOrigin,
       sbmlModelToken, sbmlModelNumReactions, sbmlModelNumSpecies,sbmlModelNumCompartments,
       sbmlModelNumEvents, sbmlModelNumFunctions, sbmlModelNumRules,
-      validateModel, validatingModel,
+      validateModel, validatingModel, validatedModel, modelIsValid, modelConsistencyErrors,
        ...rest } = this.props
     // action dispatchers
     const { setEnteredQuery, dispatchQuery, setActiveModel } = this.props
@@ -132,6 +135,9 @@ class App extends React.Component {
                   sbmlModelNumRules={sbmlModelNumRules}
                   validateModel={validateModel}
                   validatingModel={validatingModel}
+                  validatedModel={validatedModel}
+                  modelIsValid={modelIsValid}
+                  modelConsistencyErrors={modelConsistencyErrors}
                   />}
                   key="/view"/>
               </Switch>

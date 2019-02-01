@@ -70,7 +70,7 @@ function ModelView(props) {
   const { classes, model, displayedModel, displayedModelTitle, displayedModelOrigin, displayedModelOriginStr,
     sbmlModelToken, sbmlModelNumReactions, sbmlModelNumSpecies, sbmlModelNumCompartments,
     sbmlModelNumEvents, sbmlModelNumFunctions, sbmlModelNumRules,
-    validateModel, validatingModel,
+    validateModel, validatingModel, validatedModel, modelIsValid, modelConsistencyErrors,
    } = props
   const identifiers_org_uri = displayedModel === model ?
     (displayedModelOrigin === 'BioModels' ? 'http://identifiers.org/biomodels.db/' : 'http://identifiers.org/bigg.model/')+displayedModel
@@ -102,6 +102,14 @@ function ModelView(props) {
           </div> :
           <div>
           <div><br/></div>
+          {validatedModel === displayedModel ?
+          <Card>
+            <CardHeader color={modelIsValid ? 'success' : 'danger'}>
+              <h4 className={classes.cardTitleWhite}>{modelIsValid ? 'Valid' : 'Invalid'}</h4>
+            </CardHeader>
+            <CardBody style={{textAlign:'center'}}>
+            </CardBody>
+          </Card> :
           <Card>
             <CardHeader color="primary">
               <h4 className={classes.cardTitleWhite}>Validation</h4>
@@ -112,7 +120,7 @@ function ModelView(props) {
               <CircularProgress className={classes.progress} />
               }
             </CardBody>
-          </Card>
+          </Card>}
           </div>
         }
       </GridItem>

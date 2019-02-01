@@ -1,4 +1,4 @@
-import { NULL_ACTION, SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO, SET_MODEL_SRC, SET_MODEL_PROPERTIES, LIBSBML_LOADED, VALIDATE_MODEL } from 'constants.js'
+import { NULL_ACTION, SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO, SET_MODEL_SRC, SET_MODEL_PROPERTIES, LIBSBML_LOADED, VALIDATE_MODEL, SET_MODEL_VALIDATION_RESULTS } from 'constants.js'
 
 export const nullAction = () => ({
   type: NULL_ACTION,
@@ -56,5 +56,12 @@ export const libsbmlLoaded = () => ({
 
 export const validateModel = (model) => ({
   type: VALIDATE_MODEL,
-  model
+  model,
+})
+
+export const setModelValidationResults = (model, is_valid, consistency_errors) => ({
+  type: SET_MODEL_VALIDATION_RESULTS,
+  model,
+  is_valid,
+  consistency_errors,
 })
