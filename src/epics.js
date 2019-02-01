@@ -1,6 +1,6 @@
 import { combineEpics, ofType } from 'redux-observable'
-import { map, mapTo, debounceTime, merge, tap, mergeMap, publish, skipUntil, takeUntil, last, filter, buffer, delay } from 'rxjs/operators'
-import { of } from 'rxjs'
+import { map, mapTo, debounceTime, merge, tap, mergeMap, publish, skipUntil, takeUntil, last, filter, buffer, catchError, delay } from 'rxjs/operators'
+import { of, empty } from 'rxjs'
 import { ajax } from 'rxjs/ajax'
 import { push } from 'connected-react-router'
 
@@ -55,7 +55,6 @@ export const setModelSourceEpic = action$ =>
     skipUntil(action$.pipe(
       ofType(LIBSBML_LOADED),
     )),
-    delay(1000),
     map(action => libsbmljs_worker.postMessage(action)),
     filter(() => false),
   )
@@ -65,17 +64,10 @@ export const bufferedSetModelSourceEpic = action$ =>
     ofType(SET_MODEL_SRC),
     takeUntil(action$.pipe(
       ofType(LIBSBML_LOADED),
-      tap(() => console.log('libsbml loaded action')),
+      // tap(() => console.log('libsbml loaded action')),
     )),
     last(),
-    delay(1000),
-    tap(() => console.log('buffered set src2')),
-    // buffer(action$.pipe(
-    //   ofType(LIBSBML_LOADED),
-    //   tap(() => console.log('libsbml loaded action')),
-    // )),
-    // tap(() => console.log('buffered set src')),
-    // map(actions => actions.slice(-1)[0]),
+    catchError(() => empty()),
   )
 
 export const rootEpic = combineEpics(
