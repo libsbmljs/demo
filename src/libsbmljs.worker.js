@@ -33,7 +33,6 @@ const handleAction = (action) => {
       return
     }
     case VALIDATE_MODEL:{
-      console.log('worker validate model',action.model)
       const reader = new libsbml.SBMLReader()
       const doc = reader.readSBMLFromString(action.source)
       const loading_errors = doc.getNumErrors()

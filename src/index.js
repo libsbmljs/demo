@@ -71,8 +71,6 @@ const model = (state = {
         n_rules: action.n_rules,
       })
     case LIBSBML_LOADED:
-      console.log('libsbml loaded reducer')
-      // setModelSourceEpic.connect()
       // return Object.assign({}, state, {libsbml_loaded: true})
       return state
     case SET_MODEL_SRC:

@@ -92,7 +92,7 @@ function ModelView(props) {
             </a>
             {sbmlModelToken === model ?
             <p>
-            {sbmlModelNumReactions>0 ? `${sbmlModelNumReactions} reactions, ${sbmlModelNumSpecies} species, ${sbmlModelNumCompartments} compartments, ${sbmlModelNumEvents} events, ${sbmlModelNumFunctions} functions, ${sbmlModelNumRules} rules` : ''}
+            {`${sbmlModelNumReactions} reactions, ${sbmlModelNumSpecies} species, ${sbmlModelNumCompartments} compartments, ${sbmlModelNumEvents} events, ${sbmlModelNumFunctions} functions, ${sbmlModelNumRules} rules`}
             </p> : []}
           </CardBody>
         </Card>

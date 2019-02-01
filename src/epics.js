@@ -21,6 +21,7 @@ const remapBiggModel = (id) => {
 
 const buildModelUrl = (model, origin, curated) => {
   if (origin === 'BioModels') {
+    // return `https://cors-anywhere.herokuapp.com/http://www.ebi.ac.uk/biomodels/model/download/${model}?filename=${model}_url.xml`
     if (curated === 'Yes') {
       return `biomodels/curated/${model}/${model}_url.xml`
     } else {
