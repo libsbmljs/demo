@@ -37,7 +37,8 @@ const tableStyle = theme => ({
     maxWidth: "100%",
     backgroundColor: "transparent",
     borderSpacing: "0",
-    borderCollapse: "collapse"
+    borderCollapse: "collapse",
+    cursor: "pointer"
   },
   tableHeadCell: {
     color: "inherit",
@@ -48,21 +49,26 @@ const tableStyle = theme => ({
     borderSpacing: "0",
     borderCollapse: "collapse"
   },
+  tableCell2: {
+    cursor: "pointer",
+  },
   tableRow: {
     borderStyle: "none none solid none",
     borderWidth: "1px",
     borderSpacing: "0",
     borderCollapse: "collapse",
     borderColor: "#eeeeee",
+    // holy shet https://github.com/facebook/react/issues/7635
     '&:hover': {
       backgroundColor: "#eeeeee"
-    }
+    },
+    cursor: "pointer"
   },
   tableResponsive: {
     width: "100%",
     marginTop: theme.spacing.unit * 3,
     overflowX: "auto"
-  }
+  },
 });
 
 export default tableStyle;
