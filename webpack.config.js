@@ -18,11 +18,11 @@ module.exports = env => ({
   },
   devtool: 'inline-source-map',
   devServer: {
-    contentBase: [path.join(__dirname,'src'), env.LIBSBMLJS_PREFIX, env.DATABASE_PREFIX],
+    contentBase: [path.join(__dirname,'src'), env.LIBSBMLJS_PREFIX, env.LIBSBMLJS_PREFIX+'/libsbmljs_experimental', env.DATABASE_PREFIX],
     hot: false
   },
   resolve: {
-    modules: [path.resolve(__dirname,'src'),path.resolve(__dirname,'theme'),env.LIBSBMLJS_PREFIX,'node_modules']
+    modules: [path.resolve(__dirname,'src'),path.resolve(__dirname,'theme'),env.LIBSBMLJS_PREFIX,env.LIBSBMLJS_PREFIX+'/libsbml_experimental','node_modules']
   },
   module: {
     rules: [
