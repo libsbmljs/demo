@@ -3,9 +3,9 @@ import { SET_MODEL_SRC, VALIDATE_MODEL } from 'constants.js'
 import { range } from 'lodash'
 
 // import libsbml from 'libsbml.js'
-import libsbml from 'libsbml.js'
-// let libsbml = null
-libsbml().then(((self,module) => {
+import libsbml_module from 'libsbmljs_experimental'
+let libsbml = null
+libsbml_module().then(((self,module) => {
   libsbml = module
   self.postMessage(libsbmlLoaded())
 }).bind(undefined, self))
