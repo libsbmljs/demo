@@ -39,6 +39,7 @@ function CustomTable({ ...props }) {
                   dataKey='id'
                   headerClassName={classes[tableHeaderColor + "TableHeader"]}
                   width={150}
+                  cellRenderer={({cellData,rowData}) => <a href={`/#/view?m=${rowData.id}`}>{cellData}</a>}
                 />
                 <Column
                   key='title'
@@ -48,6 +49,7 @@ function CustomTable({ ...props }) {
                   width={400}
                   flexGrow={1}
                   flexShrink={0}
+                  cellRenderer={({cellData,rowData}) => <a href={`/#/view?m=${rowData.id}`}>{cellData}</a>}
                 />
                 <Column
                   key='origin'
@@ -55,6 +57,7 @@ function CustomTable({ ...props }) {
                   dataKey='origin'
                   headerClassName={classes[tableHeaderColor + "TableHeader"]}
                   width={100}
+                  cellRenderer={({cellData,rowData}) => <a href={`/#/view?m=${rowData.id}`}>{cellData}</a>}
                 />
                 <Column
                   key='curated'
@@ -62,6 +65,7 @@ function CustomTable({ ...props }) {
                   dataKey='curated'
                   headerClassName={classes[tableHeaderColor + "TableHeader"]}
                   width={100}
+                  cellRenderer={({cellData,rowData}) => <a href={`/#/view?m=${rowData.id}`}>{cellData}</a>}
                 />
               </Table>
             </Hidden>
@@ -85,6 +89,7 @@ function CustomTable({ ...props }) {
                    width={400}
                    flexGrow={1}
                    flexShrink={0}
+                   cellRenderer={({cellData,rowData}) => <a href={`/#/view?m=${rowData.id}`}>{cellData}</a>}
                  />
               </Table>
             </Hidden>

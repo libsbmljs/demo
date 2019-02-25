@@ -69,13 +69,5 @@ function SearchView(props) {
     </GridContainer>
   );
 }
-//   <Hidden smDown implementation="css">
-// </Hidden>
-// <Hidden mdUp implementation="css">
-//   <Table
-//     tableHeaderColor="primary"
-//     tableData={(searchResults || []).map(x => [x[1]])}
-//   />
-// </Hidden>
 
 export default withStyles(styles)(SearchView);
