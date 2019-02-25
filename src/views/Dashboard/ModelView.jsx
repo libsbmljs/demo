@@ -8,6 +8,7 @@ import GridContainer from "components/Grid/GridContainer.jsx"
 import Card from "components/Card/Card.jsx"
 import CardHeader from "components/Card/CardHeader.jsx"
 import CardBody from "components/Card/CardBody.jsx"
+import CardFooter from "components/Card/CardFooter.jsx";
 import Hidden from "@material-ui/core/Hidden"
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Button from 'components/CustomButtons/Button.jsx'
@@ -64,6 +65,13 @@ const styles = {
   cardWithMargin: {
     margin: '10 em',
   },
+  errorList: {
+    margin: '1em',
+    marginTop: '3em',
+  },
+  errorListItem: {
+    margin: '1em',
+  },
 };
 
 function ModelView(props) {
@@ -72,6 +80,7 @@ function ModelView(props) {
     sbmlModelNumEvents, sbmlModelNumFunctions, sbmlModelNumRules,
     validateModel, validatingModel, validatedModel, modelIsValid, modelConsistencyErrors,
    } = props
+  const model_and_origin = displayedModel === model ? `${model} | ${displayedModelOrigin}` : model
   const identifiers_org_uri = displayedModel === model ?
     (displayedModelOrigin === 'BioModels' ? 'http://identifiers.org/biomodels.db/' : 'http://identifiers.org/bigg.model/')+displayedModel
      : ''
@@ -80,21 +89,22 @@ function ModelView(props) {
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader color="primary">
-            <h4 className={classes.cardTitleWhite}>{model}</h4>
+            <h4 className={classes.cardTitleWhite}>{model_and_origin}</h4>
             <p className={classes.cardCategoryWhite}>
-              {displayedModel === model ? displayedModelOrigin : ''}
+              {displayedModel === model ? displayedModelTitle : ''}
             </p>
           </CardHeader>
           <CardBody>
-            <h4>{displayedModel === model ? displayedModelTitle : ''}</h4>
-            <a href={identifiers_org_uri}>
-              {identifiers_org_uri}
-            </a>
             {sbmlModelToken === model ?
             <p>
             {`${sbmlModelNumReactions} reactions, ${sbmlModelNumSpecies} species, ${sbmlModelNumCompartments} compartments, ${sbmlModelNumEvents} events, ${sbmlModelNumFunctions} functions, ${sbmlModelNumRules} rules`}
             </p> : []}
           </CardBody>
+          <CardFooter stats>
+          <a href={identifiers_org_uri}>
+            {identifiers_org_uri}
+          </a>
+          </CardFooter>
         </Card>
         {sbmlModelToken !== model ?
           <div style={{textAlign:'center'}}>
@@ -108,7 +118,9 @@ function ModelView(props) {
               <h4 className={classes.cardTitleWhite}>{modelIsValid ? 'Valid' : 'Invalid'}</h4>
             </CardHeader>
             <CardBody>
-              {modelConsistencyErrors.map((e) => (<div key={e.key}>{e.message}</div>))}
+              <ul className={classes.errorList}>
+                {modelConsistencyErrors.map((e) => (<li className={classes.errorListItem} key={e.key}>{e.message}</li>))}
+              </ul>
             </CardBody>
           </Card> :
           <Card>

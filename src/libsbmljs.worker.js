@@ -1,5 +1,5 @@
 import { setModelProperties, libsbmlLoaded, setModelValidationResults } from 'actions.js'
-import { SET_MODEL_SRC, VALIDATE_MODEL } from 'constants.js'
+import { SET_MODEL_SRC, VALIDATE_MODEL, ERRORS_READING_SBML } from 'constants.js'
 import { range } from 'lodash'
 
 // import libsbml from 'libsbml.js'
@@ -23,7 +23,7 @@ const handleAction = (action) => {
           ({
             message: doc.getError(k).getMessage(),
           })
-        ))
+        )))
       }
       const model = doc.getModel()
       self.postMessage(setModelProperties(
