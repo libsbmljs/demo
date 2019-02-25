@@ -17,7 +17,7 @@ function Footer({ ...props }) {
             Theme by{" "}
             <a href="https://www.creative-tim.com" className={classes.a}>
               Creative Tim
-            </a>. See disclaimer.
+            </a>. See <a href="https://github.com/libsbmljs/demo#disclaimer">disclaimer</a>.
           </span>
         </p>
       </div>
