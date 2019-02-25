@@ -4,7 +4,7 @@
   "description": "Live demo of libsbml.js",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node --max_old_space_size=4096 ./node_modules/webpack-dev-server/bin/webpack-dev-server --mode development --env.DATABASE_PREFIX=$DATABASE_PREFIX --env.LIBSBMLJS_PREFIX=$LIBSBMLJS_PREFIX --host 0.0.0.0",
+    "start": "babel-node --max_old_space_size=4096 ./node_modules/webpack-dev-server/bin/webpack-dev-server --mode development --env.DATABASE_PREFIX=$DATABASE_PREFIX --host 0.0.0.0",
     "build": "babel-node --max_old_space_size=4096 ./node_modules/webpack-dev-server/bin/webpack --mode production"
   },
   "keywords": [
@@ -41,6 +41,7 @@
     "classnames": "^2.2.6",
     "connected-react-router": "^6.2.2",
     "immutable": "^4.0.0-rc.12",
+    "libsbmljs_stable": "^5.17.0-beta2",
     "lodash": "^4.17.11",
     "lunr": "^2.3.5",
     "perfect-scrollbar": "^1.4.0",

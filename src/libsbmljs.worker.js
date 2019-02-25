@@ -3,7 +3,7 @@ import { SET_MODEL_SRC, VALIDATE_MODEL } from 'constants.js'
 import { range } from 'lodash'
 
 // import libsbml from 'libsbml.js'
-import libsbml_module from 'libsbmljs_experimental'
+import libsbml_module from 'libsbmljs_stable'
 let libsbml = null
 libsbml_module().then(((self,module) => {
   libsbml = module
