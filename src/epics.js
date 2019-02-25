@@ -21,14 +21,15 @@ const remapBiggModel = (id) => {
 
 const buildModelUrl = (model, origin, curated) => {
   if (origin === 'BioModels') {
-    // return `https://cors-anywhere.herokuapp.com/http://www.ebi.ac.uk/biomodels/model/download/${model}?filename=${model}_url.xml`
-    if (curated === 'Yes') {
-      return `biomodels/curated/${model}/${model}_url.xml`
-    } else {
-      return `biomodels/non_curated/${model}/${model}_url.xml`
-    }
+    return `https://cors-anywhere.herokuapp.com/http://www.ebi.ac.uk/biomodels/model/download/${model}?filename=${model}_url.xml`
+    // if (curated === 'Yes') {
+    //   return `biomodels/curated/${model}/${model}_url.xml`
+    // } else {
+    //   return `biomodels/non_curated/${model}/${model}_url.xml`
+    // }
   } else {
-    return `bigg_models/${remapBiggModel(model)}.xml`
+    return `https://raw.githubusercontent.com/SBRG/bigg_models_data/master/models/${remapBiggModel(model)}.xml`
+    // return `bigg_models/${remapBiggModel(model)}.xml`
   }
 }
 

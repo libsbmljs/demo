@@ -4,8 +4,8 @@
   "description": "Live demo of libsbml.js",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node --max_old_space_size=4096 ./node_modules/webpack-dev-server/bin/webpack-dev-server --mode development --env.DATABASE_PREFIX=$DATABASE_PREFIX --host 0.0.0.0",
-    "build": "babel-node --max_old_space_size=4096 ./node_modules/webpack-dev-server/bin/webpack --mode production"
+    "start": "npx babel-node --max_old_space_size=4096 ./node_modules/webpack-dev-server/bin/webpack-dev-server --mode development --env.DATABASE_PREFIX=$DATABASE_PREFIX --host 0.0.0.0",
+    "build": "npx babel-node --max_old_space_size=4096 webpack --mode production"
   },
   "keywords": [
     "systems",
