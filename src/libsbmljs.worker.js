@@ -17,7 +17,13 @@ const handleAction = (action) => {
       const doc = reader.readSBMLFromString(action.source)
       const n_errors = doc.getNumErrors()
       if (n_errors > 0) {
-        console.log('Errors when reading SBML document') // TODO: post error
+        self.postMessage(errorsReadingSBML(
+          action.model,
+          range(n_errors).map(k =>
+          ({
+            message: doc.getError(k).getMessage(),
+          })
+        ))
       }
       const model = doc.getModel()
       self.postMessage(setModelProperties(

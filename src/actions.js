@@ -65,3 +65,9 @@ export const setModelValidationResults = (model, is_valid, consistency_errors) =
   is_valid,
   consistency_errors,
 })
+
+export const errorsReadingSBML = (model, errors) => ({
+  type: ERRORS_READING_SBML,
+  model,
+  errors,
+})

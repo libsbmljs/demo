@@ -38,7 +38,8 @@ const query = (state = {entered_query: '', results: []}, action) => {
 const model = (state = {
       model: '', title: '', origin: '', origin_str: '',
       // libsbml_loaded: false,
-      sbml_model_token: '', n_reactions: -1, n_species: -1, n_compartments: -1, n_events: -1, n_functions: -1, n_rules: -1,
+      sbml_model_token: '', errors: [],
+      n_reactions: -1, n_species: -1, n_compartments: -1, n_events: -1, n_functions: -1, n_rules: -1,
       model_source: '',
       validating_model: '', validated_model: '', model_is_valid: false, model_consistency_errors: [],
     }, action) => {
@@ -69,6 +70,11 @@ const model = (state = {
         n_events: action.n_events,
         n_functions: action.n_functions,
         n_rules: action.n_rules,
+      })
+    case ERRORS_READING_SBML:
+      return Object.assign({}, state, {
+        sbml_model_token: action.sbml_model_token,
+        errors: action.errors,
       })
     case LIBSBML_LOADED:
       // return Object.assign({}, state, {libsbml_loaded: true})
