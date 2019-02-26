@@ -105,7 +105,9 @@ const headerLinksStyle = theme => ({
       width: "-webkit-fill-available",
       margin: "10px 15px 0"
     },
-    display: "inline-block"
+    display: "inline-block",
+    flex: 1,
+    width: '100%',
   }
 });
 

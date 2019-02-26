@@ -23,7 +23,7 @@ function Header({ ...props }) {
   return (
     <AppBar className={classes.appBar + appBarClasses}>
       <Toolbar className={classes.container}>
-        <div className={classes.flex}>
+        <div>
           <Hidden smDown implementation="css">
             <Button color="transparent" href="#" className={classes.title}>
               {'libsbmljs demo'}
