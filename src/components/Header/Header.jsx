@@ -26,7 +26,7 @@ function Header({ ...props }) {
         <div className={classes.flex}>
           <Hidden smDown implementation="css">
             <Button color="transparent" href="#" className={classes.title}>
-              {'libsbml.js demo'}
+              {'libsbmljs demo'}
             </Button>
           </Hidden>
         </div>

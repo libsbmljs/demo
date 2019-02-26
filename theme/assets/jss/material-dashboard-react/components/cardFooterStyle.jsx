@@ -8,7 +8,8 @@ const cardFooterStyle = {
     alignItems: "center",
     display: "flex",
     backgroundColor: "transparent",
-    border: "0"
+    border: "0",
+    wordWrap: 'break-word',
   },
   cardFooterProfile: {
     marginTop: "-15px"

@@ -101,7 +101,7 @@ function ModelView(props) {
             </p> : []}
           </CardBody>
           <CardFooter stats>
-          <a href={identifiers_org_uri}>
+          <a href={identifiers_org_uri} style={{wordWrap: 'break-word'}}>
             {identifiers_org_uri}
           </a>
           </CardFooter>

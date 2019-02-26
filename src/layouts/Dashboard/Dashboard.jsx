@@ -15,6 +15,7 @@ import Footer from "components/Footer/Footer.jsx"
 import Sidebar from "components/Sidebar/Sidebar.jsx"
 import SearchView from "views/Dashboard/SearchView.jsx"
 import ModelView from "views/Dashboard/ModelView.jsx"
+import LandingView from "views/Dashboard/LandingView.jsx"
 import { setEnteredQuery, dispatchQuery, setActiveModel, getModelInfo, validateModel } from 'actions'
 
 import dashboardRoutes from "routes/dashboard.jsx"
@@ -140,6 +141,8 @@ class App extends React.Component {
                   modelConsistencyErrors={modelConsistencyErrors}
                   />}
                   key="/view"/>
+                <Route path="/" render={props =>
+                  <LandingView key="/landing"/>} />
               </Switch>
             </div>
           </div>
