@@ -54,9 +54,10 @@ export const libsbmlLoaded = () => ({
   type: LIBSBML_LOADED,
 })
 
-export const validateModel = (model) => ({
+export const validateModel = (model, source) => ({
   type: VALIDATE_MODEL,
   model,
+  source,
 })
 
 export const setModelValidationResults = (model, is_valid, consistency_errors) => ({

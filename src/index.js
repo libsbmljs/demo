@@ -42,6 +42,7 @@ const model = (state = {
       n_reactions: -1, n_species: -1, n_compartments: -1, n_events: -1, n_functions: -1, n_rules: -1,
       model_source: '',
       validating_model: '', validated_model: '', model_is_valid: false, model_consistency_errors: [],
+      expired: false,
     }, action) => {
   switch (action.type) {
     case GET_MODEL_INFO:
@@ -81,7 +82,7 @@ const model = (state = {
       // return Object.assign({}, state, {libsbml_loaded: true})
       return state
     case SET_MODEL_SRC:
-      return Object.assign({}, state, {model_source: action.source})
+      return Object.assign({}, state, {model:action.model, model_source: action.source})
     case VALIDATE_MODEL:
       libsbmljs_worker.postMessage(Object.assign({}, action, {source: state.model_source}))
       return Object.assign({}, state, {validating_model: action.model})
