@@ -106,7 +106,7 @@ class App extends React.Component {
       validateModel, validatingModel, validatedModel, modelIsValid, modelConsistencyErrors,
        ...rest } = this.props
     // action dispatchers
-    const { setEnteredQuery, dispatchQuery, setActiveModel, setUploadedModel } = this.props
+    const { setEnteredQuery, dispatchQuery, setActiveModel, setUploadedModel, setModelSource } = this.props
     return (
       <div className={classes.wrapper}>
         <div className={classes.mainPanel} ref="mainPanel">

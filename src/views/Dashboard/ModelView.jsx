@@ -112,7 +112,7 @@ function ModelView(props) {
           </div> :
           <div>
           <div><br/></div>
-          {validatedModel === displayedModel ?
+          { (validatedModel && (model === displayedModel && validatedModel === displayedModel)) ?
           <Card>
             <CardHeader color={modelIsValid ? 'success' : 'danger'}>
               <h4 className={classes.cardTitleWhite}>{modelIsValid ? 'Valid' : 'Invalid'}</h4>
@@ -128,7 +128,7 @@ function ModelView(props) {
               <h4 className={classes.cardTitleWhite}>Validation</h4>
             </CardHeader>
             <CardBody style={{textAlign:'center'}}>
-              { validatingModel !== displayedModel ?
+              { (!validatingModel || (validatingModel !== displayedModel) )?
               <div>
                 <Button color="primary" onClick={() => validateModel(model)}>Validate Now</Button>
               </div> :

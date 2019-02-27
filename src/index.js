@@ -85,7 +85,7 @@ const model = (state = {
       libsbmljs_worker.postMessage(Object.assign({}, action, {source: state.model_source}))
       return Object.assign({}, state, {validating_model: action.model})
     case SET_MODEL_VALIDATION_RESULTS:
-      return Object.assign({}, state, {validated_model: action.model, model_is_valid: action.is_valid, model_consistency_errors: action.consistency_errors})
+      return Object.assign({}, state, {validated_model: action.model, model_is_valid: action.is_valid, model_consistency_errors: action.consistency_errors, validating_model: ''})
     default:
       return state
   }
