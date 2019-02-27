@@ -1,5 +1,5 @@
-import { setModelProperties, libsbmlLoaded, setModelValidationResults } from 'actions.js'
-import { SET_MODEL_SRC, VALIDATE_MODEL, ERRORS_READING_SBML } from 'constants.js'
+import { setModelProperties, libsbmlLoaded, setModelValidationResults, errorsReadingSBML } from 'actions.js'
+import { SET_MODEL_SRC, VALIDATE_MODEL } from 'constants.js'
 import { range } from 'lodash'
 
 // import libsbml from 'libsbml.js'
@@ -21,6 +21,7 @@ const handleAction = (action) => {
           action.model,
           range(n_errors).map(k =>
           ({
+            key: k,
             message: doc.getError(k).getMessage(),
           })
         )))

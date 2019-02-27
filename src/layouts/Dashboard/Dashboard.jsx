@@ -45,6 +45,8 @@ const mapStateToProps = (state) => {
     validatedModel: state.model.validated_model,
     modelIsValid: state.model.model_is_valid,
     modelConsistencyErrors: state.model.model_consistency_errors,
+    errorsModel: state.model.errors_model,
+    errors: state.model.errors,
   }
 }
 
@@ -104,6 +106,7 @@ class App extends React.Component {
       sbmlModelToken, sbmlModelNumReactions, sbmlModelNumSpecies,sbmlModelNumCompartments,
       sbmlModelNumEvents, sbmlModelNumFunctions, sbmlModelNumRules,
       validateModel, validatingModel, validatedModel, modelIsValid, modelConsistencyErrors,
+      errorsModel, errors,
        ...rest } = this.props
     // action dispatchers
     const { setEnteredQuery, dispatchQuery, setActiveModel, setUploadedModel, setModelSource } = this.props
@@ -131,6 +134,8 @@ class App extends React.Component {
                   <ModelView
                   model={new URLSearchParams(location.search).get('m')}
                   modelWasUploaded={new URLSearchParams(location.search).get('src') === 'upload'}
+                  errorsModel={errorsModel}
+                  errors={errors}
                   displayedModel={displayedModel}
                   displayedModelTitle={displayedModelTitle}
                   displayedModelOrigin={displayedModelOrigin}

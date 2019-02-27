@@ -79,26 +79,43 @@ function ModelView(props) {
     sbmlModelToken, sbmlModelNumReactions, sbmlModelNumSpecies, sbmlModelNumCompartments,
     sbmlModelNumEvents, sbmlModelNumFunctions, sbmlModelNumRules,
     validateModel, validatingModel, validatedModel, modelIsValid, modelConsistencyErrors,
+    errors, errorsModel,
    } = props
-  const model_and_origin = modelWasUploaded ? 'Uploaded Model' : (displayedModel === model ? `${model} | ${displayedModelOrigin}` : model)
+
+  const model_and_origin = errors.length && (errorsModel === model) ?
+    'Errors Reading SBML' :
+    (modelWasUploaded ?
+      'Uploaded Model' :
+      (displayedModel === model ?
+        `${model} | ${displayedModelOrigin}` :
+        model))
+
   const identifiers_org_uri = displayedModel === model ?
     (displayedModelOrigin === 'BioModels' ? 'http://identifiers.org/biomodels.db/' : 'http://identifiers.org/bigg.model/')+displayedModel
      : ''
+
   return (
     <GridContainer style={{minHeight:'calc(100vh - 240px)'}}>
       <GridItem xs={12} sm={12} md={12}>
         <Card>
-          <CardHeader color="primary">
+          <CardHeader color={errors.length && (errorsModel === model) ? 'danger' : 'primary'}>
             <h4 className={classes.cardTitleWhite}>{model_and_origin}</h4>
             <p className={classes.cardCategoryWhite}>
               {displayedModel === model ? displayedModelTitle : ''}
             </p>
           </CardHeader>
           <CardBody>
-            {sbmlModelToken === model ?
-            <p>
-            {`${sbmlModelNumReactions} reactions, ${sbmlModelNumSpecies} species, ${sbmlModelNumCompartments} compartments, ${sbmlModelNumEvents} events, ${sbmlModelNumFunctions} functions, ${sbmlModelNumRules} rules`}
-            </p> : []}
+            {
+              (errors.length && (errorsModel === model)) ?
+                <ul className={classes.errorList}>
+                  {errors.map((e) => (<li className={classes.errorListItem} key={e.key}>{e.message}</li>))}
+                </ul>
+              :
+                (sbmlModelToken === model ?
+                <p>
+                {`${sbmlModelNumReactions} reactions, ${sbmlModelNumSpecies} species, ${sbmlModelNumCompartments} compartments, ${sbmlModelNumEvents} events, ${sbmlModelNumFunctions} functions, ${sbmlModelNumRules} rules`}
+                </p> : [])
+            }
           </CardBody>
           <CardFooter stats>
           <a href={identifiers_org_uri} style={{wordWrap: 'break-word'}}>

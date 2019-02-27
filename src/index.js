@@ -38,7 +38,7 @@ const query = (state = {entered_query: '', results: []}, action) => {
 const model = (state = {
       model: '', title: '', origin: '', origin_str: '',
       // libsbml_loaded: false,
-      sbml_model_token: '', errors: [],
+      sbml_model_token: '', errors: [], errors_model: '',
       n_reactions: -1, n_species: -1, n_compartments: -1, n_events: -1, n_functions: -1, n_rules: -1,
       model_source: '',
       validating_model: '', validated_model: '', model_is_valid: false, model_consistency_errors: [],
@@ -74,6 +74,7 @@ const model = (state = {
     case ERRORS_READING_SBML:
       return Object.assign({}, state, {
         sbml_model_token: action.sbml_model_token,
+        errors_model: action.model,
         errors: action.errors,
       })
     case LIBSBML_LOADED:
