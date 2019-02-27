@@ -63,6 +63,21 @@ class LandingView extends React.PureComponent {
     super(props)
   }
 
+  uploadFile() {
+    if ('files' in this.fileUpload) {
+      if (this.fileUpload.files.length != 0) {
+        for (const f of this.fileUpload.files) {
+          // const f = this.fileUpload.files[i]
+          const reader = new FileReader()
+          reader.onload = ((f) => (
+            (e) => console.log(e.target.result)
+          ))(f)
+          reader.readAsText(f)
+        }
+      }
+    }
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -76,7 +91,7 @@ class LandingView extends React.PureComponent {
               <li className={classes.demoListItem} >Search for BioModels and BiGG Models using the bar.</li>
               <li className={classes.demoListItem} >Click here or drag and drop to upload an SBML model.</li>
             </ol>
-            <input id='fileuploadcontrol' type='file' hidden ref={input => this.fileUpload = input}/>
+            <input id='fileuploadcontrol' type='file' hidden onChange={(f) => this.uploadFile()} ref={input => this.fileUpload = input}/>
           </div>
         </GridItem>
       </GridContainer>

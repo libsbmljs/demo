@@ -57,7 +57,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(dispatchQuery(query))
     },
     setActiveModel: (model) => {
-      dispatch(push('/view?m='+model))
+      dispatch(push('/view?m='+model+'&src=web'))
       dispatch(getModelInfo(model))
     },
     validateModel: (model) => {
