@@ -58,23 +58,30 @@ const styles = {
   },
 };
 
-function LandingView(props) {
-  const { classes } = props;
-  return (
-    <GridContainer style={{minHeight:'calc(100vh - 240px)'}}>
-      <GridItem xs={12} sm={12} md={12}>
-        <div className={classes.landingPad} style={{minHeight:'calc(100vh - 240px)'}}>
-          <p className={classes.demoText}>
-            How to use:
-          </p>
-          <ol className={classes.demoText}>
-            <li className={classes.demoListItem} >Search for BioModels and BiGG Models using the bar.</li>
-            <li className={classes.demoListItem} >Click here or drag and drop to upload an SBML model.</li>
-          </ol>
-        </div>
-      </GridItem>
-    </GridContainer>
-  );
+class LandingView extends React.PureComponent {
+  constructor(props) {
+    super(props)
+  }
+
+  render() {
+    const { classes } = this.props;
+    return (
+      <GridContainer style={{minHeight:'calc(100vh - 240px)'}}>
+        <GridItem xs={12} sm={12} md={12}>
+          <div className={classes.landingPad} style={{minHeight:'calc(100vh - 240px)'}} onClick={() => this.fileUpload.click()}>
+            <p className={classes.demoText}>
+              How to use:
+            </p>
+            <ol className={classes.demoText}>
+              <li className={classes.demoListItem} >Search for BioModels and BiGG Models using the bar.</li>
+              <li className={classes.demoListItem} >Click here or drag and drop to upload an SBML model.</li>
+            </ol>
+            <input id='fileuploadcontrol' type='file' hidden ref={input => this.fileUpload = input}/>
+          </div>
+        </GridItem>
+      </GridContainer>
+    );
+  }
 }
 
 export default withStyles(styles)(LandingView);
