@@ -111,6 +111,10 @@ hist.listen((location, action) => {
     }
     const model = new URLSearchParams(hist.location.search).get('m')
     if (model) {
+      const src = new URLSearchParams(hist.location.search).get('src')
+      if (src && src === 'upload') {
+        return
+      }
       store.dispatch(getModelInfo(model))
       return
     }
@@ -124,6 +128,10 @@ window.onload = () => {
   }
   const model = new URLSearchParams(hist.location.search).get('m')
   if (model) {
+    const src = new URLSearchParams(hist.location.search).get('src')
+    if (src && src === 'upload') {
+      return
+    }
     store.dispatch(getModelInfo(model))
     return
   }

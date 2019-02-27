@@ -75,12 +75,12 @@ const styles = {
 };
 
 function ModelView(props) {
-  const { classes, model, displayedModel, displayedModelTitle, displayedModelOrigin, displayedModelOriginStr,
+  const { classes, model, modelWasUploaded, displayedModel, displayedModelTitle, displayedModelOrigin, displayedModelOriginStr,
     sbmlModelToken, sbmlModelNumReactions, sbmlModelNumSpecies, sbmlModelNumCompartments,
     sbmlModelNumEvents, sbmlModelNumFunctions, sbmlModelNumRules,
     validateModel, validatingModel, validatedModel, modelIsValid, modelConsistencyErrors,
    } = props
-  const model_and_origin = displayedModel === model ? `${model} | ${displayedModelOrigin}` : model
+  const model_and_origin = modelWasUploaded ? 'Uploaded Model' : (displayedModel === model ? `${model} | ${displayedModelOrigin}` : model)
   const identifiers_org_uri = displayedModel === model ?
     (displayedModelOrigin === 'BioModels' ? 'http://identifiers.org/biomodels.db/' : 'http://identifiers.org/bigg.model/')+displayedModel
      : ''

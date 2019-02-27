@@ -16,7 +16,7 @@ import Sidebar from "components/Sidebar/Sidebar.jsx"
 import SearchView from "views/Dashboard/SearchView.jsx"
 import ModelView from "views/Dashboard/ModelView.jsx"
 import LandingView from "views/Dashboard/LandingView.jsx"
-import { setEnteredQuery, dispatchQuery, setActiveModel, getModelInfo, validateModel } from 'actions'
+import { setEnteredQuery, dispatchQuery, setActiveModel, getModelInfo, validateModel, setModelSource } from 'actions'
 
 import dashboardRoutes from "routes/dashboard.jsx"
 
@@ -60,9 +60,15 @@ const mapDispatchToProps = dispatch => {
       dispatch(push('/view?m='+model+'&src=web'))
       dispatch(getModelInfo(model))
     },
+    setUploadedModel: (model) => {
+      dispatch(push('/view?m='+model+'&src=upload'))
+    },
     validateModel: (model) => {
       dispatch(validateModel(model))
     },
+    setModelSource: (model,src) => {
+      dispatch(setModelSource(model,src))
+    }
   }
 }
 
@@ -100,7 +106,7 @@ class App extends React.Component {
       validateModel, validatingModel, validatedModel, modelIsValid, modelConsistencyErrors,
        ...rest } = this.props
     // action dispatchers
-    const { setEnteredQuery, dispatchQuery, setActiveModel } = this.props
+    const { setEnteredQuery, dispatchQuery, setActiveModel, setUploadedModel } = this.props
     return (
       <div className={classes.wrapper}>
         <div className={classes.mainPanel} ref="mainPanel">
@@ -124,6 +130,7 @@ class App extends React.Component {
                 <Route path="/view" render={props =>
                   <ModelView
                   model={new URLSearchParams(location.search).get('m')}
+                  modelWasUploaded={new URLSearchParams(location.search).get('src') === 'upload'}
                   displayedModel={displayedModel}
                   displayedModelTitle={displayedModelTitle}
                   displayedModelOrigin={displayedModelOrigin}
@@ -142,7 +149,7 @@ class App extends React.Component {
                   />}
                   key="/view"/>
                 <Route path="/" render={props =>
-                  <LandingView key="/landing"/>} />
+                  <LandingView setUploadedModel={setUploadedModel} setModelSource={setModelSource} key="/landing"/>} />
               </Switch>
             </div>
           </div>

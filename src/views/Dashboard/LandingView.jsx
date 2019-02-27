@@ -9,6 +9,7 @@ import Card from "components/Card/Card.jsx"
 import CardHeader from "components/Card/CardHeader.jsx"
 import CardBody from "components/Card/CardBody.jsx"
 import Hidden from "@material-ui/core/Hidden"
+import uuidv4 from 'uuid/v4'
 
 import "assets/css/material-dashboard-react.css"
 
@@ -64,16 +65,23 @@ class LandingView extends React.PureComponent {
   }
 
   uploadFile() {
+    const { setModelSource, setUploadedModel } = this.props;
     if ('files' in this.fileUpload) {
-      if (this.fileUpload.files.length != 0) {
+      if (this.fileUpload.files.length == 1) {
         for (const f of this.fileUpload.files) {
           // const f = this.fileUpload.files[i]
           const reader = new FileReader()
           reader.onload = ((f) => (
-            (e) => console.log(e.target.result)
+            (e) => {
+              const model_id = uuidv4()
+              setUploadedModel(model_id)
+              setModelSource(model_id, e.target.result)
+            }
           ))(f)
           reader.readAsText(f)
         }
+      } else if (this.fileUpload.files.length > 1) {
+        alert('Select only one file')
       }
     }
   }
