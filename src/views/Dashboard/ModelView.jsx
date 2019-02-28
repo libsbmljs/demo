@@ -80,6 +80,7 @@ function ModelView(props) {
     sbmlModelNumEvents, sbmlModelNumFunctions, sbmlModelNumRules,
     validateModel, validatingModel, validatedModel, modelIsValid, modelConsistencyErrors,
     errors, errorsModel,
+    expiredModel,
    } = props
 
   const model_and_origin = errors.length && (errorsModel === model) ?
@@ -106,15 +107,18 @@ function ModelView(props) {
           </CardHeader>
           <CardBody>
             {
-              (errors.length && (errorsModel === model)) ?
-                <ul className={classes.errorList}>
-                  {errors.map((e) => (<li className={classes.errorListItem} key={e.key}>{e.message}</li>))}
-                </ul>
-              :
-                (sbmlModelToken === model ?
-                <p>
-                {`${sbmlModelNumReactions} reactions, ${sbmlModelNumSpecies} species, ${sbmlModelNumCompartments} compartments, ${sbmlModelNumEvents} events, ${sbmlModelNumFunctions} functions, ${sbmlModelNumRules} rules`}
-                </p> : [])
+              (expiredModel && (expiredModel === model)) ?
+                <p>No model loaded</p>
+                :
+                (errors.length && (errorsModel === model)) ?
+                  <ul className={classes.errorList}>
+                    {errors.map((e) => (<li className={classes.errorListItem} key={e.key}>{e.message}</li>))}
+                  </ul>
+                :
+                  (sbmlModelToken === model ?
+                  <p>
+                  {`${sbmlModelNumReactions} reactions, ${sbmlModelNumSpecies} species, ${sbmlModelNumCompartments} compartments, ${sbmlModelNumEvents} events, ${sbmlModelNumFunctions} functions, ${sbmlModelNumRules} rules`}
+                  </p> : [])
             }
           </CardBody>
           <CardFooter stats>
@@ -124,9 +128,12 @@ function ModelView(props) {
           </CardFooter>
         </Card>
         {sbmlModelToken !== model ?
-          <div style={{textAlign:'center'}}>
-            <CircularProgress className={classes.progress} />
-          </div> :
+          (
+            (!expiredModel || (expiredModel != model)) ?
+            <div style={{textAlign:'center'}}>
+              <CircularProgress className={classes.progress} />
+            </div> : <div/>
+          ) :
           <div>
           <div><br/></div>
           { (validatedModel && (model === displayedModel && validatedModel === displayedModel)) ?
@@ -146,10 +153,11 @@ function ModelView(props) {
             </CardHeader>
             <CardBody style={{textAlign:'center'}}>
               { (!validatingModel || (validatingModel !== displayedModel) )?
-              <div>
-                <Button color="primary" onClick={() => validateModel(model)}>Validate Now</Button>
-              </div> :
-              <CircularProgress className={classes.progress} />
+                <div>
+                  <Button color="primary" onClick={() => validateModel(model)}>Validate Now</Button>
+                </div>
+              :
+                <CircularProgress className={classes.progress} />
               }
             </CardBody>
           </Card>}

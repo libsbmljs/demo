@@ -47,6 +47,7 @@ const mapStateToProps = (state) => {
     modelConsistencyErrors: state.model.model_consistency_errors,
     errorsModel: state.model.errors_model,
     errors: state.model.errors,
+    expiredModel: state.model.expired_model
   }
 }
 
@@ -107,6 +108,7 @@ class App extends React.Component {
       sbmlModelNumEvents, sbmlModelNumFunctions, sbmlModelNumRules,
       validateModel, validatingModel, validatedModel, modelIsValid, modelConsistencyErrors,
       errorsModel, errors,
+      expiredModel,
        ...rest } = this.props
     // action dispatchers
     const { setEnteredQuery, dispatchQuery, setActiveModel, setUploadedModel, setModelSource } = this.props
@@ -151,6 +153,7 @@ class App extends React.Component {
                   validatedModel={validatedModel}
                   modelIsValid={modelIsValid}
                   modelConsistencyErrors={modelConsistencyErrors}
+                  expiredModel={expiredModel}
                   />}
                   key="/view"/>
                 <Route path="/" render={props =>

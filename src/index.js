@@ -13,8 +13,8 @@ import "assets/css/material-dashboard-react.css"
 
 import indexRoutes from "routes/index.jsx"
 import { rootEpic, database_worker, libsbmljs_worker } from 'epics.js'
-import { dispatchQuery, getModelInfo } from 'actions.js'
-import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO, SET_MODEL_PROPERTIES, LIBSBML_LOADED, SET_MODEL_SRC, VALIDATE_MODEL, SET_MODEL_VALIDATION_RESULTS, ERRORS_READING_SBML } from 'constants.js'
+import { dispatchQuery, getModelInfo, setExpiredModel } from 'actions.js'
+import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO, SET_MODEL_PROPERTIES, LIBSBML_LOADED, SET_MODEL_SRC, VALIDATE_MODEL, SET_MODEL_VALIDATION_RESULTS, ERRORS_READING_SBML, SET_EXPIRED_MODEL } from 'constants.js'
 import { setModelSourceEpic } from 'epics.js'
 
 import 'react-virtualized/styles.css'
@@ -42,7 +42,7 @@ const model = (state = {
       n_reactions: -1, n_species: -1, n_compartments: -1, n_events: -1, n_functions: -1, n_rules: -1,
       model_source: '',
       validating_model: '', validated_model: '', model_is_valid: false, model_consistency_errors: [],
-      expired: false,
+      expired_model: '',
     }, action) => {
   switch (action.type) {
     case GET_MODEL_INFO:
@@ -53,6 +53,7 @@ const model = (state = {
         model: action.model,
         title: action.title,
         origin: action.origin,
+        expired_model: '',
         origin_str: action.origin +
         (action.origin === 'BioModels' ?
           (action.curated === 'Yes' ? ' (curated)' : ' (non-curated)')
@@ -65,6 +66,7 @@ const model = (state = {
     case SET_MODEL_PROPERTIES:
       return Object.assign({}, state, {
         sbml_model_token: action.sbml_model_token,
+        expired_model: '',
         n_reactions: action.n_reactions,
         n_species: action.n_species,
         n_compartments: action.n_compartments,
@@ -75,6 +77,7 @@ const model = (state = {
     case ERRORS_READING_SBML:
       return Object.assign({}, state, {
         sbml_model_token: action.sbml_model_token,
+        expired_model: '',
         errors_model: action.model,
         errors: action.errors,
       })
@@ -82,12 +85,14 @@ const model = (state = {
       // return Object.assign({}, state, {libsbml_loaded: true})
       return state
     case SET_MODEL_SRC:
-      return Object.assign({}, state, {model:action.model, model_source: action.source})
+      return Object.assign({}, state, {model:action.model, model_source: action.source, expired_model: ''})
     case VALIDATE_MODEL:
       libsbmljs_worker.postMessage(Object.assign({}, action, {source: state.model_source}))
-      return Object.assign({}, state, {validating_model: action.model})
+      return Object.assign({}, state, {validating_model: action.model, expired_model: ''})
     case SET_MODEL_VALIDATION_RESULTS:
-      return Object.assign({}, state, {validated_model: action.model, model_is_valid: action.is_valid, model_consistency_errors: action.consistency_errors, validating_model: ''})
+      return Object.assign({}, state, {validated_model: action.model, model_is_valid: action.is_valid, model_consistency_errors: action.consistency_errors, validating_model: '', expired_model: ''})
+    case SET_EXPIRED_MODEL:
+      return Object.assign({}, state, {expired_model: action.model})
     default:
       return state
   }
@@ -115,6 +120,7 @@ hist.listen((location, action) => {
     if (model) {
       const src = new URLSearchParams(hist.location.search).get('src')
       if (src && src === 'upload') {
+        store.dispatch(setExpiredModel(model))
         return
       }
       store.dispatch(getModelInfo(model))
@@ -132,6 +138,7 @@ window.onload = () => {
   if (model) {
     const src = new URLSearchParams(hist.location.search).get('src')
     if (src && src === 'upload') {
+      store.dispatch(setExpiredModel(model))
       return
     }
     store.dispatch(getModelInfo(model))

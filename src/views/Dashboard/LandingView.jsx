@@ -96,7 +96,7 @@ class LandingView extends React.PureComponent {
               How to use:
             </p>
             <ol className={classes.demoText}>
-              <li className={classes.demoListItem} >Search for BioModels and BiGG Models using the bar.</li>
+              <li className={classes.demoListItem} >Search for BioModels and BiGG Models using the search bar above.</li>
               <li className={classes.demoListItem} >Click here or drag and drop to upload an SBML model.</li>
             </ol>
             <input id='fileuploadcontrol' type='file' hidden onChange={(f) => this.uploadFile()} ref={input => this.fileUpload = input}/>
