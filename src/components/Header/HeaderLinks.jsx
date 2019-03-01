@@ -44,6 +44,10 @@ class HeaderLinks extends React.Component {
     this.setState({ open: false });
   };
 
+  componentDidMount() {
+    // this.input.focus()
+  }
+
   render() {
     const { classes, query } = this.props;
     const { open } = this.state;
@@ -58,7 +62,8 @@ class HeaderLinks extends React.Component {
             inputProps: {
               "aria-label": "Search",
               value: query || '',
-              onChange: this.handleChange
+              onChange: this.handleChange,
+              // ref: (input) => { this.input = input },
             }
           }}
         />

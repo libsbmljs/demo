@@ -14,10 +14,7 @@ function Footer({ ...props }) {
       <div className={classes.container}>
         <p className={classes.right}>
           <span>
-            Theme by{" "}
-            <a href="https://www.creative-tim.com" className={classes.a}>
-              Creative Tim
-            </a>. See <a href="https://github.com/libsbmljs/demo#disclaimer">disclaimer</a>.
+            By J Kyle Medley. View on <a href="https://github.com/libsbmljs/demo#readme">GitHub</a>.
           </span>
         </p>
       </div>
