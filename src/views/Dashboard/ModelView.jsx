@@ -83,7 +83,10 @@ function ModelView(props) {
     expiredModel,
    } = props
 
-  const model_and_origin = errors.length && (errorsModel === model) ?
+  const showErrors = errors.length && (errorsModel === model)
+  const showValidator = !showErrors
+
+  const model_and_origin = showErrors ?
     'Errors Reading SBML' :
     (modelWasUploaded ?
       'Uploaded Model' :
@@ -99,7 +102,7 @@ function ModelView(props) {
     <GridContainer style={{minHeight:'calc(100vh - 240px)'}}>
       <GridItem xs={12} sm={12} md={12}>
         <Card>
-          <CardHeader color={errors.length && (errorsModel === model) ? 'danger' : 'primary'}>
+          <CardHeader color={showErrors ? 'danger' : 'primary'}>
             <h4 className={classes.cardTitleWhite}>{model_and_origin}</h4>
             <p className={classes.cardCategoryWhite}>
               {displayedModel === model ? displayedModelTitle : ''}
@@ -110,7 +113,7 @@ function ModelView(props) {
               (expiredModel && (expiredModel === model)) ?
                 <p>No model loaded</p>
                 :
-                (errors.length && (errorsModel === model)) ?
+                (showErrors) ?
                   <ul className={classes.errorList}>
                     {errors.map((e) => (<li className={classes.errorListItem} key={e.key}>{e.message}</li>))}
                   </ul>
@@ -136,31 +139,35 @@ function ModelView(props) {
           ) :
           <div>
           <div><br/></div>
-          { (validatedModel && (model === displayedModel && validatedModel === displayedModel)) ?
-          <Card>
-            <CardHeader color={modelIsValid ? 'success' : 'danger'}>
-              <h4 className={classes.cardTitleWhite}>{modelIsValid ? 'Valid' : 'Invalid'}</h4>
-            </CardHeader>
-            <CardBody>
-              <ul className={classes.errorList}>
-                {modelConsistencyErrors.map((e) => (<li className={classes.errorListItem} key={e.key}>{e.message}</li>))}
-              </ul>
-            </CardBody>
-          </Card> :
-          <Card>
-            <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Validation</h4>
-            </CardHeader>
-            <CardBody style={{textAlign:'center'}}>
-              { (!validatingModel || (validatingModel !== displayedModel) )?
-                <div>
-                  <Button color="primary" onClick={() => validateModel(model)}>Validate Now</Button>
-                </div>
-              :
-                <CircularProgress className={classes.progress} />
-              }
-            </CardBody>
-          </Card>}
+          {showValidator ?
+            (validatedModel && (model === displayedModel && validatedModel === displayedModel)) ?
+            <Card>
+              <CardHeader color={modelIsValid ? 'success' : 'danger'}>
+                <h4 className={classes.cardTitleWhite}>{modelIsValid ? 'Valid' : 'Invalid'}</h4>
+              </CardHeader>
+              <CardBody>
+                <ul className={classes.errorList}>
+                  {modelConsistencyErrors.map((e) => (<li className={classes.errorListItem} key={e.key}>{e.message}</li>))}
+                </ul>
+              </CardBody>
+            </Card> :
+            <Card>
+              <CardHeader color="primary">
+                <h4 className={classes.cardTitleWhite}>Validation</h4>
+              </CardHeader>
+              <CardBody style={{textAlign:'center'}}>
+                { (!validatingModel || (validatingModel !== displayedModel) )?
+                  <div>
+                    <Button color="primary" onClick={() => validateModel(model)}>Validate Now</Button>
+                  </div>
+                :
+                  <CircularProgress className={classes.progress} />
+                }
+              </CardBody>
+            </Card>
+          :
+            <div/>
+          }
           </div>
         }
       </GridItem>
