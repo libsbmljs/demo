@@ -63,6 +63,9 @@ const styles = {
   },
   landingPadLitUp: {
     borderColor: successColor,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   demoText: {
     margin: '2em',
@@ -70,6 +73,9 @@ const styles = {
   },
   demoListItem: {
     marginBottom:'1em',
+  },
+  upload: {
+    color: successColor,
   },
 };
 
@@ -141,14 +147,21 @@ class LandingView extends React.PureComponent {
       <GridContainer style={{minHeight:'calc(100vh - 240px)'}}>
         <GridItem xs={12} sm={12} md={12}>
           <div className={[classes.landingPad, (draggingModel ? classes.landingPadLitUp :  classes.landingPadDark)].join(' ')} style={{minHeight:'calc(100vh - 240px)'}} onClick={() => this.fileUpload.click()} onDragOver={this.drag} onDragLeave={this.stopDragging} onDrop={this.drop}>
-            <p className={classes.demoText}>
-              How to use:
-            </p>
-            <ol className={classes.demoText}>
-              <li className={classes.demoListItem} >Search for BioModels and BiGG Models using the search bar above.</li>
-              <li className={classes.demoListItem} >Click here or drag and drop to upload an SBML model.</li>
-            </ol>
-            <input id='fileuploadcontrol' type='file' hidden onChange={(f) => this.selectFile()} ref={input => this.fileUpload = input}/>
+            {
+              (!draggingModel) ?
+                <div>
+                  <p className={classes.demoText}>
+                    How to use:
+                  </p>
+                  <ol className={classes.demoText}>
+                    <li className={classes.demoListItem} >Search for BioModels and BiGG Models using the search bar above.</li>
+                    <li className={classes.demoListItem} >Click here or drag and drop to upload an SBML model.</li>
+                  </ol>
+                  <input id='fileuploadcontrol' type='file' hidden onChange={(f) => this.selectFile()} ref={input => this.fileUpload = input}/>
+                </div>
+              :
+                <h1 className={classes.upload}>Upload</h1>
+            }
           </div>
         </GridItem>
       </GridContainer>
