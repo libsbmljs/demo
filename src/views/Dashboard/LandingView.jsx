@@ -76,29 +76,36 @@ const styles = {
 class LandingView extends React.PureComponent {
   constructor(props) {
     super(props)
+    this.uploadFile = this.uploadFile.bind(this)
+    this.selectFile = this.selectFile.bind(this)
     this.drag = this.drag.bind(this)
     this.stopDragging = this.stopDragging.bind(this)
+    this.drop = this.drop.bind(this)
   }
 
-  uploadFile() {
+  uploadFile(files) {
     const { setModelSource, setUploadedModel } = this.props;
-    if ('files' in this.fileUpload) {
-      if (this.fileUpload.files.length == 1) {
-        for (const f of this.fileUpload.files) {
-          // const f = this.fileUpload.files[i]
-          const reader = new FileReader()
-          reader.onload = ((f) => (
-            (e) => {
-              const model_id = uuidv4()
-              setUploadedModel(model_id)
-              setModelSource(model_id, e.target.result)
-            }
-          ))(f)
-          reader.readAsText(f)
-        }
-      } else if (this.fileUpload.files.length > 1) {
-        alert('Select only one file')
+    if (files.length == 1) {
+      for (const f of files) {
+        // const f = files[i]
+        const reader = new FileReader()
+        reader.onload = ((f) => (
+          (e) => {
+            const model_id = uuidv4()
+            setUploadedModel(model_id)
+            setModelSource(model_id, e.target.result)
+          }
+        ))(f)
+        reader.readAsText(f)
       }
+    } else if (files.length > 1) {
+      alert('Select only one file')
+    }
+  }
+
+  selectFile() {
+    if ('files' in this.fileUpload) {
+      this.uploadFile(this.fileUpload.files)
     }
   }
 
@@ -120,6 +127,12 @@ class LandingView extends React.PureComponent {
     setDraggingModel(false)
   }
 
+  drop(e) {
+    e.stopPropagation()
+    e.preventDefault()
+    this.uploadFile(e.dataTransfer.files)
+  }
+
   render() {
     const { classes, draggingModel } = this.props
     // const landingLights = draggingModel ? 'landingPadLitUp' : ''
@@ -127,7 +140,7 @@ class LandingView extends React.PureComponent {
     return (
       <GridContainer style={{minHeight:'calc(100vh - 240px)'}}>
         <GridItem xs={12} sm={12} md={12}>
-          <div className={[classes.landingPad, (draggingModel ? classes.landingPadLitUp :  classes.landingPadDark)].join(' ')} style={{minHeight:'calc(100vh - 240px)'}} onClick={() => this.fileUpload.click()} onDragOver={this.drag} onDragLeave={this.stopDragging}>
+          <div className={[classes.landingPad, (draggingModel ? classes.landingPadLitUp :  classes.landingPadDark)].join(' ')} style={{minHeight:'calc(100vh - 240px)'}} onClick={() => this.fileUpload.click()} onDragOver={this.drag} onDragLeave={this.stopDragging} onDrop={this.drop}>
             <p className={classes.demoText}>
               How to use:
             </p>
@@ -135,7 +148,7 @@ class LandingView extends React.PureComponent {
               <li className={classes.demoListItem} >Search for BioModels and BiGG Models using the search bar above.</li>
               <li className={classes.demoListItem} >Click here or drag and drop to upload an SBML model.</li>
             </ol>
-            <input id='fileuploadcontrol' type='file' hidden onChange={(f) => this.uploadFile()} ref={input => this.fileUpload = input}/>
+            <input id='fileuploadcontrol' type='file' hidden onChange={(f) => this.selectFile()} ref={input => this.fileUpload = input}/>
           </div>
         </GridItem>
       </GridContainer>

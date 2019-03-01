@@ -13,7 +13,7 @@ import "assets/css/material-dashboard-react.css"
 
 import indexRoutes from "routes/index.jsx"
 import { rootEpic, database_worker, libsbmljs_worker } from 'epics.js'
-import { dispatchQuery, getModelInfo, setExpiredModel } from 'actions.js'
+import { dispatchQuery, getModelInfo, setExpiredModel, setDraggingModel } from 'actions.js'
 import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO, SET_MODEL_PROPERTIES, LIBSBML_LOADED, SET_MODEL_SRC, VALIDATE_MODEL, SET_MODEL_VALIDATION_RESULTS, ERRORS_READING_SBML, SET_EXPIRED_MODEL, SET_DRAGGING_MODEL } from 'constants.js'
 import { setModelSourceEpic } from 'epics.js'
 
@@ -123,6 +123,7 @@ const store = createStore(
 
 hist.listen((location, action) => {
   if (action === 'POP') {
+    store.dispatch(setDraggingModel(false))
     const query = new URLSearchParams(hist.location.search).get('q')
     if (query) {
       store.dispatch(dispatchQuery(query))
@@ -141,6 +142,8 @@ hist.listen((location, action) => {
   }
 })
 window.onload = () => {
+  store.dispatch(setDraggingModel(false))
+
   const query = new URLSearchParams(hist.location.search).get('q')
   if (query) {
     store.dispatch(dispatchQuery(query))
