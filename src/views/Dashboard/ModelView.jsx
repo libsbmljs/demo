@@ -12,6 +12,13 @@ import CardFooter from "components/Card/CardFooter.jsx";
 import Hidden from "@material-ui/core/Hidden"
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Button from 'components/CustomButtons/Button.jsx'
+import Checkbox from "@material-ui/core/Checkbox";
+import Check from "@material-ui/icons/Check"
+import IconButton from "@material-ui/core/IconButton";
+import Table from "@material-ui/core/Table";
+import TableRow from "@material-ui/core/TableRow";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
 
 import "assets/css/material-dashboard-react.css"
 
@@ -22,9 +29,12 @@ import {
   successColor,
   warningColor,
   dangerColor
-} from "assets/jss/material-dashboard-react.jsx";
+} from "assets/jss/material-dashboard-react.jsx"
+
+import checkboxAdnRadioStyle from "assets/jss/material-dashboard-react/checkboxAdnRadioStyle.jsx"
 
 const styles = {
+  ...checkboxAdnRadioStyle,
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
       color: "rgba(255,255,255,.62)",
@@ -72,107 +82,174 @@ const styles = {
   errorListItem: {
     margin: '1em',
   },
+  table: {
+    marginBottom: "0",
+    overflow: "visible"
+  },
+  tableRow: {
+    position: "relative",
+    borderBottom: "1px solid #dddddd"
+  },
+  tableActions: {
+    display: "flex",
+    border: "none",
+    padding: "12px 8px !important",
+    verticalAlign: "middle"
+  },
+  tableCell: {
+    ...defaultFont,
+    padding: "8px",
+    verticalAlign: "middle",
+    border: "none",
+    lineHeight: "1.42857143",
+    fontSize: "14px"
+  },
+  tableActionButton: {
+    width: "27px",
+    height: "27px",
+    padding: "0"
+  },
+  tableActionButtonIcon: {
+    width: "17px",
+    height: "17px"
+  },
 };
 
-function ModelView(props) {
-  const { classes, model, modelWasUploaded, displayedModel, displayedModelTitle, displayedModelOrigin, displayedModelOriginStr,
-    sbmlModelToken, sbmlModelNumReactions, sbmlModelNumSpecies, sbmlModelNumCompartments,
-    sbmlModelNumEvents, sbmlModelNumFunctions, sbmlModelNumRules,
-    validateModel, validatingModel, validatedModel, modelIsValid, modelConsistencyErrors,
-    errors, errorsModel,
-    expiredModel,
-   } = props
+class ModelView extends React.PureComponent {
+  constructor(props) {
+    super(props)
+    this.toggleValidationOpt = this.toggleValidationOpt.bind(this)
+  }
 
-  const showErrors = errors.length && (errorsModel === model)
-  const showValidator = !showErrors
+  toggleValidationOpt(opt) {
+    //
+  }
 
-  const model_and_origin = showErrors ?
-    'Errors Reading SBML' :
-    (modelWasUploaded ?
-      'Uploaded Model' :
-      (displayedModel === model ?
-        `${model} | ${displayedModelOrigin}` :
-        model))
+  render() {
+    const { classes, model, modelWasUploaded, displayedModel, displayedModelTitle, displayedModelOrigin, displayedModelOriginStr,
+      sbmlModelToken, sbmlModelNumReactions, sbmlModelNumSpecies, sbmlModelNumCompartments,
+      sbmlModelNumEvents, sbmlModelNumFunctions, sbmlModelNumRules,
+      validateModel, validatingModel, validatedModel, modelIsValid, modelConsistencyErrors,
+      errors, errorsModel,
+      expiredModel,
+    } = this.props
 
-  const identifiers_org_uri = displayedModel === model ?
-    (displayedModelOrigin === 'BioModels' ? 'http://identifiers.org/biomodels.db/' : 'http://identifiers.org/bigg.model/')+displayedModel
-     : ''
+    const showErrors = errors.length && (errorsModel === model)
+    const showValidator = !showErrors
 
-  return (
-    <GridContainer style={{minHeight:'calc(100vh - 240px)'}}>
-      <GridItem xs={12} sm={12} md={12}>
-        <Card>
-          <CardHeader color={showErrors ? 'danger' : 'primary'}>
-            <h4 className={classes.cardTitleWhite}>{model_and_origin}</h4>
-            <p className={classes.cardCategoryWhite}>
-              {displayedModel === model ? displayedModelTitle : ''}
-            </p>
-          </CardHeader>
-          <CardBody>
-            {
-              (expiredModel && (expiredModel === model)) ?
-                <p>No model loaded</p>
-                :
-                (showErrors) ?
+    const model_and_origin = showErrors ?
+      'Errors Reading SBML' :
+      (modelWasUploaded ?
+        'Uploaded Model' :
+        (displayedModel === model ?
+          `${model} | ${displayedModelOrigin}` :
+          model))
+
+    const identifiers_org_uri = displayedModel === model ?
+      (displayedModelOrigin === 'BioModels' ? 'http://identifiers.org/biomodels.db/' : 'http://identifiers.org/bigg.model/')+displayedModel
+       : ''
+
+    const validationOpts = ['an option']
+
+    return (
+      <GridContainer style={{minHeight:'calc(100vh - 240px)'}}>
+        <GridItem xs={12} sm={12} md={12}>
+          <Card>
+            <CardHeader color={showErrors ? 'danger' : 'primary'}>
+              <h4 className={classes.cardTitleWhite}>{model_and_origin}</h4>
+              <p className={classes.cardCategoryWhite}>
+                {displayedModel === model ? displayedModelTitle : ''}
+              </p>
+            </CardHeader>
+            <CardBody>
+              {
+                (expiredModel && (expiredModel === model)) ?
+                  <p>No model loaded</p>
+                  :
+                  (showErrors) ?
+                    <ul className={classes.errorList}>
+                      {errors.map((e) => (<li className={classes.errorListItem} key={e.key}>{e.message}</li>))}
+                    </ul>
+                  :
+                    (sbmlModelToken === model ?
+                    <p>
+                    {`${sbmlModelNumReactions} reactions, ${sbmlModelNumSpecies} species, ${sbmlModelNumCompartments} compartments, ${sbmlModelNumEvents} events, ${sbmlModelNumFunctions} functions, ${sbmlModelNumRules} rules`}
+                    </p> : [])
+              }
+            </CardBody>
+            <CardFooter stats>
+            <a href={identifiers_org_uri} style={{wordWrap: 'break-word'}}>
+              {identifiers_org_uri}
+            </a>
+            </CardFooter>
+          </Card>
+          {sbmlModelToken !== model ?
+            (
+              (!expiredModel || (expiredModel != model)) ?
+              <div style={{textAlign:'center'}}>
+                <CircularProgress className={classes.progress} />
+              </div> : <div/>
+            ) :
+            <div>
+            <div><br/></div>
+            {showValidator ?
+              (validatedModel && (model === displayedModel && validatedModel === displayedModel)) ?
+              <Card>
+                <CardHeader color={modelIsValid ? 'success' : 'danger'}>
+                  <h4 className={classes.cardTitleWhite}>{modelIsValid ? 'Valid' : 'Invalid'}</h4>
+                </CardHeader>
+                <CardBody>
                   <ul className={classes.errorList}>
-                    {errors.map((e) => (<li className={classes.errorListItem} key={e.key}>{e.message}</li>))}
+                    {modelConsistencyErrors.map((e) => (<li className={classes.errorListItem} key={e.key}>{e.message}</li>))}
                   </ul>
-                :
-                  (sbmlModelToken === model ?
-                  <p>
-                  {`${sbmlModelNumReactions} reactions, ${sbmlModelNumSpecies} species, ${sbmlModelNumCompartments} compartments, ${sbmlModelNumEvents} events, ${sbmlModelNumFunctions} functions, ${sbmlModelNumRules} rules`}
-                  </p> : [])
+                </CardBody>
+              </Card> :
+              <Card>
+                <CardHeader color="primary">
+                  <h4 className={classes.cardTitleWhite}>Validation</h4>
+                </CardHeader>
+                <CardBody style={{textAlign:'center'}}>
+                  { (!validatingModel || (validatingModel !== displayedModel) )?
+                    <div>
+                      <Table className={classes.table}>
+                        <TableBody>
+                          {validationOpts.map(opt => (
+                            <TableRow key={opt} className={classes.tableRow}>
+                              <TableCell className={classes.tableCell}>
+                                <Checkbox
+                                  checked={false}
+                                  onClick={this.toggleValidationOpt('me')}
+                                  checkedIcon={<Check className={classes.checkedIcon} />}
+                                  icon={<Check className={classes.uncheckedIcon} />}
+                                  classes={{
+                                    checked: classes.checked,
+                                    root: classes.root
+                                  }}
+                                />
+                              </TableCell>
+                              <TableCell className={classes.tableCell}>
+                                {opt}
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                      <Button color="primary" onClick={() => validateModel(model)}>Validate Now</Button>
+                    </div>
+                  :
+                    <CircularProgress className={classes.progress} />
+                  }
+                </CardBody>
+              </Card>
+            :
+              <div/>
             }
-          </CardBody>
-          <CardFooter stats>
-          <a href={identifiers_org_uri} style={{wordWrap: 'break-word'}}>
-            {identifiers_org_uri}
-          </a>
-          </CardFooter>
-        </Card>
-        {sbmlModelToken !== model ?
-          (
-            (!expiredModel || (expiredModel != model)) ?
-            <div style={{textAlign:'center'}}>
-              <CircularProgress className={classes.progress} />
-            </div> : <div/>
-          ) :
-          <div>
-          <div><br/></div>
-          {showValidator ?
-            (validatedModel && (model === displayedModel && validatedModel === displayedModel)) ?
-            <Card>
-              <CardHeader color={modelIsValid ? 'success' : 'danger'}>
-                <h4 className={classes.cardTitleWhite}>{modelIsValid ? 'Valid' : 'Invalid'}</h4>
-              </CardHeader>
-              <CardBody>
-                <ul className={classes.errorList}>
-                  {modelConsistencyErrors.map((e) => (<li className={classes.errorListItem} key={e.key}>{e.message}</li>))}
-                </ul>
-              </CardBody>
-            </Card> :
-            <Card>
-              <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Validation</h4>
-              </CardHeader>
-              <CardBody style={{textAlign:'center'}}>
-                { (!validatingModel || (validatingModel !== displayedModel) )?
-                  <div>
-                    <Button color="primary" onClick={() => validateModel(model)}>Validate Now</Button>
-                  </div>
-                :
-                  <CircularProgress className={classes.progress} />
-                }
-              </CardBody>
-            </Card>
-          :
-            <div/>
+            </div>
           }
-          </div>
-        }
-      </GridItem>
-    </GridContainer>
-  );
+        </GridItem>
+      </GridContainer>
+    );
+  }
 }
 
 export default withStyles(styles)(ModelView);
