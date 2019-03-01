@@ -14,7 +14,7 @@ import "assets/css/material-dashboard-react.css"
 import indexRoutes from "routes/index.jsx"
 import { rootEpic, database_worker, libsbmljs_worker } from 'epics.js'
 import { dispatchQuery, getModelInfo, setExpiredModel } from 'actions.js'
-import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO, SET_MODEL_PROPERTIES, LIBSBML_LOADED, SET_MODEL_SRC, VALIDATE_MODEL, SET_MODEL_VALIDATION_RESULTS, ERRORS_READING_SBML, SET_EXPIRED_MODEL } from 'constants.js'
+import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO, SET_MODEL_PROPERTIES, LIBSBML_LOADED, SET_MODEL_SRC, VALIDATE_MODEL, SET_MODEL_VALIDATION_RESULTS, ERRORS_READING_SBML, SET_EXPIRED_MODEL, SET_DRAGGING_MODEL } from 'constants.js'
 import { setModelSourceEpic } from 'epics.js'
 
 import 'react-virtualized/styles.css'
@@ -98,6 +98,17 @@ const model = (state = {
   }
 }
 
+const ui = (state = {
+      dragging: false,
+    }, action) => {
+  switch (action.type) {
+    case SET_DRAGGING_MODEL:
+      return Object.assign({}, state, {dragging: action.value})
+    default:
+      return state
+  }
+}
+
 const epicMiddleware = createEpicMiddleware()
 
 const store = createStore(
@@ -105,6 +116,7 @@ const store = createStore(
     router: connectRouter(hist),
     query,
     model,
+    ui,
   }),
   compose(applyMiddleware(routerMiddleware(hist), thunk, epicMiddleware))
 )

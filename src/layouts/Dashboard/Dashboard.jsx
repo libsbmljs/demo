@@ -16,7 +16,7 @@ import Sidebar from "components/Sidebar/Sidebar.jsx"
 import SearchView from "views/Dashboard/SearchView.jsx"
 import ModelView from "views/Dashboard/ModelView.jsx"
 import LandingView from "views/Dashboard/LandingView.jsx"
-import { setEnteredQuery, dispatchQuery, setActiveModel, getModelInfo, validateModel, setModelSource } from 'actions'
+import { setEnteredQuery, dispatchQuery, setActiveModel, getModelInfo, validateModel, setModelSource, setDraggingModel } from 'actions'
 
 import dashboardRoutes from "routes/dashboard.jsx"
 
@@ -47,7 +47,8 @@ const mapStateToProps = (state) => {
     modelConsistencyErrors: state.model.model_consistency_errors,
     errorsModel: state.model.errors_model,
     errors: state.model.errors,
-    expiredModel: state.model.expired_model
+    expiredModel: state.model.expired_model,
+    draggingModel: state.ui.dragging,
   }
 }
 
@@ -71,7 +72,10 @@ const mapDispatchToProps = dispatch => {
     },
     setModelSource: (model,src) => {
       dispatch(setModelSource(model,src))
-    }
+    },
+    setDraggingModel: (value) => {
+      dispatch(setDraggingModel(value))
+    },
   }
 }
 
@@ -108,10 +112,10 @@ class App extends React.Component {
       sbmlModelNumEvents, sbmlModelNumFunctions, sbmlModelNumRules,
       validateModel, validatingModel, validatedModel, modelIsValid, modelConsistencyErrors,
       errorsModel, errors,
-      expiredModel,
+      expiredModel, draggingModel,
        ...rest } = this.props
     // action dispatchers
-    const { setEnteredQuery, dispatchQuery, setActiveModel, setUploadedModel, setModelSource } = this.props
+    const { setEnteredQuery, dispatchQuery, setActiveModel, setUploadedModel, setModelSource, setDraggingModel } = this.props
     return (
       <div className={classes.wrapper}>
         <div className={classes.mainPanel} ref="mainPanel">
@@ -157,7 +161,12 @@ class App extends React.Component {
                   />}
                   key="/view"/>
                 <Route path="/" render={props =>
-                  <LandingView setUploadedModel={setUploadedModel} setModelSource={setModelSource} key="/landing"/>} />
+                  <LandingView
+                    setUploadedModel={setUploadedModel}
+                    setModelSource={setModelSource}
+                    setDraggingModel={setDraggingModel}
+                    draggingModel={draggingModel}
+                    key="/landing"/>} />
               </Switch>
             </div>
           </div>

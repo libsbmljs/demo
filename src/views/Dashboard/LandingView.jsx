@@ -13,6 +13,15 @@ import uuidv4 from 'uuid/v4'
 
 import "assets/css/material-dashboard-react.css"
 
+import {
+  defaultFont,
+  primaryColor,
+  infoColor,
+  successColor,
+  warningColor,
+  dangerColor
+} from "assets/jss/material-dashboard-react.jsx";
+
 const styles = {
   cardCategoryWhite: {
     "&,& a,& a:hover,& a:focus": {
@@ -48,7 +57,12 @@ const styles = {
     borderRadius: '25px',
     borderStyle: 'solid',
     borderWidth: '4px',
+  },
+  landingPadDark: {
     borderColor: 'rgb(120,120,120)',
+  },
+  landingPadLitUp: {
+    borderColor: successColor,
   },
   demoText: {
     margin: '2em',
@@ -62,6 +76,8 @@ const styles = {
 class LandingView extends React.PureComponent {
   constructor(props) {
     super(props)
+    this.drag = this.drag.bind(this)
+    this.stopDragging = this.stopDragging.bind(this)
   }
 
   uploadFile() {
@@ -86,12 +102,32 @@ class LandingView extends React.PureComponent {
     }
   }
 
+  drag(e) {
+    e.stopPropagation()
+    e.preventDefault()
+    const { setDraggingModel } = this.props
+    const dt = e.dataTransfer
+    // https://stackoverflow.com/questions/6848043/how-do-i-detect-a-file-is-being-dragged-rather-than-a-draggable-element-on-my-pa
+    if (dt.types && (dt.types.indexOf ? dt.types.indexOf('Files') != -1 : dt.types.contains('Files'))){
+      setDraggingModel(true)
+    }
+  }
+
+  stopDragging(e) {
+    e.stopPropagation()
+    e.preventDefault()
+    const { setDraggingModel } = this.props
+    setDraggingModel(false)
+  }
+
   render() {
-    const { classes } = this.props;
+    const { classes, draggingModel } = this.props
+    // const landingLights = draggingModel ? 'landingPadLitUp' : ''
+    // const landingPadClasses = `classes.landingPad ${landingLights}`
     return (
       <GridContainer style={{minHeight:'calc(100vh - 240px)'}}>
         <GridItem xs={12} sm={12} md={12}>
-          <div className={classes.landingPad} style={{minHeight:'calc(100vh - 240px)'}} onClick={() => this.fileUpload.click()}>
+          <div className={[classes.landingPad, (draggingModel ? classes.landingPadLitUp :  classes.landingPadDark)].join(' ')} style={{minHeight:'calc(100vh - 240px)'}} onClick={() => this.fileUpload.click()} onDragOver={this.drag} onDragLeave={this.stopDragging}>
             <p className={classes.demoText}>
               How to use:
             </p>
