@@ -130,6 +130,31 @@ const constructEventsTree = (model) => (
   }
 )
 
+const populateFunctionTree = (f) => {
+  const parser = new libsbml.SBMLFormulaParser()
+  if (f.isSetMath) {
+    return {
+      children: [{
+        name: parser.formulaToL3String(f.getMath())
+      }]
+    }
+  } else {
+    return {}
+  }
+}
+
+const constructFunctionsTree = (model) => (
+  {
+    name: `Functions (${model.getNumFunctionDefinitions()})`,
+    children: model.functions.map((f) =>
+      ({
+        name: f.getId() || '<blank>',
+        ...populateFunctionTree(f)
+      })
+    ),
+  }
+)
+
 const constructTree = (model) => (
   {
     name: model.getId() || 'model',
@@ -140,6 +165,7 @@ const constructTree = (model) => (
       constructCompartmentsTree(model),
       constructParametersTree(model),
       constructEventsTree(model),
+      constructFunctionsTree(model),
     ],
   }
 )
