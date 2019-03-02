@@ -36,6 +36,21 @@ const handleAction = (action) => {
         model.getNumEvents(),
         model.getNumFunctionDefinitions(),
         model.getNumRules(),
+        {
+          name: model.getId() || 'model',
+          toggled: true,
+          children: [
+            {
+              name: 'child',
+              children: [
+                {
+                  name: 'grandchild1',
+                  children: []
+                }
+              ],
+            }
+          ],
+        },
       ))
       return
     }

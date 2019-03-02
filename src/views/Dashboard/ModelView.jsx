@@ -146,7 +146,7 @@ class ModelView extends React.PureComponent {
   render() {
     const { classes, model, modelWasUploaded, displayedModel, displayedModelTitle, displayedModelOrigin, displayedModelOriginStr,
       sbmlModelToken, sbmlModelNumReactions, sbmlModelNumSpecies, sbmlModelNumCompartments,
-      sbmlModelNumEvents, sbmlModelNumFunctions, sbmlModelNumRules,
+      sbmlModelNumEvents, sbmlModelNumFunctions, sbmlModelNumRules, sbmlModelTreeView,
       validateModel, resetValidation, validatingModel, validatedModel, modelIsValid, modelConsistencyErrors,
       errors, errorsModel,
       expiredModel,
@@ -228,21 +228,7 @@ class ModelView extends React.PureComponent {
                   :
                     (sbmlModelToken === model ?
                       <TreeView
-                        data={{
-                          name: 'root',
-                          toggled: true,
-                          children: [
-                            {
-                              name: 'child',
-                              children: [
-                                {
-                                  name: 'grandchild1',
-                                  children: []
-                                }
-                              ],
-                            }
-                          ],
-                        }}
+                        data={sbmlModelTreeView}
                       />
                     :
                     [])

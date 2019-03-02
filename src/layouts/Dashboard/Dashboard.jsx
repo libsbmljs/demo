@@ -41,6 +41,7 @@ const mapStateToProps = (state) => {
     sbmlModelNumEvents: state.model.n_events,
     sbmlModelNumFunctions: state.model.n_functions,
     sbmlModelNumRules: state.model.n_rules,
+    sbmlModelTreeView: state.model.tree_view,
     validatingModel: state.model.validating_model,
     validatedModel: state.model.validated_model,
     modelIsValid: state.model.model_is_valid,
@@ -122,7 +123,7 @@ class App extends React.Component {
     const { classes, query, searchResultsEnabled, searchResults, location,
       displayedModel, displayedModelTitle, displayedModelOrigin,
       sbmlModelToken, sbmlModelNumReactions, sbmlModelNumSpecies,sbmlModelNumCompartments,
-      sbmlModelNumEvents, sbmlModelNumFunctions, sbmlModelNumRules,
+      sbmlModelNumEvents, sbmlModelNumFunctions, sbmlModelNumRules, sbmlModelTreeView,
       validateModel, resetValidation, validatingModel, validatedModel, modelIsValid, modelConsistencyErrors,
       errorsModel, errors,
       expiredModel, draggingModel,
@@ -167,6 +168,7 @@ class App extends React.Component {
                   sbmlModelNumEvents={sbmlModelNumEvents}
                   sbmlModelNumFunctions={sbmlModelNumFunctions}
                   sbmlModelNumRules={sbmlModelNumRules}
+                  sbmlModelTreeView={sbmlModelTreeView}
                   validateModel={validateModel}
                   resetValidation={resetValidation}
                   validatingModel={validatingModel}

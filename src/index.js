@@ -80,6 +80,7 @@ const model = (state = {
         n_events: action.n_events,
         n_functions: action.n_functions,
         n_rules: action.n_rules,
+        tree_view: action.tree_view,
       })
     case ERRORS_READING_SBML:
       return Object.assign({}, state, {

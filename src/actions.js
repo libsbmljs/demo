@@ -38,7 +38,7 @@ export const setModelSource = (model, source) => ({
   source,
 })
 
-export const setModelProperties = (sbml_model_token, n_reactions, n_species, n_compartments, n_parameters, n_events, n_functions, n_rules) => ({
+export const setModelProperties = (sbml_model_token, n_reactions, n_species, n_compartments, n_parameters, n_events, n_functions, n_rules, tree_view) => ({
   type: SET_MODEL_PROPERTIES,
   sbml_model_token,
   n_reactions,
@@ -48,6 +48,7 @@ export const setModelProperties = (sbml_model_token, n_reactions, n_species, n_c
   n_events,
   n_functions,
   n_rules,
+  tree_view,
 })
 
 export const libsbmlLoaded = () => ({
