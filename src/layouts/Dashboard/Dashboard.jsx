@@ -16,7 +16,7 @@ import Sidebar from "components/Sidebar/Sidebar.jsx"
 import SearchView from "views/Dashboard/SearchView.jsx"
 import ModelView from "views/Dashboard/ModelView.jsx"
 import LandingView from "views/Dashboard/LandingView.jsx"
-import { setEnteredQuery, dispatchQuery, setActiveModel, getModelInfo, validateModel, setModelSource, setDraggingModel } from 'actions'
+import { setEnteredQuery, dispatchQuery, setActiveModel, getModelInfo, validateModel, setModelSource, setDraggingModel, setValidationOptions, resetValidation } from 'actions'
 
 import dashboardRoutes from "routes/dashboard.jsx"
 
@@ -49,6 +49,13 @@ const mapStateToProps = (state) => {
     errors: state.model.errors,
     expiredModel: state.model.expired_model,
     draggingModel: state.ui.dragging,
+    enableGeneralChecks: state.model.general_checks,
+    enableIdentifierChecks: state.model.identifier_checks,
+    enableUnitsChecks: state.model.units_checks,
+    enableMathmlChecks: state.model.mathml_checks,
+    enableSboChecks: state.model.sbo_checks,
+    enableOverdeterminedChecks: state.model.overdetermined_checks,
+    enableModelingPracticeChecks: state.model.modeling_practice_checks,
   }
 }
 
@@ -67,14 +74,20 @@ const mapDispatchToProps = dispatch => {
     setUploadedModel: (model) => {
       dispatch(push('/view?m='+model+'&src=upload'))
     },
-    validateModel: (model) => {
-      dispatch(validateModel(model))
+    validateModel: (model, general_checks, identifier_checks, units_checks, mathml_checks, sbo_checks, overdetermined_checks, modeling_practice_checks) => {
+      dispatch(validateModel(model, '', general_checks, identifier_checks, units_checks, mathml_checks, sbo_checks, overdetermined_checks, modeling_practice_checks))
+    },
+    resetValidation: () => {
+      dispatch(resetValidation())
     },
     setModelSource: (model,src) => {
       dispatch(setModelSource(model,src))
     },
     setDraggingModel: (value) => {
       dispatch(setDraggingModel(value))
+    },
+    setValidationOptions: (general_checks, identifier_checks, units_checks, mathml_checks, sbo_checks, overdetermined_checks, modeling_practice_checks) => {
+      dispatch(setValidationOptions(general_checks, identifier_checks, units_checks, mathml_checks, sbo_checks, overdetermined_checks, modeling_practice_checks))
     },
   }
 }
@@ -110,9 +123,11 @@ class App extends React.Component {
       displayedModel, displayedModelTitle, displayedModelOrigin,
       sbmlModelToken, sbmlModelNumReactions, sbmlModelNumSpecies,sbmlModelNumCompartments,
       sbmlModelNumEvents, sbmlModelNumFunctions, sbmlModelNumRules,
-      validateModel, validatingModel, validatedModel, modelIsValid, modelConsistencyErrors,
+      validateModel, resetValidation, validatingModel, validatedModel, modelIsValid, modelConsistencyErrors,
       errorsModel, errors,
       expiredModel, draggingModel,
+      enableGeneralChecks, enableIdentifierChecks, enableUnitsChecks, enableMathmlChecks, enableSboChecks, enableOverdeterminedChecks, enableModelingPracticeChecks,
+      setValidationOptions,
        ...rest } = this.props
     // action dispatchers
     const { setEnteredQuery, dispatchQuery, setActiveModel, setUploadedModel, setModelSource, setDraggingModel } = this.props
@@ -153,11 +168,20 @@ class App extends React.Component {
                   sbmlModelNumFunctions={sbmlModelNumFunctions}
                   sbmlModelNumRules={sbmlModelNumRules}
                   validateModel={validateModel}
+                  resetValidation={resetValidation}
                   validatingModel={validatingModel}
                   validatedModel={validatedModel}
                   modelIsValid={modelIsValid}
                   modelConsistencyErrors={modelConsistencyErrors}
                   expiredModel={expiredModel}
+                  setValidationOptions={setValidationOptions}
+                  enableGeneralChecks={enableGeneralChecks}
+                  enableIdentifierChecks={enableIdentifierChecks}
+                  enableUnitsChecks={enableUnitsChecks}
+                  enableMathmlChecks={enableMathmlChecks}
+                  enableSboChecks={enableSboChecks}
+                  enableOverdeterminedChecks={enableOverdeterminedChecks}
+                  enableModelingPracticeChecks={enableModelingPracticeChecks}
                   />}
                   key="/view"/>
                 <Route path="/" render={props =>

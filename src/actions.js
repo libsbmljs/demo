@@ -1,4 +1,4 @@
-import { NULL_ACTION, SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO, SET_MODEL_SRC, SET_MODEL_PROPERTIES, LIBSBML_LOADED, VALIDATE_MODEL, SET_MODEL_VALIDATION_RESULTS, ERRORS_READING_SBML, SET_EXPIRED_MODEL, SET_DRAGGING_MODEL } from 'constants.js'
+import { NULL_ACTION, SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO, SET_MODEL_SRC, SET_MODEL_PROPERTIES, LIBSBML_LOADED, VALIDATE_MODEL, SET_MODEL_VALIDATION_RESULTS, ERRORS_READING_SBML, SET_EXPIRED_MODEL, SET_DRAGGING_MODEL, SET_VALIDATION_OPTIONS, RESET_VALIDATION } from 'constants.js'
 
 export const nullAction = () => ({
   type: NULL_ACTION,
@@ -54,10 +54,32 @@ export const libsbmlLoaded = () => ({
   type: LIBSBML_LOADED,
 })
 
-export const validateModel = (model, source) => ({
+export const validateModel = (model, source, general_checks, identifier_checks, units_checks, mathml_checks, sbo_checks, overdetermined_checks, modeling_practice_checks) => ({
   type: VALIDATE_MODEL,
   model,
   source,
+  general_checks,
+  identifier_checks,
+  units_checks,
+  mathml_checks,
+  sbo_checks,
+  overdetermined_checks,
+  modeling_practice_checks,
+})
+
+export const resetValidation = () => ({
+  type: RESET_VALIDATION,
+})
+
+export const setValidationOptions = (general_checks, identifier_checks, units_checks, mathml_checks, sbo_checks, overdetermined_checks, modeling_practice_checks) => ({
+  type: SET_VALIDATION_OPTIONS,
+  general_checks,
+  identifier_checks,
+  units_checks,
+  mathml_checks,
+  sbo_checks,
+  overdetermined_checks,
+  modeling_practice_checks,
 })
 
 export const setModelValidationResults = (model, is_valid, consistency_errors) => ({

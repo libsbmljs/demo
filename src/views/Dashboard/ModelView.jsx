@@ -122,16 +122,33 @@ class ModelView extends React.PureComponent {
   }
 
   toggleValidationOpt(opt) {
-    //
+    const {enableGeneralChecks, enableIdentifierChecks,
+      enableUnitsChecks, enableMathmlChecks, enableSboChecks,
+      enableOverdeterminedChecks, enableModelingPracticeChecks,
+      setValidationOptions
+    } = this.props
+
+    const options = {
+      general_checks: enableGeneralChecks,
+      identifier_checks: enableIdentifierChecks,
+      units_checks: enableUnitsChecks,
+      mathml_checks: enableMathmlChecks,
+      sbo_checks: enableSboChecks,
+      overdetermined_checks: enableOverdeterminedChecks,
+      modeling_practice_checks: enableModelingPracticeChecks,
+    }
+    options[opt] = !options[opt]
+    setValidationOptions(options.general_checks, options.identifier_checks, options.units_checks, options.mathml_checks, options.sbo_checks, options.overdetermined_checks, options.modeling_practice_checks)
   }
 
   render() {
     const { classes, model, modelWasUploaded, displayedModel, displayedModelTitle, displayedModelOrigin, displayedModelOriginStr,
       sbmlModelToken, sbmlModelNumReactions, sbmlModelNumSpecies, sbmlModelNumCompartments,
       sbmlModelNumEvents, sbmlModelNumFunctions, sbmlModelNumRules,
-      validateModel, validatingModel, validatedModel, modelIsValid, modelConsistencyErrors,
+      validateModel, resetValidation, validatingModel, validatedModel, modelIsValid, modelConsistencyErrors,
       errors, errorsModel,
       expiredModel,
+      enableGeneralChecks, enableIdentifierChecks, enableUnitsChecks, enableMathmlChecks, enableSboChecks, enableOverdeterminedChecks, enableModelingPracticeChecks,
     } = this.props
 
     const showErrors = errors.length && (errorsModel === model)
@@ -149,7 +166,43 @@ class ModelView extends React.PureComponent {
       (displayedModelOrigin === 'BioModels' ? 'http://identifiers.org/biomodels.db/' : 'http://identifiers.org/bigg.model/')+displayedModel
        : ''
 
-    const validationOpts = ['an option']
+    const validationOpts = [
+      {
+        option: 'units_checks',
+        label: 'Checks for measurement units associated with quantities',
+        enabled: enableUnitsChecks,
+      },
+      {
+        option: 'identifier_checks',
+        label: 'Identifier consistency checks',
+        enabled: enableIdentifierChecks,
+      },
+      {
+        option: 'mathml_checks',
+        label: 'MathML syntax checks',
+        enabled: enableMathmlChecks,
+      },
+      {
+        option: 'sbo_checks',
+        label: 'SBO consistency checks',
+        enabled: enableSboChecks,
+      },
+      {
+        option: 'overdetermined_checks',
+        label: 'Check if the model is overdetermined',
+        enabled: enableOverdeterminedChecks,
+      },
+      {
+        option: 'modeling_practice_checks',
+        label: 'Good modeling practice checks',
+        enabled: enableModelingPracticeChecks,
+      },
+      {
+        option: 'general_checks',
+        label: 'General SBML consistency checks',
+        enabled: enableGeneralChecks,
+      },
+    ]
 
     return (
       <GridContainer style={{minHeight:'calc(100vh - 240px)'}}>
@@ -202,6 +255,9 @@ class ModelView extends React.PureComponent {
                   <ul className={classes.errorList}>
                     {modelConsistencyErrors.map((e) => (<li className={classes.errorListItem} key={e.key}>{e.message}</li>))}
                   </ul>
+                  <div style={{textAlign:'center'}}>
+                    <Button color="primary" onClick={() => resetValidation()}>Reset</Button>
+                  </div>
                 </CardBody>
               </Card> :
               <Card>
@@ -213,28 +269,30 @@ class ModelView extends React.PureComponent {
                     <div>
                       <Table className={classes.table}>
                         <TableBody>
-                          {validationOpts.map(opt => (
-                            <TableRow key={opt} className={classes.tableRow}>
+                        {
+                          validationOpts.map(opt => (
+                            <TableRow key={opt.option} className={classes.tableRow}>
                               <TableCell className={classes.tableCell}>
                                 <Checkbox
-                                  checked={false}
-                                  onClick={this.toggleValidationOpt('me')}
+                                  checked={opt.enabled}
+                                  onClick={() => this.toggleValidationOpt(opt.option)}
                                   checkedIcon={<Check className={classes.checkedIcon} />}
                                   icon={<Check className={classes.uncheckedIcon} />}
                                   classes={{
                                     checked: classes.checked,
-                                    root: classes.root
+                                    root: classes.root,
                                   }}
                                 />
                               </TableCell>
                               <TableCell className={classes.tableCell}>
-                                {opt}
+                                {opt.label}
                               </TableCell>
                             </TableRow>
-                          ))}
+                          ))
+                        }
                         </TableBody>
                       </Table>
-                      <Button color="primary" onClick={() => validateModel(model)}>Validate Now</Button>
+                      <Button color="primary" onClick={() => validateModel(model, enableGeneralChecks, enableIdentifierChecks, enableUnitsChecks, enableMathmlChecks, enableSboChecks, enableOverdeterminedChecks, enableModelingPracticeChecks)}>Validate Now</Button>
                     </div>
                   :
                     <CircularProgress className={classes.progress} />

@@ -46,6 +46,17 @@ const handleAction = (action) => {
       if (loading_errors > 0) {
         console.log('Errors when reading SBML document') // TODO: post error
       }
+      console.log(action)
+
+      doc.setConsistencyChecks(libsbml.LIBSBML_CAT_GENERAL_CONSISTENCY, action.general_checks)
+      doc.setConsistencyChecks(libsbml.LIBSBML_CAT_IDENTIFIER_CONSISTENCY, action.identifier_checks)
+      console.log('check units', action.units_checks)
+      doc.setConsistencyChecks(libsbml.LIBSBML_CAT_UNITS_CONSISTENCY, action.units_checks)
+      doc.setConsistencyChecks(libsbml.LIBSBML_CAT_MATHML_CONSISTENCY, action.mathml_checks)
+      doc.setConsistencyChecks(libsbml.LIBSBML_CAT_SBO_CONSISTENCY, action.sbo_checks)
+      doc.setConsistencyChecks(libsbml.LIBSBML_CAT_OVERDETERMINED_MODEL, action.uverdetermined_checks)
+      doc.setConsistencyChecks(libsbml.LIBSBML_CAT_MODELING_PRACTICE, action.modeling_practice_checks)
+
       const n_consistency_errors = doc.checkConsistency() ? doc.getNumErrors() : 0
       const consistency_errors = range(n_consistency_errors).map(k =>
         ({
