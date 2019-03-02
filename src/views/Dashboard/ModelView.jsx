@@ -227,7 +227,23 @@ class ModelView extends React.PureComponent {
                     </ul>
                   :
                     (sbmlModelToken === model ?
-                      <TreeView/>
+                      <TreeView
+                        data={{
+                          name: 'root',
+                          toggled: true,
+                          children: [
+                            {
+                              name: 'child',
+                              children: [
+                                {
+                                  name: 'grandchild1',
+                                  children: []
+                                }
+                              ],
+                            }
+                          ],
+                        }}
+                      />
                     :
                     [])
               }
