@@ -10,6 +10,60 @@ libsbml_module().then(((self,module) => {
   self.postMessage(libsbmlLoaded())
 }).bind(undefined, self))
 
+const constructKineticLawTree = (reaction) => {
+  const parser = new libsbml.SBMLFormulaParser()
+  return reaction.isSetKineticLaw() ?
+    [{
+      name: `Kinetic Law`,
+      children: [
+        {
+          name: parser.formulaToL3String(reaction.getKineticLaw().getMath()),
+        }
+      ]
+    }]
+  :
+    []
+}
+
+const constructReactionTree = (model) => (
+  {
+    name: `Reactions (${model.getNumReactions()})`,
+    children: model.reactions.map((reaction) =>
+      ({
+        name: reaction.getId() || '<blank>',
+        children: [
+          {
+            name: `Reactants (${reaction.getNumReactants()})`,
+            children: range(reaction.getNumReactants()).map((n) =>
+              ({
+                name: reaction.getReactant(n).getSpecies() || '<blank>',
+              })
+            )
+          },
+          {
+            name: `Products (${reaction.getNumProducts()})`,
+            children: range(reaction.getNumProducts()).map((n) =>
+              ({
+                name: reaction.getProduct(n).getSpecies() || '<blank>',
+              })
+            )
+          },
+        ].concat(constructKineticLawTree(reaction)),
+      })
+    ),
+  }
+)
+
+const constructTree = (model) => (
+  {
+    name: model.getId() || 'model',
+    toggled: true,
+    children: [
+      constructReactionTree(model),
+    ],
+  }
+)
+
 const handleAction = (action) => {
   switch (action.type) {
     case SET_MODEL_SRC:{
@@ -36,21 +90,7 @@ const handleAction = (action) => {
         model.getNumEvents(),
         model.getNumFunctionDefinitions(),
         model.getNumRules(),
-        {
-          name: model.getId() || 'model',
-          toggled: true,
-          children: [
-            {
-              name: 'child',
-              children: [
-                {
-                  name: 'grandchild1',
-                  children: []
-                }
-              ],
-            }
-          ],
-        },
+        constructTree(model),
       ))
       return
     }
