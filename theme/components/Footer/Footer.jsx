@@ -14,7 +14,7 @@ function Footer({ ...props }) {
       <div className={classes.container}>
         <p className={classes.right}>
           <span>
-            By J Kyle Medley. View on <a href="https://github.com/libsbmljs/demo#readme">GitHub</a>.
+            By J Kyle Medley. View source on <a href="https://github.com/libsbmljs/demo#readme">GitHub</a>.
           </span>
         </p>
       </div>

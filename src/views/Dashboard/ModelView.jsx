@@ -194,7 +194,7 @@ class ModelView extends React.PureComponent {
       },
       {
         option: 'modeling_practice_checks',
-        label: 'Good modeling practice checks',
+        label: 'Checks for best practices',
         enabled: enableModelingPracticeChecks,
       },
       {
@@ -231,9 +231,14 @@ class ModelView extends React.PureComponent {
               }
             </CardBody>
             <CardFooter stats>
-            <a href={identifiers_org_uri} style={{wordWrap: 'break-word'}}>
-              {identifiers_org_uri}
-            </a>
+            {
+              !modelWasUploaded ?
+                <a href={identifiers_org_uri} style={{wordWrap: 'break-word'}}>
+                  {identifiers_org_uri}
+                </a>
+              :
+                <div/>
+            }
             </CardFooter>
           </Card>
           {sbmlModelToken !== model ?
