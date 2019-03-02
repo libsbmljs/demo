@@ -54,12 +54,92 @@ const constructReactionTree = (model) => (
   }
 )
 
+const constructSpeciesTree = (model) => (
+  {
+    name: `Species (${model.getNumSpecies()})`,
+    children: model.species.map((species) =>
+      ({
+        name: species.getId() || '<blank>',
+      })
+    ),
+  }
+)
+
+const populateCompartment = (compartment) => (
+  compartment.isSetSize() ?
+  {
+    children: [
+      {
+        name: `Size: ${compartment.getSize()}`
+      }
+    ]
+  }
+  :
+  {}
+)
+
+const constructCompartmentsTree = (model) => (
+  {
+    name: `Compartments (${model.getNumCompartments()})`,
+    children: model.compartments.map((compartment) =>
+      ({
+        name: compartment.getId() || '<blank>',
+        ...populateCompartment(compartment)
+      })
+    ),
+  }
+)
+
+const constructParametersTree = (model) => (
+  {
+    name: `Parameters (${model.getNumParameters()})`,
+    children: model.parameters.map((parameter) =>
+      ({
+        name: parameter.getId() || '<blank>',
+      })
+    ),
+  }
+)
+
+const constructTriggerTree = (e) => {
+  const parser = new libsbml.SBMLFormulaParser()
+  if (e.isSetTrigger()) {
+    const trigger = e.getTrigger()
+    if (trigger.isSetMath()) {
+      return [{
+        name: 'Trigger',
+        children: [{name: parser.formulaToL3String(trigger.getMath())}]
+      }]
+    } else {
+      return []
+    }
+  } else {
+    return []
+  }
+}
+
+const constructEventsTree = (model) => (
+  {
+    name: `Events (${model.getNumEvents()})`,
+    children: model.events.map((e) =>
+      ({
+        name: e.getId() || '<blank>',
+        children: constructTriggerTree(e)
+      })
+    ),
+  }
+)
+
 const constructTree = (model) => (
   {
     name: model.getId() || 'model',
     toggled: true,
     children: [
       constructReactionTree(model),
+      constructSpeciesTree(model),
+      constructCompartmentsTree(model),
+      constructParametersTree(model),
+      constructEventsTree(model),
     ],
   }
 )
