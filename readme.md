@@ -9,13 +9,13 @@ This is the source code for the libsbmljs demo
 Development:
 
 ```
-npm run start
+DATABASE_PREFIX=/path/to/database npm run start
 ```
 
 Production:
 
 ```
-npm run build
+DATABASE_PREFIX=x npm run build
 ```
 
 ## Disclaimer
