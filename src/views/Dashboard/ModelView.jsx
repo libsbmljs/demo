@@ -8,17 +8,19 @@ import GridContainer from "components/Grid/GridContainer.jsx"
 import Card from "components/Card/Card.jsx"
 import CardHeader from "components/Card/CardHeader.jsx"
 import CardBody from "components/Card/CardBody.jsx"
-import CardFooter from "components/Card/CardFooter.jsx";
+import CardFooter from "components/Card/CardFooter.jsx"
 import Hidden from "@material-ui/core/Hidden"
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Button from 'components/CustomButtons/Button.jsx'
-import Checkbox from "@material-ui/core/Checkbox";
+import Checkbox from "@material-ui/core/Checkbox"
 import Check from "@material-ui/icons/Check"
-import IconButton from "@material-ui/core/IconButton";
-import Table from "@material-ui/core/Table";
-import TableRow from "@material-ui/core/TableRow";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
+import IconButton from "@material-ui/core/IconButton"
+import Table from "@material-ui/core/Table"
+import TableRow from "@material-ui/core/TableRow"
+import TableBody from "@material-ui/core/TableBody"
+import TableCell from "@material-ui/core/TableCell"
+
+import TreeView from './TreeView'
 
 import "assets/css/material-dashboard-react.css"
 
@@ -225,9 +227,9 @@ class ModelView extends React.PureComponent {
                     </ul>
                   :
                     (sbmlModelToken === model ?
-                    <p>
-                    {`${sbmlModelNumReactions} reactions, ${sbmlModelNumSpecies} species, ${sbmlModelNumCompartments} compartments, ${sbmlModelNumEvents} events, ${sbmlModelNumFunctions} functions, ${sbmlModelNumRules} rules`}
-                    </p> : [])
+                      <TreeView/>
+                    :
+                    [])
               }
             </CardBody>
             <CardFooter stats>
