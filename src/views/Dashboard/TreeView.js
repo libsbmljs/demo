@@ -10,6 +10,7 @@ const style = {
   tree: {
       base: {
           listStyle: 'none',
+          backgroundColor: 'white',
           margin: 0,
           padding: 0,
           color: 'rgb(85, 85, 85)',
@@ -53,8 +54,8 @@ const style = {
                   margin: '-7px 0 0 -7px',
                   height: '14px'
               },
-              height: 14,
-              width: 14,
+              height: 10,
+              width: 10,
               arrow: {
                   fill: 'rgb(85, 85, 85)',
                   strokeWidth: 0
