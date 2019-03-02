@@ -132,7 +132,7 @@ const constructEventsTree = (model) => (
 
 const populateFunctionTree = (f) => {
   const parser = new libsbml.SBMLFormulaParser()
-  if (f.isSetMath) {
+  if (f.isSetMath()) {
     return {
       children: [{
         name: parser.formulaToL3String(f.getMath())
@@ -155,6 +155,44 @@ const constructFunctionsTree = (model) => (
   }
 )
 
+const getRuleName = (rule) => {
+  const id = rule.getId() || '<blank>'
+  if (rule.isRate()) {
+    return id + ' (Rate)'
+  } else if (rule.isAssignment()) {
+    return id + ' (Assignment)'
+  } else if (rule.isAlgebraic()) {
+    return id + ' (Algebraic)'
+  } else {
+    return id + ' (Unknown)'
+  }
+}
+
+const populateRuleTree = (rule) => {
+  const parser = new libsbml.SBMLFormulaParser()
+  if (rule.isSetMath()) {
+    return {
+      children: [{
+        name: parser.formulaToL3String(rule.getMath())
+      }]
+    }
+  } else {
+    return {}
+  }
+}
+
+const constructRulesTree = (model) => (
+  {
+    name: `Rules (${model.getNumRules()})`,
+    children: model.rules.map((rule) =>
+      ({
+        name: getRuleName(rule),
+        ...populateRuleTree(rule)
+      })
+    ),
+  }
+)
+
 const constructTree = (model) => (
   {
     name: model.getId() || 'model',
@@ -166,6 +204,7 @@ const constructTree = (model) => (
       constructParametersTree(model),
       constructEventsTree(model),
       constructFunctionsTree(model),
+      constructRulesTree(model),
     ],
   }
 )
