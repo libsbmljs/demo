@@ -4,6 +4,12 @@
 
 This is the source code for the libsbmljs demo
 
+## Installing dependencies
+
+```
+npm install
+```
+
 ## Building
 
 Development:
