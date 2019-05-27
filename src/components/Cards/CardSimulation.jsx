@@ -74,7 +74,9 @@ class CardSimulation extends React.PureComponent {
           <h4 className={classes.cardTitleWhite}>Simulation</h4>
         </CardHeader>
         <CardBody>
+          <div style={{textAlign: 'center'}}>
           <SimResults/>
+          </div>
         </CardBody>
       </Card>
     )
