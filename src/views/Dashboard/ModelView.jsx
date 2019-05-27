@@ -21,8 +21,7 @@ import TableBody from "@material-ui/core/TableBody"
 import TableCell from "@material-ui/core/TableCell"
 
 import TreeView from './TreeView'
-import SimResults from 'components/SimResults/SimResults.jsx'
-
+import CardSimulation from 'components/Cards/CardSimulation.jsx'
 
 import "assets/css/material-dashboard-react.css"
 
@@ -256,14 +255,8 @@ class ModelView extends React.PureComponent {
             ) :
             <div>
             <div><br/></div>
-            <Card>
-              <CardHeader color="primary">
-                <h4 className={classes.cardTitleWhite}>Simulation</h4>
-              </CardHeader>
-              <CardBody>
-                <SimResults/>
-              </CardBody>
-            </Card>
+            <CardSimulation/>
+            <div><br/></div>
             {showValidator ?
               (validatedModel && (model === displayedModel && validatedModel === displayedModel)) ?
               <Card>
