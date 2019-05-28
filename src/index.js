@@ -51,12 +51,12 @@ const model = (state = {
       overdetermined_checks: true,
       modeling_practice_checks: true,
 
-      add_sliders: true,
-      time_start: true,
-      time_stop: false,
-      num_timepoints: true,
-      is_stochastic: true,
-      num_replicates: true,
+      add_sliders: false,
+      time_start: 0,
+      time_stop: 10,
+      num_timepoints: 100,
+      is_stochastic: false,
+      num_replicates: 10,
       enable_mean_trace: true,
 
       simulating_model: '',
