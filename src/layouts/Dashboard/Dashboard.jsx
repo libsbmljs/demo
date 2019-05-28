@@ -64,6 +64,8 @@ const mapStateToProps = (state) => {
     isStochastic: state.model.is_stochastic,
     numReplicates: state.model.num_replicates,
     enableMeanTrace: state.model.enable_mean_trace,
+    parameterValues: state.model.parameter_values,
+    simulationResults: state.model.simulation_results,
   }
 }
 
@@ -100,8 +102,8 @@ const mapDispatchToProps = dispatch => {
     setSimulationOptions: (add_sliders, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace) => {
       dispatch(setSimulationOptions(add_sliders, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace))
     },
-    simulateModel: (add_sliders, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace) => {
-      dispatch(simulateModel(add_sliders, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace))
+    simulateModel: (model, add_sliders, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace, parameter_values) => {
+      dispatch(simulateModel(model, add_sliders, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace, parameter_values))
     },
   }
 }
@@ -144,7 +146,9 @@ class App extends React.Component {
       setValidationOptions,
       // simulation
       addSliders, timeStart, timeStop, numTimepoints,
-      isStochastic, numReplicates, enableMeanTrace, setSimulationOptions, simulateModel,
+      isStochastic, numReplicates, enableMeanTrace,
+      parameterValues, simulationResults,
+      setSimulationOptions, simulateModel,
        ...rest } = this.props
     // action dispatchers
     const { setEnteredQuery, dispatchQuery, setActiveModel, setUploadedModel, setModelSource, setDraggingModel } = this.props
@@ -209,6 +213,8 @@ class App extends React.Component {
                   enableMeanTrace={enableMeanTrace}
                   setSimulationOptions={setSimulationOptions}
                   simulateModel={simulateModel}
+                  parameterValues={parameterValues}
+                  simulationResults={simulationResults}
                   />}
                   key="/view"/>
                 <Route path="/" render={props =>

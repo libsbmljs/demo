@@ -68,7 +68,7 @@ class CardSimulation extends React.PureComponent {
   }
 
   render() {
-    const { classes, model, addSliders, timeStart, timeStop, numTimepoints, isStochastic, numReplicates, enableMeanTrace, setSimulationOptions, simulateModel } = this.props
+    const { classes, model, addSliders, timeStart, timeStop, numTimepoints, isStochastic, numReplicates, enableMeanTrace, setSimulationOptions, simulateModel, parameterValues, simulationResults } = this.props
     return (
       <Card>
         <CardHeader color="primary">
@@ -76,7 +76,9 @@ class CardSimulation extends React.PureComponent {
         </CardHeader>
         <CardBody>
           <div style={{textAlign: 'center'}}>
-          <SimResults/>
+          <SimResults
+            simulationResults={simulationResults}
+          />
           <SimControls
             model={model}
             addSliders={addSliders}
@@ -88,6 +90,7 @@ class CardSimulation extends React.PureComponent {
             enableMeanTrace={enableMeanTrace}
             setSimulationOptions={setSimulationOptions}
             simulateModel={simulateModel}
+            parameterValues={parameterValues}
           />
           </div>
         </CardBody>

@@ -6,21 +6,14 @@ import Plot from 'react-plotly.js';
 // import withStyles from "@material-ui/core/styles/withStyles"
 
 function SimResults({ ...props }) {
-  // const { classes, tableHead, tableData, tableHeaderColor, setActiveModel } = props
-  return (
+  const { simulationResults } = props
+  if (simulationResults !== null)
+    console.log('simulationResults', simulationResults.data)
+  return ( simulationResults !== null ?
     <Plot
-     data={[
-       {
-         x: [1, 2, 3],
-         y: [2, 6, 3],
-         type: 'scatter',
-         mode: 'lines+points',
-         marker: {color: 'red'},
-       },
-       {type: 'bar', x: [1, 2, 3], y: [2, 5, 3]},
-     ]}
+     data={simulationResults.data}
      layout={ {width: 800, height: 600, title: 'Simulation Results'} }
-   />)
+   /> : <div/>)
 }
 
 // SimResults.defaultProps = {

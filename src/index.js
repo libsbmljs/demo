@@ -14,7 +14,7 @@ import "assets/css/material-dashboard-react.css"
 import indexRoutes from "routes/index.jsx"
 import { rootEpic, database_worker, libsbmljs_worker } from 'epics.js'
 import { dispatchQuery, getModelInfo, setExpiredModel, setDraggingModel } from 'actions.js'
-import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO, SET_MODEL_PROPERTIES, LIBSBML_LOADED, SET_MODEL_SRC, VALIDATE_MODEL, SET_MODEL_VALIDATION_RESULTS, ERRORS_READING_SBML, SET_EXPIRED_MODEL, SET_DRAGGING_MODEL, SET_VALIDATION_OPTIONS, RESET_VALIDATION, SET_SIMULATION_OPTIONS, SIMULATE_MODEL, SET_SIMULATION_RESULTS } from 'constants.js'
+import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO, SET_MODEL_PROPERTIES, LIBSBML_LOADED, SET_MODEL_SRC, VALIDATE_MODEL, SET_MODEL_VALIDATION_RESULTS, ERRORS_READING_SBML, SET_EXPIRED_MODEL, SET_DRAGGING_MODEL, SET_VALIDATION_OPTIONS, RESET_VALIDATION, SET_SIMULATION_OPTIONS, SIMULATE_MODEL, SET_SIMULATION_RESULTS, SET_PARAMETER_VALUES } from 'constants.js'
 import { setModelSourceEpic } from 'epics.js'
 
 import 'react-virtualized/styles.css'
@@ -61,7 +61,8 @@ const model = (state = {
 
       simulating_model: '',
       simulated_model: '',
-      simulation_results: {},
+      parameter_values: null,
+      simulation_results: null,
     }, action) => {
   switch (action.type) {
     case GET_MODEL_INFO:
@@ -140,6 +141,13 @@ const model = (state = {
           is_stochastic: action.is_stochastic,
           num_replicates: action.num_replicates,
           enable_mean_trace: action.enable_mean_trace,
+        })
+    case SET_PARAMETER_VALUES:
+      return Object.assign(
+        {},
+        state,
+        {
+          parameter_values: action.parameter_values,
         })
     case SIMULATE_MODEL:
       libsbmljs_worker.postMessage(Object.assign({}, action, {source: state.model_source}))

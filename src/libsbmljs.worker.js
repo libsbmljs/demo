@@ -281,7 +281,16 @@ const handleAction = (action) => {
 
       self.postMessage(setSimulationResults(
         action.model,
-        {}
+        {
+          type: 'single',
+          data: range(2).map((k) => ({
+            x: range(action.num_timepoints).map((k) => (action.time_stop-action.time_start)*k/action.num_timepoints),
+            y: range(action.num_timepoints).map((l) => Math.cos((action.time_stop-action.time_start)*l/action.num_timepoints + k*3.14/4)),
+            type: 'scatter',
+            mode: 'lines',
+            name: 'cos',
+          }))
+        }
       ))
       return
     }
