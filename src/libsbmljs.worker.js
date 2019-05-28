@@ -1,6 +1,7 @@
 import { setModelProperties, libsbmlLoaded, setModelValidationResults, errorsReadingSBML, setSimulationResults } from 'actions.js'
 import { SET_MODEL_SRC, VALIDATE_MODEL, SIMULATE_MODEL, SET_SIMULATION_RESULTS } from 'constants.js'
 import { range } from 'lodash'
+import { loadFromSBML } from 'sbml_websim'
 
 // import libsbml from 'libsbml.js'
 import libsbml_module from 'libsbmljs_stable'
@@ -272,14 +273,14 @@ const handleAction = (action) => {
     }
     case SIMULATE_MODEL:{
       console.log('worker simulate model')
-      const reader = new libsbml.SBMLReader()
-      const doc = reader.readSBMLFromString(action.source)
-      const loading_errors = doc.getNumErrors()
-      if (loading_errors > 0) {
-        console.log('Errors when reading SBML document') // TODO: post error
-      }
+      // const reader = new libsbml.SBMLReader()
+      // const doc = reader.readSBMLFromString(action.source)
+      // const loading_errors = doc.getNumErrors()
+      // if (loading_errors > 0) {
+      //   console.log('Errors when reading SBML document') // TODO: post error
+      // }
 
-      self.postMessage(setSimulationResults(
+      loadFromSBML(action.source, action.is_stochastic).then((sim) => self.postMessage(setSimulationResults(
         action.model,
         {
           type: 'single',
@@ -291,7 +292,7 @@ const handleAction = (action) => {
             name: 'cos',
           }))
         }
-      ))
+      )))
       return
     }
     default:
