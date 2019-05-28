@@ -1,7 +1,7 @@
 import { setModelProperties, libsbmlLoaded, setModelValidationResults, errorsReadingSBML, setSimulationResults } from 'actions.js'
 import { SET_MODEL_SRC, VALIDATE_MODEL, SIMULATE_MODEL, SET_SIMULATION_RESULTS } from 'constants.js'
 import { range } from 'lodash'
-import { loadFromSBML } from 'sbml_websim'
+import { loadFromSBML, makePlotlyGrid } from 'sbml_websim'
 
 // import libsbml from 'libsbml.js'
 import libsbml_module from 'libsbmljs_stable'
@@ -284,13 +284,14 @@ const handleAction = (action) => {
         action.model,
         {
           type: 'single',
-          data: range(2).map((k) => ({
-            x: range(action.num_timepoints).map((k) => (action.time_stop-action.time_start)*k/action.num_timepoints),
-            y: range(action.num_timepoints).map((l) => Math.cos((action.time_stop-action.time_start)*l/action.num_timepoints + k*3.14/4)),
-            type: 'scatter',
-            mode: 'lines',
-            name: 'cos',
-          }))
+          data: makePlotlyGrid(sim),
+          // range(2).map((k) => ({
+          //   x: range(action.num_timepoints).map((k) => (action.time_stop-action.time_start)*k/action.num_timepoints),
+          //   y: range(action.num_timepoints).map((l) => Math.cos((action.time_stop-action.time_start)*l/action.num_timepoints + k*3.14/4)),
+          //   type: 'scatter',
+          //   mode: 'lines',
+          //   name: 'cos',
+          // }))
         }
       )))
       return

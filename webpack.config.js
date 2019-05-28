@@ -22,7 +22,7 @@ module.exports = env => ({
     hot: false
   },
   resolve: {
-    modules: [path.resolve(__dirname,'src'),path.resolve(__dirname,'theme'),'node_modules']
+    modules: [path.resolve(__dirname,'src'), path.resolve(__dirname,'theme'), '/home/poltergeist/devel/src/sbml_websim/dist', 'node_modules']
   },
   module: {
     rules: [
