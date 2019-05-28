@@ -14,7 +14,7 @@ import "assets/css/material-dashboard-react.css"
 import indexRoutes from "routes/index.jsx"
 import { rootEpic, database_worker, libsbmljs_worker } from 'epics.js'
 import { dispatchQuery, getModelInfo, setExpiredModel, setDraggingModel } from 'actions.js'
-import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO, SET_MODEL_PROPERTIES, LIBSBML_LOADED, SET_MODEL_SRC, VALIDATE_MODEL, SET_MODEL_VALIDATION_RESULTS, ERRORS_READING_SBML, SET_EXPIRED_MODEL, SET_DRAGGING_MODEL, SET_VALIDATION_OPTIONS, RESET_VALIDATION } from 'constants.js'
+import { SET_ENTERED_QUERY, DISPATCH_QUERY, QUERY_RESULTS, GET_MODEL_INFO, SET_MODEL_INFO, SET_MODEL_PROPERTIES, LIBSBML_LOADED, SET_MODEL_SRC, VALIDATE_MODEL, SET_MODEL_VALIDATION_RESULTS, ERRORS_READING_SBML, SET_EXPIRED_MODEL, SET_DRAGGING_MODEL, SET_VALIDATION_OPTIONS, RESET_VALIDATION, SET_SIMULATION_OPTIONS, SIMULATE_MODEL, SET_SIMULATION_RESULTS } from 'constants.js'
 import { setModelSourceEpic } from 'epics.js'
 
 import 'react-virtualized/styles.css'
@@ -50,6 +50,18 @@ const model = (state = {
       sbo_checks: true,
       overdetermined_checks: true,
       modeling_practice_checks: true,
+
+      add_sliders: true,
+      time_start: true,
+      time_stop: false,
+      num_timepoints: true,
+      is_stochastic: true,
+      num_replicates: true,
+      enable_mean_trace: true,
+
+      simulating_model: '',
+      simulated_model: '',
+      simulation_results: {},
     }, action) => {
   switch (action.type) {
     case GET_MODEL_INFO:
@@ -116,6 +128,24 @@ const model = (state = {
           overdetermined_checks: action.overdetermined_checks,
           modeling_practice_checks: action.modeling_practice_checks,
         })
+    case SET_SIMULATION_OPTIONS:
+      return Object.assign(
+        {},
+        state,
+        {
+          add_sliders: action.add_sliders,
+          time_start: action.time_start,
+          time_stop: action.time_stop,
+          num_timepoints: action.num_timepoints,
+          is_stochastic: action.is_stochastic,
+          num_replicates: action.num_replicates,
+          enable_mean_trace: action.enable_mean_trace,
+        })
+    case SIMULATE_MODEL:
+      libsbmljs_worker.postMessage(Object.assign({}, action, {source: state.model_source}))
+      return Object.assign({}, state, {simulating_model: action.model, expired_model: ''})
+    case SET_SIMULATION_RESULTS:
+      return Object.assign({}, state, {simulated_model: action.model, simulation_results: action.simulation_results, simulating_model: '', expired_model: ''})
     default:
       return state
   }

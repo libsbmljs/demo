@@ -151,7 +151,12 @@ class ModelView extends React.PureComponent {
       validateModel, resetValidation, validatingModel, validatedModel, modelIsValid, modelConsistencyErrors,
       errors, errorsModel,
       expiredModel,
+      // validation
       enableGeneralChecks, enableIdentifierChecks, enableUnitsChecks, enableMathmlChecks, enableSboChecks, enableOverdeterminedChecks, enableModelingPracticeChecks,
+      // simulation
+      addSliders, timeStart, timeStop, numTimepoints,
+      isStochastic, numReplicates, enableMeanTrace,
+      setSimulationOptions, simulateModel,
     } = this.props
 
     const showErrors = errors.length && (errorsModel === model)
@@ -255,7 +260,18 @@ class ModelView extends React.PureComponent {
             ) :
             <div>
             <div><br/></div>
-            <CardSimulation/>
+            <CardSimulation
+              model={model}
+              addSliders={addSliders}
+              timeStart={timeStart}
+              timeStop={timeStop}
+              numTimepoints={numTimepoints}
+              isStochastic={isStochastic}
+              numReplicates={numReplicates}
+              enableMeanTrace={enableMeanTrace}
+              setSimulationOptions={setSimulationOptions}
+              simulateModel={simulateModel}
+            />
             <div><br/></div>
             {showValidator ?
               (validatedModel && (model === displayedModel && validatedModel === displayedModel)) ?

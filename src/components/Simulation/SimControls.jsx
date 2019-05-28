@@ -12,7 +12,6 @@ import Checkbox from "@material-ui/core/Checkbox"
 import Check from "@material-ui/icons/Check"
 
 import SimResults from 'components/Simulation/SimResults.jsx'
-import SimControls from 'components/Simulation/SimControls.jsx'
 
 import "assets/css/material-dashboard-react.css"
 
@@ -61,39 +60,37 @@ const styles = {
   },
 };
 
-class CardSimulation extends React.PureComponent {
+class SimControls extends React.PureComponent {
   constructor(props) {
     super(props)
-    // this.toggleValidationOpt = this.toggleValidationOpt.bind(this)
+    this.setSimulationOpt = this.setSimulationOpt.bind(this)
+  }
+
+  setSimulationOpt(opt, value) {
+    const {addSliders, timeStart, timeStop, numTimepoints,
+      isStochastic, numReplicates, enableMeanTrace,
+      setSimulationOptions
+    } = this.props
+
+    const options = {
+      add_sliders: addSliders,
+      time_start: timeStart,
+      time_stop: timeStop,
+      num_timepoints: numTimepoints,
+      is_stochastic: isStochastic,
+      num_replicates: numReplicates,
+      enable_mean_trace: enableMeanTrace,
+    }
+    options[opt] = !options[opt]
+    setSimulationOptions(options.add_sliders, options.time_start, options.time_stop, options.num_timepoints, options.is_stochastic, options.num_replicates, options.enable_mean_trace)
   }
 
   render() {
-    const { classes, model, addSliders, timeStart, timeStop, numTimepoints, isStochastic, numReplicates, enableMeanTrace, setSimulationOptions, simulateModel } = this.props
+    const { classes, model, addSliders, timeStart, timeStop, numTimepoints, isStochastic, numReplicates, enableMeanTrace, simulateModel } = this.props
     return (
-      <Card>
-        <CardHeader color="primary">
-          <h4 className={classes.cardTitleWhite}>Simulation</h4>
-        </CardHeader>
-        <CardBody>
-          <div style={{textAlign: 'center'}}>
-          <SimResults/>
-          <SimControls
-            model={model}
-            addSliders={addSliders}
-            timeStart={timeStart}
-            timeStop={timeStop}
-            numTimepoints={numTimepoints}
-            isStochastic={isStochastic}
-            numReplicates={numReplicates}
-            enableMeanTrace={enableMeanTrace}
-            setSimulationOptions={setSimulationOptions}
-            simulateModel={simulateModel}
-          />
-          </div>
-        </CardBody>
-      </Card>
+      <Button color="primary" onClick={() => simulateModel(model, addSliders, timeStart, timeStop, numTimepoints, isStochastic, numReplicates, enableMeanTrace)}>Simulate</Button>
     )
   }
 }
 
-export default withStyles(styles)(CardSimulation);
+export default withStyles(styles)(SimControls);

@@ -16,7 +16,7 @@ import Sidebar from "components/Sidebar/Sidebar.jsx"
 import SearchView from "views/Dashboard/SearchView.jsx"
 import ModelView from "views/Dashboard/ModelView.jsx"
 import LandingView from "views/Dashboard/LandingView.jsx"
-import { setEnteredQuery, dispatchQuery, setActiveModel, getModelInfo, validateModel, setModelSource, setDraggingModel, setValidationOptions, resetValidation } from 'actions'
+import { setEnteredQuery, dispatchQuery, setActiveModel, getModelInfo, validateModel, setModelSource, setDraggingModel, setValidationOptions, resetValidation, setSimulationOptions, simulateModel } from 'actions'
 
 import dashboardRoutes from "routes/dashboard.jsx"
 
@@ -57,6 +57,13 @@ const mapStateToProps = (state) => {
     enableSboChecks: state.model.sbo_checks,
     enableOverdeterminedChecks: state.model.overdetermined_checks,
     enableModelingPracticeChecks: state.model.modeling_practice_checks,
+    addSliders: state.model.add_sliders,
+    timeStart: state.model.time_start,
+    timeStop: state.model.time_stop,
+    numTimepoints: state.model.num_timepoints,
+    isStochastic: state.model.is_stochastic,
+    numReplicates: state.model.num_replicates,
+    enableMeanTrace: state.model.enable_mean_trace,
   }
 }
 
@@ -89,6 +96,12 @@ const mapDispatchToProps = dispatch => {
     },
     setValidationOptions: (general_checks, identifier_checks, units_checks, mathml_checks, sbo_checks, overdetermined_checks, modeling_practice_checks) => {
       dispatch(setValidationOptions(general_checks, identifier_checks, units_checks, mathml_checks, sbo_checks, overdetermined_checks, modeling_practice_checks))
+    },
+    setSimulationOptions: (add_sliders, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace) => {
+      dispatch(setSimulationOptions(add_sliders, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace))
+    },
+    simulateModel: (add_sliders, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace) => {
+      dispatch(simulateModel(add_sliders, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace))
     },
   }
 }
@@ -129,6 +142,9 @@ class App extends React.Component {
       expiredModel, draggingModel,
       enableGeneralChecks, enableIdentifierChecks, enableUnitsChecks, enableMathmlChecks, enableSboChecks, enableOverdeterminedChecks, enableModelingPracticeChecks,
       setValidationOptions,
+      // simulation
+      addSliders, timeStart, timeStop, numTimepoints,
+      isStochastic, numReplicates, enableMeanTrace, setSimulationOptions, simulateModel,
        ...rest } = this.props
     // action dispatchers
     const { setEnteredQuery, dispatchQuery, setActiveModel, setUploadedModel, setModelSource, setDraggingModel } = this.props
@@ -184,6 +200,15 @@ class App extends React.Component {
                   enableSboChecks={enableSboChecks}
                   enableOverdeterminedChecks={enableOverdeterminedChecks}
                   enableModelingPracticeChecks={enableModelingPracticeChecks}
+                  addSliders={addSliders}
+                  timeStart={timeStart}
+                  timeStop={timeStop}
+                  numTimepoints={numTimepoints}
+                  isStochastic={isStochastic}
+                  numReplicates={numReplicates}
+                  enableMeanTrace={enableMeanTrace}
+                  setSimulationOptions={setSimulationOptions}
+                  simulateModel={simulateModel}
                   />}
                   key="/view"/>
                 <Route path="/" render={props =>

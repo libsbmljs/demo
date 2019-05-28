@@ -1,5 +1,5 @@
-import { setModelProperties, libsbmlLoaded, setModelValidationResults, errorsReadingSBML } from 'actions.js'
-import { SET_MODEL_SRC, VALIDATE_MODEL } from 'constants.js'
+import { setModelProperties, libsbmlLoaded, setModelValidationResults, errorsReadingSBML, setSimulationResults } from 'actions.js'
+import { SET_MODEL_SRC, VALIDATE_MODEL, SIMULATE_MODEL, SET_SIMULATION_RESULTS } from 'constants.js'
 import { range } from 'lodash'
 
 // import libsbml from 'libsbml.js'
@@ -246,7 +246,6 @@ const handleAction = (action) => {
       if (loading_errors > 0) {
         console.log('Errors when reading SBML document') // TODO: post error
       }
-      console.log(action)
 
       doc.setConsistencyChecks(libsbml.LIBSBML_CAT_GENERAL_CONSISTENCY, action.general_checks)
       doc.setConsistencyChecks(libsbml.LIBSBML_CAT_IDENTIFIER_CONSISTENCY, action.identifier_checks)
@@ -268,6 +267,21 @@ const handleAction = (action) => {
         action.model,
         n_consistency_errors === 0,
         consistency_errors,
+      ))
+      return
+    }
+    case SIMULATE_MODEL:{
+      console.log('worker simulate model')
+      const reader = new libsbml.SBMLReader()
+      const doc = reader.readSBMLFromString(action.source)
+      const loading_errors = doc.getNumErrors()
+      if (loading_errors > 0) {
+        console.log('Errors when reading SBML document') // TODO: post error
+      }
+
+      self.postMessage(setSimulationResults(
+        action.model,
+        {}
       ))
       return
     }
