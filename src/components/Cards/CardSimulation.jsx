@@ -11,7 +11,7 @@ import Button from 'components/CustomButtons/Button.jsx'
 import Checkbox from "@material-ui/core/Checkbox"
 import Check from "@material-ui/icons/Check"
 
-import SimResults from 'components/SimResults/SimResults.jsx'
+import SimResults from 'components/Simulation/SimResults.jsx'
 
 import "assets/css/material-dashboard-react.css"
 
