@@ -7,13 +7,15 @@ import Plot from 'react-plotly.js';
 
 function SimResults({ ...props }) {
   const { simulationResults } = props
-  if (simulationResults !== null)
-    console.log('simulationResults', simulationResults.data)
-  return ( simulationResults !== null ?
+  return ( simulationResults !== null ? (
+    simulationResults.type !== 'error' ?
     <Plot
      data={simulationResults.data}
      layout={ {width: 800, height: 600, title: 'Simulation Results'} }
-   /> : <div/>)
+   /> :
+   <div>{simulationResults.message}</div>
+   ) : <div/>
+  )
 }
 
 // SimResults.defaultProps = {

@@ -250,7 +250,6 @@ const handleAction = (action) => {
 
       doc.setConsistencyChecks(libsbml.LIBSBML_CAT_GENERAL_CONSISTENCY, action.general_checks)
       doc.setConsistencyChecks(libsbml.LIBSBML_CAT_IDENTIFIER_CONSISTENCY, action.identifier_checks)
-      console.log('check units', action.units_checks)
       doc.setConsistencyChecks(libsbml.LIBSBML_CAT_UNITS_CONSISTENCY, action.units_checks)
       doc.setConsistencyChecks(libsbml.LIBSBML_CAT_MATHML_CONSISTENCY, action.mathml_checks)
       doc.setConsistencyChecks(libsbml.LIBSBML_CAT_SBO_CONSISTENCY, action.sbo_checks)
@@ -272,28 +271,31 @@ const handleAction = (action) => {
       return
     }
     case SIMULATE_MODEL:{
-      console.log('worker simulate model')
-      // const reader = new libsbml.SBMLReader()
-      // const doc = reader.readSBMLFromString(action.source)
-      // const loading_errors = doc.getNumErrors()
-      // if (loading_errors > 0) {
-      //   console.log('Errors when reading SBML document') // TODO: post error
-      // }
+      const { model, source, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace } = action
+      console.log('worker SIMULATE_MODEL', time_start, time_stop)
 
-      loadFromSBML(action.source, action.is_stochastic).then((sim) => self.postMessage(setSimulationResults(
-        action.model,
-        {
-          type: 'single',
-          data: makePlotlyGrid(sim),
-          // range(2).map((k) => ({
-          //   x: range(action.num_timepoints).map((k) => (action.time_stop-action.time_start)*k/action.num_timepoints),
-          //   y: range(action.num_timepoints).map((l) => Math.cos((action.time_stop-action.time_start)*l/action.num_timepoints + k*3.14/4)),
-          //   type: 'scatter',
-          //   mode: 'lines',
-          //   name: 'cos',
-          // }))
-        }
-      )))
+      loadFromSBML(source, is_stochastic).then((sim) => {
+        try {
+        self.postMessage(setSimulationResults(
+          model,
+          {
+            type: 'single',
+            data: makePlotlyGrid(sim, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace),
+          }
+        ))
+      } catch(error) {
+        console.log(error)
+
+        self.postMessage(setSimulationResults(
+          model,
+          {
+            type: 'error',
+            message: error.message,
+          }
+        ))
+      }
+      }
+      )
       return
     }
     default:

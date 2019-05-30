@@ -145,6 +145,10 @@ class SimControls extends React.PureComponent {
     const can_simulate = (!time_start_error && !time_stop_error && !num_timepoints_error && !replicates_error)
     return (
       <div>
+        <Button
+          color="primary"
+          disabled={!can_simulate}
+          onClick={() => simulateModel(model, addSliders, Number(timeStart), Number(timeStop), Number(numTimepoints), isStochastic, Number(numReplicates), enableMeanTrace, parameterValues)}>Simulate</Button>
         <Table className={classes.table}>
           <TableBody>
             {this.renderNumeric(classes, 'time_start', 'Start time', timeStart, true, time_start_error)}
@@ -156,10 +160,6 @@ class SimControls extends React.PureComponent {
             {this.renderCheck(classes, 'add_sliders', 'Add sliders for parameters (Max. 10)', addSliders)}
           </TableBody>
         </Table>
-        <Button
-          color="primary"
-          disabled={!can_simulate}
-          onClick={() => simulateModel(model, addSliders, timeStart, timeStop, numTimepoints, isStochastic, numReplicates, enableMeanTrace, parameterValues)}>Simulate</Button>
       </div>
     )
   }
