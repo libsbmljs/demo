@@ -66,6 +66,7 @@ const mapStateToProps = (state) => {
     enableMeanTrace: state.model.enable_mean_trace,
     parameterValues: state.model.parameter_values,
     simulationResults: state.model.simulation_results,
+    stochasticInc: state.model.stochastic_inc
   }
 }
 
@@ -102,8 +103,8 @@ const mapDispatchToProps = dispatch => {
     setSimulationOptions: (add_sliders, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace) => {
       dispatch(setSimulationOptions(add_sliders, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace))
     },
-    simulateModel: (model, add_sliders, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace, parameter_values) => {
-      dispatch(simulateModel(model, add_sliders, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace, parameter_values))
+    simulateModel: (model, add_sliders, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace, parameter_values, stochastic_inc) => {
+      dispatch(simulateModel(model, add_sliders, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace, parameter_values, stochastic_inc))
     },
   }
 }
@@ -147,7 +148,7 @@ class App extends React.Component {
       // simulation
       addSliders, timeStart, timeStop, numTimepoints,
       isStochastic, numReplicates, enableMeanTrace,
-      parameterValues, simulationResults,
+      parameterValues, simulationResults, stochasticInc,
       setSimulationOptions, simulateModel,
        ...rest } = this.props
     // action dispatchers
@@ -211,6 +212,7 @@ class App extends React.Component {
                   isStochastic={isStochastic}
                   numReplicates={numReplicates}
                   enableMeanTrace={enableMeanTrace}
+                  stochasticInc={stochasticInc}
                   setSimulationOptions={setSimulationOptions}
                   simulateModel={simulateModel}
                   parameterValues={parameterValues}

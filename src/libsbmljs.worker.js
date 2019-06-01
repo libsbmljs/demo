@@ -271,29 +271,30 @@ const handleAction = (action) => {
       return
     }
     case SIMULATE_MODEL:{
-      const { model, source, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace } = action
-      console.log('worker SIMULATE_MODEL', time_start, time_stop)
+      const { model, source, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace, stochastic_inc } = action
 
-      loadFromSBML(source, is_stochastic).then((sim) => {
+      loadFromSBML(source, is_stochastic, stochastic_inc).then((sim) => {
         try {
-        self.postMessage(setSimulationResults(
-          model,
-          {
-            type: 'single',
-            data: makePlotlyGrid(sim, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace),
-          }
-        ))
-      } catch(error) {
-        console.log(error)
+          const thedata = makePlotlyGrid(sim, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace)
+          console.log(thedata)
+          self.postMessage(setSimulationResults(
+            model,
+            {
+              type: 'single',
+              data: thedata,
+            }
+          ))
+        } catch(error) {
+          console.log(error)
 
-        self.postMessage(setSimulationResults(
-          model,
-          {
-            type: 'error',
-            message: error.message,
-          }
-        ))
-      }
+          self.postMessage(setSimulationResults(
+            model,
+            {
+              type: 'error',
+              message: error.message,
+            }
+          ))
+        }
       }
       )
       return

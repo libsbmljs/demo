@@ -68,7 +68,7 @@ class CardSimulation extends React.PureComponent {
   }
 
   render() {
-    const { classes, model, addSliders, timeStart, timeStop, numTimepoints, isStochastic, numReplicates, enableMeanTrace, setSimulationOptions, simulateModel, parameterValues, simulationResults } = this.props
+    const { classes, model, addSliders, timeStart, timeStop, numTimepoints, isStochastic, numReplicates, enableMeanTrace, setSimulationOptions, simulateModel, parameterValues, simulationResults, stochasticInc } = this.props
     const header_color = (simulationResults !== null && simulationResults.type === 'error') ? 'danger' : 'primary'
     return (
       <Card>
@@ -92,6 +92,7 @@ class CardSimulation extends React.PureComponent {
             setSimulationOptions={setSimulationOptions}
             simulateModel={simulateModel}
             parameterValues={parameterValues}
+            stochasticInc={stochasticInc}
           />
           </div>
         </CardBody>

@@ -58,6 +58,7 @@ const model = (state = {
       is_stochastic: false,
       num_replicates: 10,
       enable_mean_trace: true,
+      stochastic_inc: 1,
 
       simulating_model: '',
       simulated_model: '',

@@ -117,7 +117,7 @@ export const setSimulationOptions = (add_sliders, time_start, time_stop, num_tim
   enable_mean_trace,
 })
 
-export const simulateModel = (model, add_sliders, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace, parameter_values) => ({
+export const simulateModel = (model, add_sliders, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace, parameter_values, stochastic_inc=1) => ({
   type: SIMULATE_MODEL,
   model,
   add_sliders,
@@ -127,6 +127,7 @@ export const simulateModel = (model, add_sliders, time_start, time_stop, num_tim
   is_stochastic,
   num_replicates,
   enable_mean_trace,
+  stochastic_inc,
 })
 
 export const setSimulationResults = (model, simulation_results) => ({
