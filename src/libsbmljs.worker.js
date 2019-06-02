@@ -275,13 +275,11 @@ const handleAction = (action) => {
 
       loadFromSBML(source, is_stochastic, stochastic_inc).then((sim) => {
         try {
-          const thedata = makePlotlyGrid(sim, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace)
-          console.log(thedata)
           self.postMessage(setSimulationResults(
             model,
             {
               type: 'single',
-              data: thedata,
+              data: makePlotlyGrid(sim, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace),
             }
           ))
         } catch(error) {
