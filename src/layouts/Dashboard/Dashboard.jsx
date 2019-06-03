@@ -66,7 +66,8 @@ const mapStateToProps = (state) => {
     enableMeanTrace: state.model.enable_mean_trace,
     parameterValues: state.model.parameter_values,
     simulationResults: state.model.simulation_results,
-    stochasticInc: state.model.stochastic_inc
+    stochasticInc: state.model.stochastic_inc,
+    simulatedModel: state.model.simulated_model,
   }
 }
 
@@ -149,6 +150,7 @@ class App extends React.Component {
       addSliders, timeStart, timeStop, numTimepoints,
       isStochastic, numReplicates, enableMeanTrace,
       parameterValues, simulationResults, stochasticInc,
+      simulatedModel,
       setSimulationOptions, simulateModel,
        ...rest } = this.props
     // action dispatchers
@@ -213,6 +215,7 @@ class App extends React.Component {
                   numReplicates={numReplicates}
                   enableMeanTrace={enableMeanTrace}
                   stochasticInc={stochasticInc}
+                  simulatedModel={simulatedModel}
                   setSimulationOptions={setSimulationOptions}
                   simulateModel={simulateModel}
                   parameterValues={parameterValues}

@@ -157,12 +157,13 @@ class SimControls extends React.PureComponent {
             {this.renderCheck(classes, 'is_stochastic', 'Stochastic', isStochastic)}
             {this.renderNumeric(classes, 'num_replicates', 'Number of replicates', numReplicates, isStochastic, replicates_error)}
             {this.renderCheck(classes, 'enable_mean_trace', 'Show the replicate mean', enableMeanTrace, isStochastic)}
-            {this.renderCheck(classes, 'add_sliders', 'Add sliders for parameters (Max. 10)', addSliders)}
           </TableBody>
         </Table>
       </div>
     )
   }
 }
+
+// {this.renderCheck(classes, 'add_sliders', 'Add sliders for parameters (Max. 10)', addSliders)}
 
 export default withStyles(styles)(SimControls);

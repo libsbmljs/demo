@@ -2,6 +2,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import webpack from 'webpack';
 import path from "path";
+import CopyPlugin from 'copy-webpack-plugin'
 
 const htmlPlugin = new HtmlWebpackPlugin({
   template: "./src/index.html",
@@ -22,7 +23,7 @@ module.exports = env => ({
     hot: false
   },
   resolve: {
-    modules: [path.resolve(__dirname,'src'), path.resolve(__dirname,'theme'), '/home/poltergeist/devel/src/sbml_websim/dist', 'node_modules']
+    modules: [path.resolve(__dirname,'src'), path.resolve(__dirname,'theme'),  'node_modules']
   },
   module: {
     rules: [
@@ -79,5 +80,9 @@ module.exports = env => ({
     new CleanWebpackPlugin(['dist']),
     new webpack.IgnorePlugin(/^fs$/),
     htmlPlugin,
+    new CopyPlugin([
+      {from: '**/*.wasm', to: './', flatten: true},
+      {from: 'package.json', to: './', flatten: true}
+    ]),
   ]
 })

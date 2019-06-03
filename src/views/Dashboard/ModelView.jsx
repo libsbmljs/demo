@@ -157,6 +157,7 @@ class ModelView extends React.PureComponent {
       addSliders, timeStart, timeStop, numTimepoints,
       isStochastic, numReplicates, enableMeanTrace,
       parameterValues, simulationResults, stochasticInc,
+      simulatedModel,
       setSimulationOptions, simulateModel,
     } = this.props
 
@@ -275,6 +276,7 @@ class ModelView extends React.PureComponent {
               parameterValues={parameterValues}
               simulationResults={simulationResults}
               stochasticInc={stochasticInc}
+              simulatedModel={simulatedModel}
             />
             <div><br/></div>
             {showValidator ?

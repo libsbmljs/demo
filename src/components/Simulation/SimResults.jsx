@@ -6,8 +6,8 @@ import Plot from 'react-plotly.js';
 // import withStyles from "@material-ui/core/styles/withStyles"
 
 function SimResults({ ...props }) {
-  const { simulationResults } = props
-  return ( simulationResults !== null ? (
+  const { model, simulatedModel, simulationResults } = props
+  return ( (simulationResults !== null && simulatedModel === model) ? (
     simulationResults.type !== 'error' ?
     <Plot
      data={simulationResults.data}
