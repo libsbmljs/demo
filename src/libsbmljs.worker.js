@@ -1,10 +1,10 @@
 import { setModelProperties, libsbmlLoaded, setModelValidationResults, errorsReadingSBML, setSimulationResults } from 'actions.js'
 import { SET_MODEL_SRC, VALIDATE_MODEL, SIMULATE_MODEL, SET_SIMULATION_RESULTS } from 'constants.js'
 import { range } from 'lodash'
-import { loadFromSBML, makePlotlyGrid } from 'sbml_websim'
+// import { loadFromSBML, makePlotlyGrid } from 'sbml_websim'
 
 // import libsbml from 'libsbml.js'
-import libsbml_module from 'libsbmljs_stable'
+import libsbml_module from 'libsbmljs_experimental'
 let libsbml = null
 libsbml_module().then(((self,module) => {
   libsbml = module
@@ -273,28 +273,28 @@ const handleAction = (action) => {
     case SIMULATE_MODEL:{
       const { model, source, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace, stochastic_inc } = action
 
-      loadFromSBML(source, is_stochastic, stochastic_inc).then((sim) => {
-        try {
-          self.postMessage(setSimulationResults(
-            model,
-            {
-              type: 'single',
-              data: makePlotlyGrid(sim, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace),
-            }
-          ))
-        } catch(error) {
-          console.log(error)
-
-          self.postMessage(setSimulationResults(
-            model,
-            {
-              type: 'error',
-              message: error.message,
-            }
-          ))
-        }
-      }
-      )
+      // loadFromSBML(source, is_stochastic, stochastic_inc).then((sim) => {
+      //   try {
+      //     self.postMessage(setSimulationResults(
+      //       model,
+      //       {
+      //         type: 'single',
+      //         data: makePlotlyGrid(sim, time_start, time_stop, num_timepoints, is_stochastic, num_replicates, enable_mean_trace),
+      //       }
+      //     ))
+      //   } catch(error) {
+      //     console.log(error)
+      //
+      //     self.postMessage(setSimulationResults(
+      //       model,
+      //       {
+      //         type: 'error',
+      //         message: error.message,
+      //       }
+      //     ))
+      //   }
+      // }
+      // )
       return
     }
     default:

@@ -42,7 +42,7 @@
     "classnames": "^2.2.6",
     "connected-react-router": "^6.2.2",
     "immutable": "^4.0.0-rc.12",
-    "libsbmljs_stable": "^5.18.0-beta1",
+    "libsbmljs_experimental": "^5.18.1-alpha1",
     "lodash": "^4.17.11",
     "lunr": "^2.3.5",
     "perfect-scrollbar": "^1.4.0",
